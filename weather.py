@@ -1,10 +1,16 @@
 # -*- coding:utf-8 -*-
 
 import time
+import sys
+
+sys.path.append('/usr/lib/python3/dist-packages')
+
 import requests
 import locale
 
-locale.setlocale(locale.LC_TIME, '')
+#locale.setlocale(locale.LC_TIME, '') #orig
+
+locale.setlocale(locale.LC_TIME)
 
 class Weather:
     def __init__(self, latitude, longitude, api_id):
@@ -12,16 +18,22 @@ class Weather:
         self.longitude = longitude
         self.api_key = api_id
         self.prevision = [0, [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]
-        self.data = requests.get(
-            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+        endpoint = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=fr&appid=" + self.api_key
+        print (endpoint)
+        #self.data = requests.get(
+        #    f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+        self.data = requests.get(endpoint).json()
         self.prevision[0] = self.data["daily"][0]["dt"]
         self.prevision[1][6] = [self.data["daily"][0]["pressure"],
                                 round(self.data["daily"][0]["temp"]["day"] - 273.15, 0)]
         pass
 
     def update(self):
-        self.data = requests.get(
-            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+        endpoint = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=fr&appid=" + self.api_key
+        print (endpoint)
+        #self.data = requests.get(
+        #    f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+        self.data = requests.get(endpoint).json()
         return self.data
 
     def current_time(self):
@@ -169,8 +181,11 @@ class Pollution:
         pass
 
     def update(self, lattitude, longitude, api_id):
-        self.data = requests.get(
-            f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lattitude}&lon={longitude}&appid={api_id}").json()
+        endpoint = "https://api.openweathermap.org/data/2.5/air_pollutionlat=" + latitude + "&lon=" + longitude + "&lang=fr&appid=" + api_id
+        print (endpoint)
+        self.data = requests.get(endpoint).json()
+        #self.data = requests.get(
+        #    f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lattitude}&lon={longitude}&appid={api_id}").json()
         return self.data
 
     def co(self):

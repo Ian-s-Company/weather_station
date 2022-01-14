@@ -9,7 +9,8 @@ lat = "33.104191"
 lon = "-96.671738"
 api_key_weather = "696a01e644791c546061076bc92e4cb4"
 api_key_news = "3ac6eaa80651499ea0c931a93104b260"
-debug = 0
+debug = 1
+
 if debug ==0:
     import epd7in5b_V2
 else:

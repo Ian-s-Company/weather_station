@@ -1,24 +1,36 @@
 # -*- coding:utf-8 -*-
 
+import sys
+
+sys.path.append('/usr/lib/python3/dist-packages')
+
 from PIL import Image, ImageDraw, ImageFont
 
 font_choice = 7
 if font_choice == 1:
-    project_font = "font/Architects_Daughter/ArchitectsDaughter-Regular.ttf"
+    #project_font = "font/Architects_Daughter/ArchitectsDaughter-Regular.ttf"
+    project_font = "roboto/unhinted/RobotoTTF/Roboto-Regular.ttf"     
 elif font_choice == 2:
-    project_font = "font/Inconsolata/static/Inconsolata-SemiBold.ttf"
+    #project_font = "font/Inconsolata/static/Inconsolata-SemiBold.ttf"
+    project_font = "inconsolata/static/Inconsolata.otf"
 elif font_choice == 3:
-    project_font = "font/Comfortaa/static/Comfortaa-Light.ttf"
+    #project_font = "font/Comfortaa/static/Comfortaa-Light.ttf"
+    project_font = "comfortaa/static/Comfortaa-Light.ttf"
 elif font_choice == 4:
-    project_font = "font/Open_Sans/OpenSans-SemiBold.ttf"
+    #project_font = "font/Open_Sans/OpenSans-SemiBold.ttf"
+    project_font = "freefont/FreeSansBold.ttf"   
 elif font_choice == 5:
-    project_font = "font/Roboto/Roboto-Regular.ttf"
+    #project_font = "font/Roboto/Roboto-Regular.ttf"
+    project_font = "roboto/unhinted/RobotoTTF/Roboto-Regular.ttf"    
 elif font_choice == 6:
-    project_font = "font/Roboto_Slab/static/RobotoSlab-Regular.ttf"
+    #project_font = "font/Roboto_Slab/static/RobotoSlab-Regular.ttf"
+    project_font = "roboto/unhinted/RobotoTTF/Roboto-Regular.ttf"     
 elif font_choice == 7:
-    project_font = "font/Ubuntu_Mono/UbuntuMono-Bold.ttf"
+    project_font = "Ubuntu_Mono/UbuntuMono-Bold.ttf"
+    project_font = "roboto/unhinted/RobotoTTF/Roboto-Regular.ttf"   
 else:
-    project_font = "font/Open_Sans/OpenSans-SemiBold.ttf"
+    #project_font = "font/Open_Sans/OpenSans-SemiBold.ttf"
+    project_font = "freefont/FreeSansBold.ttf"    
 
 
 font8 = ImageFont.truetype(project_font, 8)

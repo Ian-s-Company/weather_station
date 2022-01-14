@@ -32,7 +32,6 @@ import logging
 import sys
 import time
 
-
 class RaspberryPi:
     # Pin definition
     RST_PIN         = 17
@@ -82,12 +81,7 @@ class RaspberryPi:
 
         self.GPIO.cleanup()
 
-
 implementation = RaspberryPi()
-
 
 for func in [x for x in dir(implementation) if not x.startswith('_')]:
     setattr(sys.modules[__name__], func, getattr(implementation, func))
-
-
-### END OF FILE ###

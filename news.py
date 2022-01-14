@@ -8,8 +8,10 @@ class News:
         pass
 
     def update(self, api_id):
-        self.news_list = requests.get(
-            f"https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey={api_id}").json()
+        endpoint = 'https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey={' + api_id + '}'
+        self.news_list = requests.get(endpoint).json()
+        #self.news_list = requests.get(
+        #    f"https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey={api_id}").json()
         return self.news_list
 
     def selected_title(self):
