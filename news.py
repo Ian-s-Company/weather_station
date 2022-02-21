@@ -4,14 +4,13 @@ import requests
 import textwrap
 
 class News:
-    def __init__(self):
+    def __init__(self,width):
+        self.width = width
         pass
 
     def update(self, api_id):
-        endpoint = 'https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey={' + api_id + '}'
-        self.news_list = requests.get(endpoint).json()
-        #self.news_list = requests.get(
-        #    f"https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey={api_id}").json()
+        self.news_list = requests.get(
+            f"https://newsapi.org/v2/top-headlines?source=the-washington-post&apiKey={api_id}&country=us").json()
         return self.news_list
 
     def selected_title(self):
@@ -19,8 +18,8 @@ class News:
         if self.news_list["status"] == "ok":
             for i in range(len(self.news_list["articles"])):
                 line = self.news_list["articles"][i]["title"]
-                line = textwrap.wrap(line, width=30)
+                line = textwrap.wrap(line, width=self.width)
                 list_news.append(line)
         else:
-            list_news = ["Problme de chargement des news"]
+            list_news = ["Problem getting the news"]
         return list_news
