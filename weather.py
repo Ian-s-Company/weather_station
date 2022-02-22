@@ -4,6 +4,7 @@ import time
 import requests
 import locale
 import os.path
+import logging
 from os import path
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -31,14 +32,40 @@ class Weather:
 
         pollution_url = "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + self.latitude \
                      + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key
-        self.pol_data = requests.get(pollution_url).json()
+        got_data = False
+        logging.info("-------Pollution Update Begin ")
+        while got_data == False:
+            logging.info("Checking Pollution URL Status")
+            self.pol_data = requests.get(pollution_url)
+            logging.info(self.pol_data.status_code)
+            if self.pol_data.status_code == 200:
+               got_data = True 
+               logging.info("Got data from Pollution URL to return successfully")
+            else:
+               logging.info("Waiting for the Pollution URL to return successfully")
+               time.sleep(15)
+        self.pol_data = self.pol_data.json()
+        logging.info("-------Pollution Update End ")
 
         return self.pol_data
 
     def update(self):
         weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude \
                      + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key + "&units=imperial"
-        self.data = requests.get(weather_url).json()
+        got_data = False
+        logging.info("-------Weather Update Begin ")
+        while got_data == False:
+            logging.info("Checking Weather URL Status")
+            self.weather_data = requests.get(weather_url)
+            logging.info(self.weather_data.status_code)
+            if self.weather_data.status_code == 200:
+               got_data = True 
+               logging.info("Got data from Weather URL to return successfully")
+            else:
+               logging.info("Waiting for the Weather URL to return successfully")
+               time.sleep(15)
+        self.data = self.weather_data.json()
+        logging.info("-------Weather Update End ")
 
         return self.data
     def get_current(self):

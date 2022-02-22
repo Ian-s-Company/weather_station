@@ -67,7 +67,7 @@ class weather_station:
         self.weather = weather
         self.news = news
         self.epd.init()
-        self.epd.Clear(0xFF)
+        #self.epd.Clear(0xFF)
 
     def button1(self): #Home Button
         logging.info("Drawing Button 1 screen")
@@ -260,6 +260,7 @@ class weather_station:
     def draw2in7(self, epd):
         Himage = Image.new('1', (self.epd.height, self.epd.width), 255)  # 255: clear the frame
         self.weather.update()
+        self.weather.update_pol()
         self.news.update(api_key_news)
         current_info = self.weather.get_current()
         logging.info("Begin update @" + self.weather.current_time() + " at latitude " + lat + " longitude " + lon)
@@ -543,14 +544,11 @@ def draw7in5(epd,weather,news,display):
 def main():
     global been_reboot
     been_reboot=1
+    weather_data = False
     weather = Weather(lat, lon, api_key_weather)
     news = News(news_width)
     display = Display()
-    #weather.update()
-    #display = Display()
-    #news.update(api_key_news)
     if screen_size == "2.7in":
-        ran_once = False
         logging.info("Initializing EPD for 2.7in")
         epd = epd2in7.EPD()
         weather_station_inst = weather_station(epd, weather, news)
@@ -564,8 +562,7 @@ def main():
         btn4 = Button(19)
         btn4.when_pressed = weather_station_inst.button4
         while True:
-            if ran_once:
-                weather_station_inst = weather_station(epd, weather, news)
+            weather_station_inst = weather_station(epd, weather, news)
             weather_station_inst.draw2in7(epd)
             logging.info("Screen is drawn")
             logging.info("Going to sleep.")
