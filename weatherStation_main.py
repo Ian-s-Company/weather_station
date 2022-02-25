@@ -266,7 +266,7 @@ class weather_station:
         logging.info("Begin update @" + self.weather.current_time() + " at latitude " + lat + " longitude " + lon)
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
-        logging.info(current_info)
+        #logging.info(current_info)
         sunrise_icon = Image.open(home_dir + 'static_icons/sunrise.bmp')
         sunrise_icon = sunrise_icon.resize((30,30))
         sunset_icon = Image.open(home_dir + 'static_icons/sunset.bmp')

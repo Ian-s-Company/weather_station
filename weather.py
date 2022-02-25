@@ -34,7 +34,8 @@ class Weather:
                      + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key
         got_data = False
         logging.info("-------Pollution Update Begin ")
-        while got_data == False:
+        iterations = 3
+        while got_data == False and iterations != 0:
             logging.info("Checking Pollution URL Status")
             self.pol_data = requests.get(pollution_url)
             logging.info(self.pol_data.status_code)
@@ -43,6 +44,7 @@ class Weather:
                logging.info("Got data from Pollution URL to return successfully")
             else:
                logging.info("Waiting for the Pollution URL to return successfully")
+               iterations = iterations - 1
                time.sleep(15)
         self.pol_data = self.pol_data.json()
         logging.info("-------Pollution Update End ")
@@ -54,7 +56,8 @@ class Weather:
                      + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key + "&units=imperial"
         got_data = False
         logging.info("-------Weather Update Begin ")
-        while got_data == False:
+        iterations = 3
+        while got_data == False and iterations != 0:
             logging.info("Checking Weather URL Status")
             self.weather_data = requests.get(weather_url)
             logging.info(self.weather_data.status_code)
@@ -63,6 +66,7 @@ class Weather:
                logging.info("Got data from Weather URL to return successfully")
             else:
                logging.info("Waiting for the Weather URL to return successfully")
+               iterations = iterations - 1
                time.sleep(15)
         self.data = self.weather_data.json()
         logging.info("-------Weather Update End ")

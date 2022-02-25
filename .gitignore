@@ -1,3 +1,5 @@
 saved.txt
 *.log
 *.pyc
+downloaded_icons/*
+weatherStation.log
