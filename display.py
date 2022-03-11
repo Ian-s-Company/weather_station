@@ -2,9 +2,9 @@
 
 from PIL import Image, ImageDraw, ImageFont
 
-home_dir = "/home/pi/WEATHER_STATION_PI/"
+home_dir = "/home/pi/weather_station/"
 #font_choice = 7
-font_choice = 2
+font_choice = 4
 if font_choice == 1:
     project_font = "font/Architects_Daughter/ArchitectsDaughter-Regular.ttf"
 elif font_choice == 2:
@@ -27,6 +27,7 @@ font8 = ImageFont.truetype(project_font, 8)
 font12 = ImageFont.truetype(project_font, 12)
 font14 = ImageFont.truetype(project_font, 14)
 font16 = ImageFont.truetype(project_font, 16)
+font20 = ImageFont.truetype(project_font, 20)
 font24 = ImageFont.truetype(project_font, 24)
 font36 = ImageFont.truetype(project_font, 36)
 font48 = ImageFont.truetype(project_font, 48)

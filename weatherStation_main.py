@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 
 from weather import *
@@ -6,45 +7,49 @@ from display import *
 import json
 import sys
 from datetime import datetime
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 from gpiozero import Button # Pins 5,6,13,19
 import logging
 
 screen_size = ""
 
 try:
-    screen_size = sys.argv[1]
+    home_dir = sys.argv[1]
+except:
+    home_dir = "/home/pi/weather_station/"
+
+try:
+    screen_size = sys.argv[2]
     # like 7x5in
 except:
     screen_size = "2.7in" #176x264
 
 try:
-     lat = sys.argv[1]
+     lat = sys.argv[3]
 except:
      lat = "33.104191"
 
 try:
-     lon = sys.argv[2]
+     lon = sys.argv[4]
 except:
      lon = "-96.671738"
 
 try:
-     api_key_weather = sys.argv[3]
+     api_key_weather = sys.argv[5]
 except:
      api_key_weather = "696a01e644791c546061076bc92e4cb4"
 
 try:
-     api_key_news = sys.argv[4]
+     api_key_news = sys.argv[6]
 except:
      api_key_news = "3ac6eaa80651499ea0c931a93104b260"
 
-been_reboot = 1
-home_dir = "/home/pi/WEATHER_STATION_PI/"
 debug = 0
-logging.basicConfig(filename=home_dir + 'weatherStation.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename=home_dir + '/weatherStation.log', filemode='w', level=logging.DEBUG)
 
 if debug == 0 and screen_size == "7x5in":
-    logging.info("Screen size is 7x5 ")
+    logging.info("Screen size is 7x5in")
+    news_width = 340
     import epd7in5b_V2 
 elif debug == 0 and screen_size == "2.7in":
     logging.info("Screen size is 2in7")
@@ -123,7 +128,6 @@ class weather_station:
         for i in self.weather.get_hourly(None,8):
             hour_temps.append(i['temp'])
             hour_feels.append(i['feels_like'])
-        #print(hour_temps)
         draw.text((165, 20), "CO", fill=0, font=font12)  
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font24)
         draw.text((165, 50), "NO", fill=0, font=font12)  
@@ -158,8 +162,9 @@ class weather_station:
             Himage.paste(icon,(start_pixel[0],start_pixel[1] + 13))
             i = i + 1
         self.epd.display(self.epd.getbuffer(Himage))
+        return 0
 
-    def three_day_forecast(self, weather, draw): # Weekend Forecast
+    def three_day_forecast(self, draw): # Weekend Forecast
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
             draw,icon = self.day_summary(self.weather, draw, day_info, start_pixel)
@@ -177,25 +182,23 @@ class weather_station:
         iter = 0 
         for i in elements:
             for j in weather_data:
-                #print("Pixel Spacing is: " + str(pixel_spacing) + ",Element: " + str(i) + ", Weather Data: " + str(j))
                 start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
                 start_v = corner[1] - dot_size - weather_data[iter]
                 finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
                 finish_v = corner[1] + dot_size - weather_data[iter]
-                #print("Start H " + str(start_h) + ",Start V " + str(start_v) + ",Finish H " + str(finish_h) + ",Finish V " + str(finish_v))
                 draw.ellipse((round(start_h), round(start_v), round(finish_h), round(finish_v)), fill = fill_col)
                 iter = iter + 1
             draw.text((corner[0] + (graph_dim[1] / 2), corner[1]), i.upper() , fill=0, font=font12)  
         return draw
     
     def open_framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)  # SUNRISE TIME
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)  
         draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
     def framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)  # SUNRISE TIME
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16) 
         draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
@@ -245,6 +248,15 @@ class weather_station:
         icon = icon.resize((30,30))
         return draw, icon
 
+    def day_summary_large(self, draw, day_info, start_pixel):
+        draw.text((start_pixel[0],start_pixel[1]), day_info[4], fill=0, font=font12) # DAY NAME
+        draw.text((start_pixel[0] + 5, start_pixel[1] + 60), str(day_info[2]) + "\N{DEGREE SIGN}/" + str(day_info[3])+ "\N{DEGREE SIGN}", fill=0, font=font20) #DAY HIGH/LOW
+        draw.text((start_pixel[0], start_pixel[1] + 85), str(day_info[5]) + "% " + str(day_info[6]), fill=0, font=font16)
+        draw.text((start_pixel[0], start_pixel[1] + 101), str(day_info[7]) + "mph " + self.weather.wind_dir(day_info[8]), fill=0, font=font16)
+        icon = Image.open(day_info[0])
+        icon = icon.resize((45,45))
+        return draw, icon
+
     def hour_summary(self, draw, hour_info, start_pixel):
         draw.text((start_pixel[0],start_pixel[1]), hour_info[4], fill=0, font=font12) # HOUR
         draw.text((start_pixel[0] + 35, start_pixel[1] + 12), str(hour_info[2]), fill=0, font=font16) #HOUR TEMP
@@ -257,6 +269,15 @@ class weather_station:
         icon = icon.resize((30,30))
         return draw, icon
 
+    def hour_summary_large(self, draw, hour_info, start_pixel):
+        draw.text((start_pixel[0] + 15,start_pixel[1]), hour_info[4], fill=0, font=font16) # HOUR
+        draw.text((start_pixel[0] + 5, start_pixel[1] + 60), str(hour_info[2]) + "\N{DEGREE SIGN}/" + str(hour_info[3])+ "\N{DEGREE SIGN}", fill=0, font=font20) #HOUR FEELS LIKE
+        draw.text((start_pixel[0], start_pixel[1] + 85), str(hour_info[5]) + "% " + str(hour_info[6]), fill=0, font=font16)
+        draw.text((start_pixel[0], start_pixel[1] + 105), str(hour_info[7]) + "mph " + self.weather.wind_dir(hour_info[8]), fill=0, font=font16)
+        icon = Image.open(hour_info[0])
+        icon = icon.resize((45,45))
+        return draw, icon
+
     def draw2in7(self, epd):
         Himage = Image.new('1', (self.epd.height, self.epd.width), 255)  # 255: clear the frame
         self.weather.update()
@@ -267,9 +288,9 @@ class weather_station:
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
         #logging.info(current_info)
-        sunrise_icon = Image.open(home_dir + 'static_icons/sunrise.bmp')
+        sunrise_icon = Image.open(home_dir + '/static_icons/sunrise.bmp')
         sunrise_icon = sunrise_icon.resize((30,30))
-        sunset_icon = Image.open(home_dir + 'static_icons/sunset.bmp')
+        sunset_icon = Image.open(home_dir + '/static_icons/sunset.bmp')
         sunset_icon = sunset_icon.resize((30,30))
         Himage.paste(sunrise_icon, (225,20))
         Himage.paste(sunset_icon, (225,60))
@@ -327,227 +348,173 @@ class weather_station:
 
         return test_image
 
-def draw7in5(epd,weather,news,display):
+    def draw7in5(self, epd): #800 x 480
+        HimageBlack = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+        HimageRed = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+        self.weather.update()
+        self.weather.update_pol()
+        self.news.update(api_key_news)
+        current_info = self.weather.get_current()
+        day_info = self.weather.get_daily(0)
+        hour_info = self.weather.get_hourly(0)
+        epaperBlack7x5img = ImageDraw.Draw(HimageBlack)
+        epaperRed7x5img = ImageDraw.Draw(HimageRed)
 
-    ##################################################################################################################
-    # FRAME
-    display.draw_black.rectangle((5, 5, 795, 475), fill=255, outline=0, width=2)  # INNER FRAME
-    display.draw_black.line((540, 5, 540, 350), fill=0, width=1)  # VERTICAL SEPARATION
-    display.draw_black.line((350, 5, 350, 350), fill=0, width=1)  # VERTICAL SEPARATION slim
-    display.draw_black.line((5, 350, 795, 350), fill=0, width=1)  # HORIZONTAL SEPARATION
+        epaperBlack7x5img.rectangle((5, 5, 795, 475), fill=255, outline=0, width=2)  # INNER FRAME
+        epaperBlack7x5img.line((400, 5, 400, 220), fill=0, width=1)  # VERTICAL SEPARATION
+        epaperBlack7x5img.line((5, 220, 795, 220), fill=0, width=1) # HORIZONTAL SEPARATION
+        epaperBlack7x5img.line((5, 350, 795, 350), fill=0, width=1)  # HORIZONTAL SEPARATION
+        epaperRed7x5img.text((410, 10), self.weather.current_time(), fill=0, font=font24)  # TIME
+        icon_list = []
+        for i in current_info['weather']:
+            icon = self.weather.get_icon(i['icon'])
+            icon_list.append(icon)
+        cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
+        if len(icon_list) == 2:
+            cur_icon_name1 = icon_list[0]
+            cur_icon_name2 = icon_list[1]
+            cur_icon1 = Image.open(cur_icon_name1) #.convert('LA')
+            cur_icon2 = Image.open(cur_icon_name2) #.convert('LA')
+            cur_icon1 = cur_icon1.resize((30,30),None,None,3)
+            cur_icon2 = cur_icon2.resize((30,30),None,None,3)
+            HimageRed.paste(cur_icon1, (120,90))
+            HimageRed.paste(cur_icon2, (120,120))
+        elif len(icon_list) == 1: 
+            cur_icon_name1 = icon_list[0]
+            cur_icon1 = Image.open(cur_icon_name1) #.convert('LA')
+            cur_icon1 = cur_icon1.resize((80,80),None,None,3)
+            HimageRed.paste(cur_icon1, (150, 80))
+        epaperBlack7x5img.text((10, 10), cur_condition.upper(), fill=0, font=font24)  # CURRENT Condition
+        epaperRed7x5img.text((10, 35), str(round(current_info['temp'])) + "\N{DEGREE SIGN}/" + str(round(current_info['feels_like'])) + "\N{DEGREE SIGN}", fill=0, font=font48)  # CURRENT TEMP
+        epaperBlack7x5img.text((10, 90), "Clouds", fill=0, font=font16)  
+        epaperBlack7x5img.text((10, 106), str(current_info['clouds']) + "%", fill=0, font=font24)  # CLOUD COVER
+        epaperBlack7x5img.text((250, 10), "High/Low", fill=0, font=font24)  
+        epaperBlack7x5img.text((250, 34), self.weather.current_daymax() + "\N{DEGREE SIGN}/" + self.weather.current_daymin() + "\N{DEGREE SIGN}", fill=0, font=font36)  # CURRENT HIGH/LOW
+        epaperBlack7x5img.text((300, 165), "Wind", fill=0, font=font16)  
+        epaperBlack7x5img.text((300, 180), str(current_info['wind_speed']) + " " + str(self.weather.wind_dir(current_info['wind_deg'])), fill=0, font=font24)  # CURRENT WIND
+        epaperBlack7x5img.text((10, 150), "Rain %/mm", fill=0, font=font16)  
+        epaperBlack7x5img.text((10, 165), "Hour and Day", fill=0, font=font16)  
+        if 'rain' in hour_info:
+            hour_rain = hour_info['rain']['1h']
+        else:
+            hour_rain = 0
+        if 'rain' in day_info:
+            day_rain = day_info['rain']
+        else:
+            day_rain = 0
+        epaperBlack7x5img.text((10, 180), str(round(hour_info['pop'] * 100)) + "%/" + str(round(hour_rain)) + " " + str(round(day_info['pop'] * 100)) + "%/" + str(round(day_rain)), fill=0, font=font24)  # Hour/Day Rain
+        epaperBlack7x5img.text((200, 165), "Humidity", fill=0, font=font16)  
+        epaperBlack7x5img.text((200, 180), str(current_info['humidity']) + "%", fill=0, font=font24)  # HUMIDTY
 
-    # UPDATED AT
-    display.draw_black.text((10, 8), "Mis à jour le " + weather.current_time(), fill=0, font=font8)
+        epaperBlack7x5img.text((290, 90), self.weather.current_sunrise(), fill=0, font=font24)  # SUNRISE TIME
+        epaperBlack7x5img.text((290, 120), self.weather.current_sunset(), fill=0, font=font24)  # SUNSET TIME
+        sunrise_icon = Image.open(home_dir + '/static_icons/sunrise.bmp')
+        sunrise_icon = sunrise_icon.resize((30,30))
+        sunset_icon = Image.open(home_dir + '/static_icons/sunset.bmp')
+        sunset_icon = sunset_icon.resize((30,30))
+        HimageRed.paste(sunrise_icon, (250,90))
+        HimageRed.paste(sunset_icon, (250,120))
 
-    ###################################################################################################################
-    # CURRENT WEATHER
-    display.draw_icon(20, 55, "r", 75, 75,
-                      weather.weather_description(weather.current_weather())[0])  # CURRENT WEATHER ICON
-    display.draw_black.text((120, 15), weather.current_temp(), fill=0, font=font48)  # CURRENT TEMP
-    display.draw_black.text((230, 15), weather.current_hum(), fill=0, font=font48)  # CURRENT HUM
-    display.draw_black.text((245, 65), "Humidity", fill=0, font=font12)  # LABEL "HUMIDITY"
-    display.draw_black.text((120, 75), weather.wind()[0] + " " + weather.wind()[1], fill=0, font=font24)
+        news_selected = self.news.selected_title()
+        epaperBlack7x5img.text((410, 40), "News:", fill=0, font=font24) 
+        epaperBlack7x5img.text((420, 70), news_selected[0][0], fill=0, font=font16)
+        epaperBlack7x5img.text((420, 90), news_selected[1][0], fill=0, font=font16)
+        epaperBlack7x5img.text((420, 110), news_selected[2][0], fill=0, font=font16)
+        epaperBlack7x5img.text((420, 130), news_selected[3][0], fill=0, font=font16)
 
-    display.draw_icon(120, 105, "b", 35, 35, "sunrise")  # SUNRISE ICON
-    display.draw_black.text((160, 110), weather.current_sunrise(), fill=0, font=font16)  # SUNRISE TIME
-    display.draw_icon(220, 105, "b", 35, 35, "sunset")  # SUNSET ICON
-    display.draw_black.text((260, 110), weather.current_sunset(), fill=0, font=font16)  # SUNSET TIME
+        time = 'hour'
+        #day_pixel_array = [[15,350],[115,350],[215,350],[315,350],[415,350],[515,350],[615,350],[715,350]]
+        hour_pixel_array = [[15,220],[130,220],[245,220],[360,220],[475,220],[590,220],[705,220]]
+        hour_span = 3
+        i = 0
+        for start_pixel in hour_pixel_array:
+            hour_info = self.forecast(time, i)
+            epaperBlack7x5img,icon = self.hour_summary_large(epaperBlack7x5img, hour_info, start_pixel)
+            HimageRed.paste(icon,(start_pixel[0] + 15,start_pixel[1] + 20))
+            i = i + hour_span
 
-    ###################################################################################################################
-    # NEXT HOUR RAIN
-    try :
-        data_rain = weather.rain_next_hour()
+        time = 'day'
+        day_pixel_array = [[15,350],[130,350],[245,350],[360,350],[475,350],[590,350],[705,350]]
+        start_pixel = [0,20]
+        i = 0
+        for start_pixel in day_pixel_array:
+            day_info = self.forecast(time, i)
+            epaperBlack7x5img,icon = self.day_summary_large(epaperBlack7x5img, day_info, start_pixel)
+            HimageRed.paste(icon,(start_pixel[0] + 15,start_pixel[1] + 20))
+            i = i + 1
+        
+        epd.display(epd.getbuffer(HimageBlack), epd.getbuffer(HimageRed))
 
-        # FRAME
-        display.draw_black.text((20, 150), "Pluie dans l'heure - " + time.strftime("%H:%M", time.localtime()), fill=0,
-                                font=font16)  # NEXT HOUR RAIN LABEL
-        display.draw_black.rectangle((20, 175, 320, 195), fill=255, outline=0, width=1)  # Red rectangle = rain
+        return epaperBlack7x5img, epaperRed7x5img
 
-        # LABEL
-        for i in range(len(data_rain)):
-            display.draw_black.line((20 + i * 50, 175, 20 + i * 50, 195), fill=0, width=1)
-            display.draw_black.text((20 + i * 50, 195), data_rain[i][0], fill=0, font=font16)
-            if data_rain[i][1] != 0:
-                display.draw_red.rectangle((20 + i * 50, 175, 20 + (i + 1) * 50, 195), fill=0)
-    except:
-        pass
-
-    ###################################################################################################################
-    # HOURLY FORECAST
-    display.draw_black.text((30, 227), "+3h", fill=0, font=font16)  # +3h LABEL
-    display.draw_black.text((150, 227), "+6h", fill=0, font=font16)  # +6h LABEL
-    display.draw_black.text((270, 227), "+12h", fill=0, font=font16)  # +12h LABEL
-    # 3H
-    display.draw_icon(25, 245, "r", 50, 50,
-                      weather.weather_description(weather.hourly_forecast()["+3h"]["id"])[0])  # +3H WEATHER ICON
-    display.draw_black.text((25, 295), weather.weather_description(weather.hourly_forecast()["+3h"]["id"])[1], fill=0,
-                            font=font12)  # WEATHER DESCRIPTION +3h
-    display.draw_black.text((35, 307), weather.hourly_forecast()["+3h"]["temp"], fill=0, font=font16)  # TEMP +3H
-    display.draw_black.text((35, 323), weather.hourly_forecast()["+3h"]["pop"], fill=0, font=font16)  # POP +3H
-    # +6h
-    display.draw_icon(145, 245, "r", 50, 50,
-                      weather.weather_description(weather.hourly_forecast()["+6h"]["id"])[0])  # +6H WEATHER ICON
-    display.draw_black.text((145, 295), weather.weather_description(weather.hourly_forecast()["+6h"]["id"])[1], fill=0,
-                            font=font12)  # WEATHER DESCRIPTION +6h
-    display.draw_black.text((155, 307), weather.hourly_forecast()["+6h"]["temp"], fill=0, font=font16)  # TEMP +6H
-    display.draw_black.text((155, 323), weather.hourly_forecast()["+6h"]["pop"], fill=0, font=font16)  # POP +6H
-    # +12h
-    display.draw_icon(265, 245, "r", 50, 50,
-                      weather.weather_description(weather.hourly_forecast()["+12h"]["id"])[0])  # +12H WEATHER ICON
-    display.draw_black.text((265, 295), weather.weather_description(weather.hourly_forecast()["+12h"]["id"])[1], fill=0,
-                            font=font12)  # WEATHER DESCRIPTION +12h
-    display.draw_black.text((275, 307), weather.hourly_forecast()["+12h"]["temp"], fill=0, font=font16)  # TEMP +12H
-    display.draw_black.text((275, 323), weather.hourly_forecast()["+12h"]["pop"], fill=0, font=font16)  # POP +12H
-
-    ###################################################################################################################
-    # DAILY FORECAST
-    # +24h
-    display.draw_black.text((360, 30), weather.daily_forecast()["+24h"]["date"], fill=0, font=font16)  # +24H DAY
-    display.draw_icon(400, 50, "r", 50, 50,
-                      weather.weather_description(weather.daily_forecast()["+24h"]["id"])[0])  # +24H WEATHER ICON
-    display.draw_black.text((465, 50), weather.daily_forecast()["+24h"]["min"], fill=0, font=font14)
-    display.draw_black.text((498, 50), "min", fill=0, font=font14)  # +24H MIN TEMPERATURE
-    display.draw_black.text((465, 65), weather.daily_forecast()["+24h"]["max"], fill=0, font=font14)
-    display.draw_black.text((498, 65), "max", fill=0, font=font14)  # +24H MAX TEMPERATURE
-    display.draw_black.text((465, 80), weather.daily_forecast()["+24h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 80), "pluie", fill=0, font=font14)  # +24H RAIN PROBABILITY
-
-    # +48h
-    display.draw_black.text((360, 105), weather.daily_forecast()["+48h"]["date"], fill=0, font=font16)  # +48H DAY
-    display.draw_icon(400, 125, "r", 50, 50,
-                      weather.weather_description(weather.daily_forecast()["+48h"]["id"])[0])  # +48H WEATHER ICON
-    display.draw_black.text((465, 125), weather.daily_forecast()["+48h"]["min"], fill=0, font=font14)
-    display.draw_black.text((498, 125), "min", fill=0, font=font14)  # +48H MIN TEMPERATURE
-    display.draw_black.text((465, 140), weather.daily_forecast()["+48h"]["max"], fill=0, font=font14)
-    display.draw_black.text((498, 140), "max", fill=0, font=font14)  # +48H MAX TEMPERATURE
-    display.draw_black.text((465, 155), weather.daily_forecast()["+48h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 155), "pluie", fill=0, font=font14)  # +48H RAIN PROBABILITY
-
-    # +72h
-    display.draw_black.text((360, 180), weather.daily_forecast()["+72h"]["date"], fill=0, font=font16)  # +72H DAY
-    display.draw_icon(400, 200, "r", 50, 50,
-                      weather.weather_description(weather.daily_forecast()["+72h"]["id"])[0])  # +72H WEATHER ICON
-    display.draw_black.text((465, 200), weather.daily_forecast()["+72h"]["min"], fill=0, font=font14)
-    display.draw_black.text((498, 200), "min", fill=0, font=font14)  # +72H MIN TEMPERATURE
-    display.draw_black.text((465, 215), weather.daily_forecast()["+72h"]["max"], fill=0, font=font14)
-    display.draw_black.text((498, 215), "max", fill=0, font=font14)  # +72H MAX TEMPERATURE
-    display.draw_black.text((465, 230), weather.daily_forecast()["+72h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 230), "pluie", fill=0, font=font14)  # +72H RAIN PROBABILITY
-
-    # +96h
-    display.draw_black.text((360, 255), weather.daily_forecast()["+96h"]["date"], fill=0, font=font16)  # +96H DAY
-    display.draw_icon(400, 275, "r", 50, 50,
-                      weather.weather_description(weather.daily_forecast()["+96h"]["id"])[0])  # +96H WEATHER ICON
-    display.draw_black.text((465, 275), weather.daily_forecast()["+96h"]["min"], fill=0, font=font14)
-    display.draw_black.text((498, 275), "min", fill=0, font=font14)  # +96H MIN TEMPERATURE
-    display.draw_black.text((465, 290), weather.daily_forecast()["+96h"]["max"], fill=0, font=font14)
-    display.draw_black.text((498, 290), "max", fill=0, font=font14)  # +96H MAX TEMPERATURE
-    display.draw_black.text((465, 305), weather.daily_forecast()["+96h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 305), "pluie", fill=0, font=font14)  # +96H RAIN PROBABILITY
-
-    ###################################################################################################################
-    # GRAPHS
-    # PRESSURE & TEMPERATURE
-    pression = []
-    temperature = []
-    maxi = 440  # MAX VERT. PIXEL OF THE GRAPH
-    mini = 360  # MIN VERT PIXEL OF THE GRAPH
-    x = [55, 105, 155, 205, 255, 305, 355]  # X value of the points
-    j = ["J-6", "J-5", "J-4", "J-3", "J-2", "J-1", "J"]  # LABELS
+        ###################################################################################################################
+        # PRESSURE & TEMPERATURE
+        pression = []
+        temperature = []
+        maxi = 440  # MAX VERT. PIXEL OF THE GRAPH
+        mini = 360  # MIN VERT PIXEL OF THE GRAPH
+        x = [55, 105, 155, 205, 255, 305, 355]  # X value of the points
+        j = ["J-6", "J-5", "J-4", "J-3", "J-2", "J-1", "J"]  # LABELS
 
 
-    weather.graph_p_t()
-    data = weather.prevision[1]
-    global been_reboot
-    if (been_reboot == 1):
-        try :
-            file = open("saved.txt","r")
-            weather.prevision[1] = json.loads(file.read())
-            data = weather.prevision[1]
-            been_reboot = 0
-            file.close()
-        except:
+        self.weather.graph_p_t()
+        data = self.weather.prevision[1]
+        global been_reboot
+        if (been_reboot == 1):
+            try :
+                file = open("saved.txt","r")
+                self.weather.prevision[1] = json.loads(file.read())
+                data = self.weather.prevision[1]
+                been_reboot = 0
+                file.close()
+            except:
+                pass
+
+        else :
             pass
 
-    else :
-        pass
+        file = open("saved.txt", "w")
+        file.write(str(data))
+        file.close()
+        for i in range(len(data)):
+            pression.append(data[i][0])
+            temperature.append(data[i][1])
 
-    file = open("saved.txt", "w")
-    file.write(str(data))
-    file.close()
-    for i in range(len(data)):
-        pression.append(data[i][0])
-        temperature.append(data[i][1])
-
-    # PRESSURE
-    display.draw_black.line((40, mini, 40, maxi + 20), fill=0, width=1)  # GRAPH AXIS
-    display.draw_black.text((10, mini), str(max(pression)), fill=0, font=font12)  # MAX AXIS GRAPH LABEL
-    display.draw_black.text((10, maxi), str(min(pression)), fill=0, font=font12)  # MIN AXIS GRAPH LABEL
-    display.draw_black.text((10, mini + (maxi - mini) // 2), str((max(pression) + min(pression)) // 2), fill=0,
-                            font=font12)  # MID VALUE LABEL
-    for i in range(len(x)):  # UPDATE CIRCLE POINTS
-        display.draw_black.text((x[i], 455), j[i], fill=0, font=font12)
-        display.draw_circle(x[i], map_resize(pression[i], min(pression), max(pression), maxi, mini), 3, "r")
-    for i in range(len(x) - 1):  # UPDATE LINE
-        display.draw_red.line((x[i], map_resize(pression[i], min(pression), max(pression), maxi, mini), x[i + 1],
-                               map_resize(pression[i + 1], min(pression), max(pression), maxi, mini)), fill=0,
-                              width=2)
-    # TEMPERATURE
-    display.draw_black.line((430, mini, 430, maxi + 20), fill=0, width=1)  # GRAPH AXIS
-    display.draw_black.text((410, mini), str(max(temperature)), fill=0, font=font12)  # MAX AXIS GRAPH LABEL
-    display.draw_black.text((410, maxi), str(min(temperature)), fill=0, font=font12)  # MIN AXIS GRAPH LABEL
-    display.draw_black.text((410, mini + (maxi - mini) // 2), str((max(temperature) + min(temperature)) // 2), fill=0,
-                            font=font12)  # MID VALUE LABEL
-    for i in range(len(x)):  # UPDATE CIRCLE POINTS
-        display.draw_black.text((x[i] + 400, 455), j[i], fill=0, font=font12)
-        display.draw_circle(x[i] + 400, map_resize(temperature[i], min(temperature), max(temperature), maxi, mini), 3,
-                            "r")
-    for i in range(len(x) - 1):  # UPDATE LINE
-        display.draw_red.line((x[i] + 400, map_resize(temperature[i], min(temperature), max(temperature), maxi, mini),
-                               x[i + 1] + 400,
-                               map_resize(temperature[i + 1], min(temperature), max(temperature), maxi, mini)),
-                              fill=0, width=2)
-
-    ###################################################################################################################
-    # ALERT AND POLLUTION
-
-    ###################################################################################################################
-    # NEWS UPDATE
-    news_selected = news.selected_title()
-    display.draw_black.text((550, 15), "NEWS", fill=0, font=font24)
-    for i in range(5):
-        if len(news_selected) == 1:
-            display.draw_black.text((550, 40), news_selected[0], fill=0, font=font14)
-            break
-        else:
-            if len(news_selected[i]) <= 3 :
-                for j in range(len(news_selected[i])):
-                    display.draw_black.text((550, 40 + j * 15 + i * 60), news_selected[i][j], fill=0, font=font14)
-            else:
-                for j in range(2):
-                    display.draw_black.text((550, 40 + j * 15 + i * 60), news_selected[i][j], fill=0, font=font14)
-                display.draw_black.text((550, 40 + 2 * 15 + i * 60), news_selected[i][2] + "[.]", fill=0, font=font14)
+        # PRESSURE
+        self.display.draw_black.line((40, mini, 40, maxi + 20), fill=0, width=1)  # GRAPH AXIS
+        self.display.draw_black.text((10, mini), str(max(pression)), fill=0, font=font12)  # MAX AXIS GRAPH LABEL
+        self.display.draw_black.text((10, maxi), str(min(pression)), fill=0, font=font12)  # MIN AXIS GRAPH LABEL
+        self.display.draw_black.text((10, mini + (maxi - mini) // 2), str((max(pression) + min(pression)) // 2), fill=0,
+                                font=font12)  # MID VALUE LABEL
+        for i in range(len(x)):  # UPDATE CIRCLE POINTS
+            self.display.draw_black.text((x[i], 455), j[i], fill=0, font=font12)
+            self.display.draw_circle(x[i], map_resize(pression[i], min(pression), max(pression), maxi, mini), 3, "r")
+        for i in range(len(x) - 1):  # UPDATE LINE
+            self.display.draw_red.line((x[i], map_resize(pression[i], min(pression), max(pression), maxi, mini), x[i + 1],
+                                map_resize(pression[i + 1], min(pression), max(pression), maxi, mini)), fill=0,
+                                width=2)
+        # TEMPERATURE
+        self.display.draw_black.line((430, mini, 430, maxi + 20), fill=0, width=1)  # GRAPH AXIS
+        self.display.draw_black.text((410, mini), str(max(temperature)), fill=0, font=font12)  # MAX AXIS GRAPH LABEL
+        self.display.draw_black.text((410, maxi), str(min(temperature)), fill=0, font=font12)  # MIN AXIS GRAPH LABEL
+        self.display.draw_black.text((410, mini + (maxi - mini) // 2), str((max(temperature) + min(temperature)) // 2), fill=0,
+                                font=font12)  # MID VALUE LABEL
+        for i in range(len(x)):  # UPDATE CIRCLE POINTS
+            self.display.draw_black.text((x[i] + 400, 455), j[i], fill=0, font=font12)
+            self.display.draw_circle(x[i] + 400, map_resize(temperature[i], min(temperature), max(temperature), maxi, mini), 3,
+                                "r")
+        for i in range(len(x) - 1):  # UPDATE LINE
+            self.display.draw_red.line((x[i] + 400, map_resize(temperature[i], min(temperature), max(temperature), maxi, mini),
+                                x[i + 1] + 400,
+                                map_resize(temperature[i + 1], min(temperature), max(temperature), maxi, mini)),
+                                fill=0, width=2)
 
 
-
-    ###################################################################################################################
-    logging.info("Updating screen.")
-    # display.im_black.show()
-    # display.im_red.show()  
-    logging.info("\tPrinting.")
-
-    time.sleep(2)
-    epd.display(epd.getbuffer(display.im_black), epd.getbuffer(display.im_red))
-    time.sleep(2)	
-    return True
+        ###################################################################################################################
 
 def main():
-    global been_reboot
-    been_reboot=1
-    weather_data = False
     weather = Weather(lat, lon, api_key_weather)
     news = News(news_width)
-    display = Display()
     if screen_size == "2.7in":
         logging.info("Initializing EPD for 2.7in")
         epd = epd2in7.EPD()
@@ -567,21 +534,18 @@ def main():
             logging.info("Screen is drawn")
             logging.info("Going to sleep.")
             logging.info("------------")
-            ran_once = True
             time.sleep(900)
-    else:
-        logging.info("Screen size is 7.5")
+    elif screen_size == "7x5in":
+        logging.info("Initializing EPD for 7x5in")
         epd = epd7in5b_V2.EPD()
-        epd.init()
-        epd.Clear(0xFF)
-        logging.info("Drawing screen")
-        Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
-        draw = draw7in5(epd,weather,news,display)
-        epd.display(epd.getbuffer(Himage))
-        logging.info("Screen is drawn")
-        time.sleep(900)
-    return True
+        while True:
+            logging.info("Drawing screen")
+            weather_station_inst = weather_station(epd, weather, news)
+            weather_station_inst.draw7in5(epd)
+            logging.info("Screen is drawn")
+            logging.info("Going to sleep.")
+            logging.info("------------")
+            time.sleep(900)
 
 if __name__ == "__main__":
    main()

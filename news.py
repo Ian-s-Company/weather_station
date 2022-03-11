@@ -15,21 +15,26 @@ class News:
         got_data = False
 
         logging.info("-------News Update Begin ")
-        iterations = 3
-        while got_data == False and iterations != 0:
+        while got_data == False:
             logging.info("Checking News URL Status")
-            self.news_data = requests.get(news_url)
-            logging.info(self.news_data.status_code)
-            if self.news_data.status_code == 200:
+            try:
+                self.news_data = requests.get(news_url)
+            except:
+                time.sleep(60)
+                continue
+
+            if self.news_data.ok:
+                logging.info(self.news_data.status_code)
                 got_data = True
                 logging.info("Got data from News URL to return successfully")
+                self.news_list = self.news_data.json()
             else:
                 logging.info("Waiting for the News URL to return successfully")
-                iterations = iterations - 1
+                self.news_list = None
                 time.sleep(15)
-        self.news_list = self.news_data.json()
         logging.info("-------News Update End")
         return self.news_list
+
 
     def selected_title(self):
         list_news = []

@@ -3,12 +3,11 @@
 import time
 import requests
 import locale
-import os.path
+#import os.path
 import logging
 from os import path
 from datetime import datetime
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-import numpy as np
+from PIL import Image
 
 locale.setlocale(locale.LC_TIME, '')
 
@@ -17,7 +16,7 @@ class Weather:
         self.latitude = latitude
         self.longitude = longitude
         self.api_key = api_id
-        self.home_dir = "/home/pi/WEATHER_STATION_PI/"
+        self.home_dir = "/home/pi/weather_station/"
 
     def initialize(self):
         self.max_lvl_pollution = {"co": 10000, "no": 30, "no2": 40, "o3": 120, "so2": 50, "pm2_5": 20, "pm10": 30,
@@ -30,48 +29,57 @@ class Weather:
 
     def update_pol(self):
 
-        pollution_url = "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + self.latitude \
-                     + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key
+        pollution_url = "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key
         got_data = False
         logging.info("-------Pollution Update Begin ")
-        iterations = 3
-        while got_data == False and iterations != 0:
+        while got_data == False:
             logging.info("Checking Pollution URL Status")
-            self.pol_data = requests.get(pollution_url)
-            logging.info(self.pol_data.status_code)
-            if self.pol_data.status_code == 200:
-               got_data = True 
+            try:
+               self.pol_data = requests.get(pollution_url)
+            except:
+               time.sleep(60)
+               continue
+
+            if self.pol_data.ok:
+               logging.info(self.pol_data.status_code)
+               got_data = True
                logging.info("Got data from Pollution URL to return successfully")
+               self.pol_data = self.pol_data.json()
             else:
                logging.info("Waiting for the Pollution URL to return successfully")
-               iterations = iterations - 1
                time.sleep(15)
-        self.pol_data = self.pol_data.json()
+               self.pol_data = None
         logging.info("-------Pollution Update End ")
 
         return self.pol_data
 
+
     def update(self):
-        weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude \
-                     + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key + "&units=imperial"
+
+        weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key + "&units=imperial"
         got_data = False
         logging.info("-------Weather Update Begin ")
-        iterations = 3
-        while got_data == False and iterations != 0:
+        while got_data == False:
             logging.info("Checking Weather URL Status")
-            self.weather_data = requests.get(weather_url)
-            logging.info(self.weather_data.status_code)
-            if self.weather_data.status_code == 200:
-               got_data = True 
+            try:
+               self.weather_data = requests.get(weather_url)
+            except:
+               time.sleep(60)
+               continue
+
+            if self.weather_data.ok:
+               logging.info(self.weather_data.status_code)
+               got_data = True
                logging.info("Got data from Weather URL to return successfully")
+               self.data = self.weather_data.json()
             else:
                logging.info("Waiting for the Weather URL to return successfully")
-               iterations = iterations - 1
                time.sleep(15)
-        self.data = self.weather_data.json()
+               self.data = None
         logging.info("-------Weather Update End ")
 
         return self.data
+
     def get_current(self):
         return self.data['current']
 
@@ -100,7 +108,7 @@ class Weather:
         return weather
 
     def current_time(self):
-        return time.strftime("%d/%m/%Y %H:%M", time.localtime(self.data["current"]["dt"]))
+        return time.strftime("%b %-d %Y at %I:%M", time.localtime(self.data["current"]["dt"]))
 
     def current_temp(self):
         return "{:.0f}".format(self.data["current"]["temp"])

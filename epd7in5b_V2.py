@@ -30,7 +30,6 @@
 
 import logging
 import epdconfig
-import time
 
 # Display resolution
 EPD_WIDTH       = 800
@@ -72,19 +71,9 @@ class EPD:
         logger.debug("e-Paper busy")
         self.send_command(0x71)
         busy = epdconfig.digital_read(self.busy_pin)
-
-        #######New code begin
-        while(epdconfig.digital_read(self.busy_pin) == 0):      #  0: idle, 1: busy
-            #self.send_command(0x71)
-            epdconfig.delay_ms(200)
-            print(epdconfig.digital_read(self.busy_pin))
-            time.sleep(5)
-            break
-        #######New code end
-
-        #while(busy == 0):
-        #    self.send_command(0x71)
-        #    busy = epdconfig.digital_read(self.busy_pin)
+        while(busy == 0):
+            self.send_command(0x71)
+            busy = epdconfig.digital_read(self.busy_pin)
         epdconfig.delay_ms(200)
         logger.debug("e-Paper busy release")
         
@@ -99,6 +88,7 @@ class EPD:
         # self.send_data(0x17)
         # self.send_data(0x38)        # If an exception is displayed, try using 0x38
         # self.send_data(0x17)
+
         self.send_command(0x01);			#POWER SETTING
         self.send_data(0x07);
         self.send_data(0x07);    #VGH=20V,VGL=-20V
@@ -196,4 +186,3 @@ class EPD:
         epdconfig.delay_ms(2000)
         epdconfig.module_exit()
 ### END OF FILE ###
-
