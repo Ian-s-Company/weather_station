@@ -33,14 +33,14 @@ jobs:
     env:
       API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
       API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
-      APP_DIR: "/opt/weather_station"
+      APP_DIR: ${{ vars.APP_DIR }}
     steps:
       - name: deploy
         run: echo "Trying to Deploy"
-      - name: Create app directory
-        run:  if [ ! -e "/opt/weather_station" ]; then mkdir /opt/weather_station; fi
+      - name: Create app directory ${{ vars.APP_DIR }}
+        run:  if [ ! -e "/opt/weather_station" ]; then mkdir ${{ vars.APP_DIR }}; fi
       - name: Cloning Weather Station
-        run: git clone https://github.com/Ian-s-Company/weather_station.git /opt/weather_station/
+        run: git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}
       - name: Starting Weather Station
-        run: python /opt/weather_station/weatherStation_main.py 
+        run: python ${{ vars.APP_DIR }}/weatherStation_main.py 
       
