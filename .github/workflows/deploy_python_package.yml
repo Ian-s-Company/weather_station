@@ -1,4 +1,4 @@
-name: Deployment
+name: Deploy Python package
 
 concurrency:
   group: production
