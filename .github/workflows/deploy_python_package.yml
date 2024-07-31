@@ -5,14 +5,18 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
 jobs:
-  deployment:
-    runs-on: ubuntu-latest
+  deploy_weatherStation:
+    runs-on: [self-hosted, linux]
     environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
     steps:
       - name: deploy
         run: echo "Trying to Deploy"
