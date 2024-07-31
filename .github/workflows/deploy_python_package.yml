@@ -55,5 +55,5 @@ jobs:
       - name: Cloning Weather Station
         run: git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}
       - name: Starting Weather Station
-        run: python ${{ vars.APP_DIR }}/weatherStation_main.py 
+        run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
       
