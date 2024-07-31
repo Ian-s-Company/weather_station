@@ -1,4 +1,4 @@
-name: Python package
+name: Build Python package
 
 on: [push]
 
@@ -20,5 +20,5 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: Run Weather Station
-        run: /opt/weather_station/weatherStation_main.py $API_KEY_WEATHER $API_KEY_NEWS
+      #- name: Run Weather Station
+      #  run: /opt/weather_station/weatherStation_main.py $API_KEY_WEATHER $API_KEY_NEWS
