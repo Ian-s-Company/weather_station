@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux]
 
     steps:
       - uses: actions/checkout@v4
@@ -20,3 +20,5 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+      - name: Run Weather Station
+        run: /opt/weather_station/weatherStation_main.py $API_KEY_WEATHER $API_KEY_NEWS
