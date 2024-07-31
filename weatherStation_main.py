@@ -13,6 +13,7 @@ import logging
 
 screen_size = ""
 
+'''
 try:
      api_key_weather = sys.argv[1]
 except:
@@ -22,7 +23,10 @@ try:
      api_key_news = sys.argv[2]
 except:
      api_key_news = "3ac6eaa80651499ea0c931a93104b260"
+'''
 
+api_key_weather = sys.argv[1]
+api_key_news = sys.argv[2]
 try:
     home_dir = sys.argv[3]
 except:
