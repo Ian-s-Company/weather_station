@@ -33,6 +33,9 @@ jobs:
     env:
       API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
       API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: "/opt/weather_station"
     steps:
       - name: deploy
         run: echo "Trying to Deploy"
+      - name: Create app directory
+        run:  if [ ! -f "$APP_DIR" ]; then mkdir $APP_DIR; fi
