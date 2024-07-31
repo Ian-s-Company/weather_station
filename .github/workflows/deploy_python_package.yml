@@ -38,4 +38,4 @@ jobs:
       - name: deploy
         run: echo "Trying to Deploy"
       - name: Create app directory
-        run:  if [ ! -f "/opt/weather_station" ]; then sudo mkdir /opt/weather_station; fi
+        run:  if [ ! -f "/opt/weather_station" ]; then mkdir /opt/weather_station; fi
