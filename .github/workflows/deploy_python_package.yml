@@ -49,7 +49,7 @@ jobs:
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
-        run:  if [ ! -e "/opt/weather_station" ]; then rm -R ${{ vars.APP_DIR }}; fi
+        run:  if [ -e "/opt/weather_station" ]; then rm -R ${{ vars.APP_DIR }}; fi
       #- name: Create app directory ${{ vars.APP_DIR }}
       #  run:  if [ ! -e "/opt/weather_station" ]; then mkdir ${{ vars.APP_DIR }}; fi
       - name: Cloning Weather Station
