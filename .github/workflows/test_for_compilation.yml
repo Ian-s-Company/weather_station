@@ -2,7 +2,10 @@ name: Hello World
 on: [push]
 jobs:
   Hello-World-Job:
-    #runs-on: codebuild-myProject-${{ github.run_id }}-${{ github.run_attempt }}-arm-3.0-fleet-myFleet
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux]
     steps:
       - run: echo "Hello World!"
+  Run_on_local_runner:
+    runs-on: [self-hosted, linux]
+    steps:
+      - run: /opt/weather_station/weatherStation_main.py $API_KEY_WEATHER $API_KEY_NEWS
