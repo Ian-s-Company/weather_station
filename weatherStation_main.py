@@ -14,35 +14,37 @@ import logging
 screen_size = ""
 
 try:
-    home_dir = sys.argv[1]
+     api_key_weather = sys.argv[1]
+except:
+     api_key_weather = "696a01e644791c546061076bc92e4cb4"
+
+try:
+     api_key_news = sys.argv[2]
+except:
+     api_key_news = "3ac6eaa80651499ea0c931a93104b260"
+
+try:
+    home_dir = sys.argv[3]
 except:
     home_dir = "/home/pi/weather_station/"
 
 try:
-    screen_size = sys.argv[2]
+    screen_size = sys.argv[4]
     # like 7x5in
 except:
     screen_size = "2.7in" #176x264
 
 try:
-     lat = sys.argv[3]
+     lat = sys.argv[5]
 except:
      lat = "33.104191"
 
 try:
-     lon = sys.argv[4]
+     lon = sys.argv[6]
 except:
      lon = "-96.671738"
 
-try:
-     api_key_weather = sys.argv[5]
-except:
-     api_key_weather = "696a01e644791c546061076bc92e4cb4"
 
-try:
-     api_key_news = sys.argv[6]
-except:
-     api_key_news = "3ac6eaa80651499ea0c931a93104b260"
 
 debug = 0
 logging.basicConfig(filename=home_dir + '/weatherStation.log', filemode='w', level=logging.DEBUG)
