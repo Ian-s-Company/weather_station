@@ -39,3 +39,8 @@ jobs:
         run: echo "Trying to Deploy"
       - name: Create app directory
         run:  if [ ! -f "/opt/weather_station" ]; then mkdir /opt/weather_station; fi
+      - name: Cloning Weather Station
+        run: git clone https://github.com/Ian-s-Company/weather_station.git /opt/weather_station/
+      - name: Starting Weather Station
+        run: python /opt/weather_station/weatherStation_main.py 
+      
