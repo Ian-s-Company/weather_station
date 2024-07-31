@@ -26,7 +26,7 @@ except:
 try:
     home_dir = sys.argv[3]
 except:
-    home_dir = "/home/pi/weather_station/"
+    home_dir = "/opt/weather_station/"
 
 try:
     screen_size = sys.argv[4]
