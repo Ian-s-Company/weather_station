@@ -37,8 +37,10 @@ jobs:
     steps:
       - name: deploy
         run: echo "Trying to Deploy"
-      - name: Create app directory ${{ vars.APP_DIR }}
-        run:  if [ ! -e "/opt/weather_station" ]; then mkdir ${{ vars.APP_DIR }}; fi
+      - name: Remove app directory ${{ vars.APP_DIR }}
+        run:  if [ ! -e "/opt/weather_station" ]; then rm -R ${{ vars.APP_DIR }}; fi
+      #- name: Create app directory ${{ vars.APP_DIR }}
+      #  run:  if [ ! -e "/opt/weather_station" ]; then mkdir ${{ vars.APP_DIR }}; fi
       - name: Cloning Weather Station
         run: git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}
       - name: Starting Weather Station
