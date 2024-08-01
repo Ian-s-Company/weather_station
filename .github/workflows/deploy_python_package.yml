@@ -58,10 +58,12 @@ jobs:
         run: git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}
       - name: Test Weather API
         run: | 
+          export PYTHONPATH=$PYTHONPATH:${{ vars.APP_DIR }}
           export API_KEY_WEATHER=${{ secrets.API_KEY_WEATHER }}
           pytest tests/test_weatherapi.py
       - name: Test News API
         run: | 
+          export PYTHONPATH=$PYTHONPATH:${{ vars.APP_DIR }}
           export API_KEY_WEATHER=${{ secrets.API_KEY_NEWS }}
           pytest 
       #- name: Starting Weather Station
