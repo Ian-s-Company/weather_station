@@ -61,4 +61,3 @@ jobs:
           pytest ${{ vars.APP_DIR }}/tests/test_weather_api.py ${{ secrets.API_KEY_WEATHER }}
       #- name: Starting Weather Station
       #  run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
-      

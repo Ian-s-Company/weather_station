@@ -11,20 +11,6 @@ from PIL import Image, ImageDraw
 from gpiozero import Button # Pins 5,6,13,19
 import logging
 
-screen_size = ""
-
-'''
-try:
-     api_key_weather = sys.argv[1]
-except:
-     api_key_weather = "696a01e644791c546061076bc92e4cb4"
-
-try:
-     api_key_news = sys.argv[2]
-except:
-     api_key_news = "3ac6eaa80651499ea0c931a93104b260"
-'''
-
 api_key_weather = sys.argv[1]
 api_key_news = sys.argv[2]
 try:
@@ -47,8 +33,6 @@ try:
      lon = sys.argv[6]
 except:
      lon = "-96.671738"
-
-
 
 debug = 0
 logging.basicConfig(filename=home_dir + '/weatherStation.log', filemode='w', level=logging.DEBUG)
