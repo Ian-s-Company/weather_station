@@ -1,6 +1,6 @@
 #!/bin/sh
 
-USER_DIR='/home/pi' 
+APP_DIR='/opt/weather_station' 
 
 case "$1" in
   restart)
@@ -9,7 +9,7 @@ case "$1" in
     		echo "Restarting WeatherStation and killing PID $pid"
     		kill $pid
 	fi
-	python $USER_DIR/weather_station/weatherStation_main.py /home/pi/weather_station 7x5in &
+	python $USER_DIR/weather_station/weatherStation_main.py $APP_DIR $API_KEY_WEATHER $API_KEY_NEWS 7x5in &
   ;;
   start)
 	pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -17,7 +17,7 @@ case "$1" in
     		echo "WeatherStation is running, won't start"
 	else
         	echo "Starting Weather Station"
-	        python $USER_DIR/weather_station/weatherStation_main.py /home/pi/weather_station 7x5in &
+	        python $USER_DIR/weather_station/weatherStation_main.py $APP_DIR $API_KEY_WEATHER $API_KEY_NEWS 7x5in &
 	fi
   ;;
   stop)
