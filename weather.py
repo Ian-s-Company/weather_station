@@ -12,11 +12,11 @@ from PIL import Image
 locale.setlocale(locale.LC_TIME, '')
 
 class Weather:
-    def __init__(self, latitude, longitude, api_id):
+    def __init__(self, latitude, longitude, api_id, app_dir = "/opt/weather_station"):
         self.latitude = latitude
         self.longitude = longitude
         self.api_key = api_id
-        self.home_dir = "/home/pi/weather_station/"
+        self.app_dir = app_dir
 
     def initialize(self):
         self.max_lvl_pollution = {"co": 10000, "no": 30, "no2": 40, "o3": 120, "so2": 50, "pm2_5": 20, "pm10": 30,
