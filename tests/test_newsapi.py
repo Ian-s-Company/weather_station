@@ -1,6 +1,6 @@
 import pytest
 import sys
-sys.path.append('/home/ianrscott/weather_station')
+sys.path.append('../')
 from weather import Weather
 
 @pytest.fixture
