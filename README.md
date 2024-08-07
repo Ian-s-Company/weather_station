@@ -11,3 +11,5 @@ I made changes to allow for a 2.7in (254x176) or a 7.5in (800x480) Waveshare e-i
 - https://www.waveshare.com/product/raspberry-pi/displays/e-paper/7.5inch-e-paper-hat-b.htm
 
 I also set up a process to download icons if needed.
+
+Test
