@@ -1,5 +1,12 @@
 name: Format with Black
-on: [push, pull_request]
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      
 jobs:
   linter_name:
     name: runner / black
