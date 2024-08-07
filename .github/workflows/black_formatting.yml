@@ -1,4 +1,4 @@
-name: black-action
+name: Check Python Black Formatted
 on: [push, pull_request]
 jobs:
   linter_name:
