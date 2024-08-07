@@ -1,9 +1,9 @@
 # Current and Forecast Weather Display Station
-This project is derived from, but significantly enhanmced from a weather station described here:
+This project is derived from and significantly enhanced from a weather station project described here:
 
 https://www.hackster.io/aerodynamics/weather-and-news-station-e-paper-and-raspberry-pi-a19fa3
 
-You will need:
+## For this project you will need:
 - Raspberry Pi Zero 2 W or a more powerful Raspberry Pi
 - Waveshare 2.7in E-paper display with 4 buttons
 - MicroSD card (I used a 32GB SanDisk Ultra)
@@ -20,7 +20,7 @@ I made changes to allow for a 2.7in (254x176) or a 7.5in (800x480) Waveshare e-i
 
 I also set up a process to download weather icons if needed.
 
-Steps
+#Steps
 ## Format MicroSD card and install OS
 1. Plugin MicroSD to laptop. 
 2. Download and Install Raspberry Pi Installer (https://www.raspberrypi.com/software/)
