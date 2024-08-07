@@ -20,7 +20,7 @@ I made changes to allow for a 2.7in (254x176) or a 7.5in (800x480) Waveshare e-i
 
 I also set up a process to download weather icons if needed.
 
-#Steps
+# Steps
 ## Format MicroSD card and install OS
 1. Plugin MicroSD to laptop. 
 2. Download and Install Raspberry Pi Installer (https://www.raspberrypi.com/software/)
