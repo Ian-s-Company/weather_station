@@ -3,112 +3,140 @@
 import time
 import requests
 import locale
-#import os.path
+
+# import os.path
 import logging
 from os import path
 from datetime import datetime
 from PIL import Image
 
-locale.setlocale(locale.LC_TIME, '')
+locale.setlocale(locale.LC_TIME, "")
+
 
 class Weather:
-    def __init__(self, latitude, longitude, api_id, app_dir = "/opt/weather_station"):
+    def __init__(self, latitude, longitude, api_id, app_dir="/opt/weather_station"):
         self.latitude = latitude
         self.longitude = longitude
         self.api_key = api_id
         self.app_dir = app_dir
 
     def initialize(self):
-        self.max_lvl_pollution = {"co": 10000, "no": 30, "no2": 40, "o3": 120, "so2": 50, "pm2_5": 20, "pm10": 30,
-                                  "nh3": 100}
+        self.max_lvl_pollution = {
+            "co": 10000,
+            "no": 30,
+            "no2": 40,
+            "o3": 120,
+            "so2": 50,
+            "pm2_5": 20,
+            "pm10": 30,
+            "nh3": 100,
+        }
         self.prevision = [0, [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]
         self.data = self.update()
         self.prevision[0] = self.data["daily"][0]["dt"]
-        self.prevision[1][6] = [self.data["daily"][0]["pressure"], \
-                     round(self.data["daily"][0]["temp"]["day"], 0)]
+        self.prevision[1][6] = [
+            self.data["daily"][0]["pressure"],
+            round(self.data["daily"][0]["temp"]["day"], 0),
+        ]
 
     def update_pol(self):
 
-        pollution_url = "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key
+        pollution_url = (
+            "https://api.openweathermap.org/data/2.5/air_pollution?lat="
+            + self.latitude
+            + "&lon="
+            + self.longitude
+            + "&lang=en&appid="
+            + self.api_key
+        )
         got_data = False
         logging.info("-------Pollution Update Begin ")
         while got_data == False:
             logging.info("Checking Pollution URL Status")
             try:
-               self.pol_data = requests.get(pollution_url)
+                self.pol_data = requests.get(pollution_url)
             except:
-               time.sleep(60)
-               continue
+                time.sleep(60)
+                continue
 
             if self.pol_data.ok:
-               logging.info(self.pol_data.status_code)
-               got_data = True
-               logging.info("Got data from Pollution URL to return successfully")
-               self.pol_data = self.pol_data.json()
+                logging.info(self.pol_data.status_code)
+                got_data = True
+                logging.info("Got data from Pollution URL to return successfully")
+                self.pol_data = self.pol_data.json()
             else:
-               logging.info("Waiting for the Pollution URL to return successfully")
-               time.sleep(15)
-               self.pol_data = None
+                logging.info("Waiting for the Pollution URL to return successfully")
+                time.sleep(15)
+                self.pol_data = None
         logging.info("-------Pollution Update End ")
 
         return self.pol_data
 
-
     def update(self):
 
-        weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + self.latitude + "&lon=" + self.longitude + "&lang=en&appid=" + self.api_key + "&units=imperial"
+        weather_url = (
+            "https://api.openweathermap.org/data/2.5/onecall?lat="
+            + self.latitude
+            + "&lon="
+            + self.longitude
+            + "&lang=en&appid="
+            + self.api_key
+            + "&units=imperial"
+        )
         got_data = False
         logging.info("-------Weather Update Begin ")
         while got_data == False:
             logging.info("Checking Weather URL Status")
             try:
-               self.weather_data = requests.get(weather_url)
+                self.weather_data = requests.get(weather_url)
             except:
-               time.sleep(60)
-               continue
+                time.sleep(60)
+                continue
 
             if self.weather_data.ok:
-               logging.info(self.weather_data.status_code)
-               got_data = True
-               logging.info("Got data from Weather URL to return successfully")
-               self.data = self.weather_data.json()
+                logging.info(self.weather_data.status_code)
+                got_data = True
+                logging.info("Got data from Weather URL to return successfully")
+                self.data = self.weather_data.json()
             else:
-               logging.info("Waiting for the Weather URL to return successfully")
-               time.sleep(15)
-               self.data = None
+                logging.info("Waiting for the Weather URL to return successfully")
+                time.sleep(15)
+                self.data = None
         logging.info("-------Weather Update End ")
 
         return self.data
 
     def get_current(self):
-        return self.data['current']
+        return self.data["current"]
 
-    def get_daily(self,day):
-        return self.data['daily'][day]
+    def get_daily(self, day):
+        return self.data["daily"][day]
 
-    def get_hourly(self,hour = None, max = 0):
+    def get_hourly(self, hour=None, max=0):
         if hour != None:
-            return self.data['hourly'][hour]
+            return self.data["hourly"][hour]
         else:
             if max != 0:
                 i = 0
                 hourly_data = []
-                for hour in self.data['hourly']:
+                for hour in self.data["hourly"]:
                     if i < max:
                         hourly_data.append(hour)
                         i = i + 1
                     else:
                         continue
                 return hourly_data
-            else: 
-                return self.data['hourly']
+            else:
+                return self.data["hourly"]
 
-    def get_weather(self,time_span_data):
-        weather = time_span_data['weather'][0]
+    def get_weather(self, time_span_data):
+        weather = time_span_data["weather"][0]
         return weather
 
     def current_time(self):
-        return time.strftime("%b %-d %Y at %I:%M", time.localtime(self.data["current"]["dt"]))
+        return time.strftime(
+            "%b %-d %Y at %I:%M", time.localtime(self.data["current"]["dt"])
+        )
 
     def current_temp(self):
         return "{:.0f}".format(self.data["current"]["temp"])
@@ -137,7 +165,7 @@ class Weather:
     def current_sunset(self):
         return time.strftime("%H:%M", time.localtime(self.data["current"]["sunset"]))
 
-    def wind_dir(self,wind_dir):
+    def wind_dir(self, wind_dir):
         deg = wind_dir
         if deg < 11 or deg >= 349:
             direction = "N"
@@ -186,82 +214,106 @@ class Weather:
     def rain_next_hour(self):
         input_minutely = self.data["minutely"]
         rain = []
-        rain_next_hour = [["+10'", 0], ["+20'", 0], ["+30'", 0], ["+40'", 0], ["+50'", 0], ["+1h", 0]]
+        rain_next_hour = [
+            ["+10'", 0],
+            ["+20'", 0],
+            ["+30'", 0],
+            ["+40'", 0],
+            ["+50'", 0],
+            ["+1h", 0],
+        ]
         for i in range(len(input_minutely)):
             rain.append(input_minutely[i]["precipitation"])
         for i in range(6):
-            rain_next_hour[i][1] = sum(rain[i * 10 + 1:i * 10 + 10])
+            rain_next_hour[i][1] = sum(rain[i * 10 + 1 : i * 10 + 10])
         return rain_next_hour
 
     def hourly_forecast(self):
-        hourly = {"+3h": {"temp": "", "pop": "", "id": ""}, "+6h": {"temp": "", "pop": "", "id": ""},
-                  "+12h": {"temp": "", "pop": "", "id": ""}}
+        hourly = {
+            "+3h": {"temp": "", "pop": "", "id": ""},
+            "+6h": {"temp": "", "pop": "", "id": ""},
+            "+12h": {"temp": "", "pop": "", "id": ""},
+        }
         # Forecast +3h
         hourly["+3h"]["temp"] = "{:.0f}".format(self.data["hourly"][3]["temp"])
-        hourly["+3h"]["pop"] = "{:.0f}".format(self.data["hourly"][3]["pop"] * 100) + "%"
+        hourly["+3h"]["pop"] = (
+            "{:.0f}".format(self.data["hourly"][3]["pop"] * 100) + "%"
+        )
         hourly["+3h"]["id"] = self.data["hourly"][3]["weather"][0]["id"]
         # Forecast +3h
         hourly["+6h"]["temp"] = "{:.0f}".format(self.data["hourly"][6]["temp"])
-        hourly["+6h"]["pop"] = "{:.0f}".format(self.data["hourly"][6]["pop"] * 100) + "%"
+        hourly["+6h"]["pop"] = (
+            "{:.0f}".format(self.data["hourly"][6]["pop"] * 100) + "%"
+        )
         hourly["+6h"]["id"] = self.data["hourly"][6]["weather"][0]["id"]
         # Forecast +3h
         hourly["+12h"]["temp"] = "{:.0f}".format(self.data["hourly"][12]["temp"])
-        hourly["+12h"]["pop"] = "{:.0f}".format(self.data["hourly"][12]["pop"] * 100) + "%"
+        hourly["+12h"]["pop"] = (
+            "{:.0f}".format(self.data["hourly"][12]["pop"] * 100) + "%"
+        )
         hourly["+12h"]["id"] = self.data["hourly"][12]["weather"][0]["id"]
 
         return hourly
 
     def daily_forecast(self):
-        daily = {"+24h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
-                 "+48h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
-                 "+72h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
-                 "+96h": {"date": "", "min": "", "max": "", "pop": "", "id": ""}}
+        daily = {
+            "+24h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
+            "+48h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
+            "+72h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
+            "+96h": {"date": "", "min": "", "max": "", "pop": "", "id": ""},
+        }
         i = 1
         for key in daily.keys():
-            daily[key]["date"] = time.strftime("%A", time.localtime(self.data["daily"][i]["dt"]))
-            daily[key]["min"] = "{:.0f}".format(self.data["daily"][i]["temp"]["min"]) 
+            daily[key]["date"] = time.strftime(
+                "%A", time.localtime(self.data["daily"][i]["dt"])
+            )
+            daily[key]["min"] = "{:.0f}".format(self.data["daily"][i]["temp"]["min"])
             daily[key]["max"] = "{:.0f}".format(self.data["daily"][i]["temp"]["max"])
-            daily[key]["pop"] = "{:.0f}".format(self.data["daily"][i]["pop"] * 100) + "%"
+            daily[key]["pop"] = (
+                "{:.0f}".format(self.data["daily"][i]["pop"] * 100) + "%"
+            )
             daily[key]["id"] = self.data["daily"][i]["weather"][0]["id"]
             i += 1
 
         return daily
 
-    #def my_daily_forecast(self):
-    #    daily_forecast_info 
+    # def my_daily_forecast(self):
+    #    daily_forecast_info
     #    for day in self.data['daily]:
-            
-
 
     def graph_p_t(self):
         if self.prevision[0] != self.data["daily"][0]["dt"]:
             self.prevision[0] = self.data["daily"][0]["dt"]
             self.prevision = [self.prevision[0], self.prevision[1][1:]]
             self.prevision[1].append(
-                [self.data["daily"][0]["pressure"], round(self.data["daily"][0]["temp"]["day"], 0)])
+                [
+                    self.data["daily"][0]["pressure"],
+                    round(self.data["daily"][0]["temp"]["day"], 0),
+                ]
+            )
 
     def get_icon(self, icon):
-        icon_dir = self.home_dir + 'downloaded_icons/'
-        icon_jpg = icon_dir + str(icon) + '.jpg'
-        icon_png = str(icon) + '.png'
+        icon_dir = self.home_dir + "downloaded_icons/"
+        icon_jpg = icon_dir + str(icon) + ".jpg"
+        icon_png = str(icon) + ".png"
         if not path.exists(icon_jpg):
-            icon_updated_png = str(icon) + '-updated.png'
-            url = 'https://openweathermap.org/img/wn/' + icon_png
+            icon_updated_png = str(icon) + "-updated.png"
+            url = "https://openweathermap.org/img/wn/" + icon_png
             icon_response = requests.get(url, allow_redirects=True, stream=True)
-            icon_png = icon_dir + str(icon) + '.png'
-            open(icon_png, 'wb').write(icon_response.content)
-            img = Image.open(icon_png)#.convert("LA")
-            img = img.crop((8,8,42,42))
+            icon_png = icon_dir + str(icon) + ".png"
+            open(icon_png, "wb").write(icon_response.content)
+            img = Image.open(icon_png)  # .convert("LA")
+            img = img.crop((8, 8, 42, 42))
 
-            bg = Image.new('RGB', img.size, (255, 255, 255))
+            bg = Image.new("RGB", img.size, (255, 255, 255))
             bg.paste(img, (0, 0), img)
-            bg.save(icon_dir + str(icon) + '-updated.png', "PNG")
+            bg.save(icon_dir + str(icon) + "-updated.png", "PNG")
             img_updated = Image.open(icon_dir + icon_updated_png).convert("L")
             newimdata = []
             for color in img_updated.getdata():
                 if color == 255:
                     newimdata.append(255)
-                if color < 255 and color >= 191 :
+                if color < 255 and color >= 191:
                     newimdata.append(191)
                 elif color < 191 and color >= 127:
                     newimdata.append(127)
@@ -272,7 +324,7 @@ class Weather:
             newim = Image.new(img_updated.mode, img_updated.size)
             newim.putdata(newimdata)
             newim.save(icon_jpg)
-        return icon_jpg 
+        return icon_jpg
 
     def weather_description(self, id):
         icon = "sun"

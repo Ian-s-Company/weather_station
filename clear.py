@@ -1,5 +1,6 @@
 import epd7in5b_V2
 import time
+
 print("Starting shut down")
 epd = epd7in5b_V2.EPD()
 epd.init()

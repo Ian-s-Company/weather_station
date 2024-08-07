@@ -5,13 +5,20 @@ import logging
 import textwrap
 import time
 
+
 class News:
-    def __init__(self,width):
+    def __init__(self, width):
         self.width = width
 
     def update(self, api_id):
         source = "the-washington-post"
-        news_url = "https://newsapi.org/v2/top-headlines?source=" + source + "&apiKey=" + api_id + "&country=us"
+        news_url = (
+            "https://newsapi.org/v2/top-headlines?source="
+            + source
+            + "&apiKey="
+            + api_id
+            + "&country=us"
+        )
         got_data = False
 
         logging.info("-------News Update Begin ")
@@ -34,7 +41,6 @@ class News:
                 time.sleep(15)
         logging.info("-------News Update End")
         return self.news_list
-
 
     def selected_title(self):
         list_news = []
