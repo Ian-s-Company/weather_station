@@ -21,14 +21,14 @@ I made changes to allow for a 2.7in (254x176) or a 7.5in (800x480) Waveshare e-i
 I also set up a process to download weather icons if needed.
 
 Steps
-1. Format MicroSD card and install Ubuntu OS
-2. Plugin MicroSD to laptop. 
-3. Download and Install Raspberry Pi Installer (https://www.raspberrypi.com/software/)
-4. Execute Installer
-5. Select correct Raspberry Pi Device, OS, and Storage
-6. Modify OS Customization as desired. I recommend setting locale, SSID, username, name, Enable SSD (public-key only and capture the key) to what makes sense for you.
-7. Save Settings and continue
-8. Configure OS on Raspberry Pi
-9. Configure Github Runner on Windows WSL and connection to Raspberry Pi
-10. Install E-Paper Display on Raspberry Pi
-11. Run Deploy process to setup Weather Display
+## Format MicroSD card and install Ubuntu OS
+1. Plugin MicroSD to laptop. 
+2. Download and Install Raspberry Pi Installer (https://www.raspberrypi.com/software/)
+3. Execute Installer
+4. Select correct Raspberry Pi Device, OS, and Storage
+5. Modify OS Customization as desired. I recommend setting locale, SSID, username, name, Enable SSD (public-key only and capture the key) to what makes sense for you.
+6. Save Settings and continue
+## Configure OS on Raspberry Pi
+## Configure Github Runner on Windows WSL and connection to Raspberry Pi
+## Install E-Paper Display on Raspberry Pi
+## Run Deploy process to setup Weather Display
