@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 from weather import *
 from news import *
 from display import *
@@ -11,30 +8,26 @@ from PIL import Image, ImageDraw
 from gpiozero import Button  # Pins 5,6,13,19
 import logging
 
-api_key_weather = sys.argv[1]
-api_key_news = sys.argv[2]
-try:
-    home_dir = sys.argv[3]
-except:
-    home_dir = "/opt/weather_station/"
+import argparse
 
-try:
-    screen_size = sys.argv[4]
-    # like 7x5in
-except:
-    screen_size = "2.7in"  # 176x264
+# Add the arguments to the parser
+ap.add_argument("-h", "--home_dir", required=False, help="home directory default is /opt/weather_station")
+ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
+ap.add_argument("-n", "--newsapikey", required=True, help="Key for News API (from the Washing Post as the default)", default="/opt/weather_station")
+ap.add_argument("-s", "--screensize", required=False, help="Options are 7x5in (800x600) and 2.7in (176x264)", default="2.7in")
+ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191")
+ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738")
+ap.add_argument("-d", "--debug", required=False, help="Debug for Deployment", default="False")
+args = vars(ap.parse_args())
 
-try:
-    lat = sys.argv[5]
-except:
-    lat = "33.104191"
+home_dir  = string(args['home_dir'])
+api_key_weather  = string(args['weatherapikey'])
+api_key_news  = string(args['newsapikey'])
+screen_size = string(args['screensize'])
+lat = string(args['lat'])
+lon = string(args['long'])
 
-try:
-    lon = sys.argv[6]
-except:
-    lon = "-96.671738"
-
-debug = 0
+debug = boolean(args['long'])
 logging.basicConfig(
     filename=home_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
 )
