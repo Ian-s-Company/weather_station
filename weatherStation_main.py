@@ -32,11 +32,11 @@ logging.basicConfig(
     filename=home_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
 )
 
-if debug == 0 and screen_size == "7x5in":
+if debug and screen_size == "7x5in":
     logging.info("Screen size is 7x5in")
     news_width = 340
     import epd7in5b_V2
-elif debug == 0 and screen_size == "2.7in":
+elif debug and screen_size == "2.7in":
     logging.info("Screen size is 2in7")
     news_width = 170
     import epd2in7
