@@ -20,6 +20,7 @@ if [ ! -z "$SCREEN_SIZE" ]; then
   else
     echo "Screen Size is invalid, using 2.7in"
     SCREEN_SIZE="2.7in"
+  fi
 fi
 
 case "$1" in
