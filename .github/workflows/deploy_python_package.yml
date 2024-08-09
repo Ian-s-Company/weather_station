@@ -49,9 +49,9 @@ jobs:
       - name: List TEst
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "ls"
       - name: APT Update
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt upgrade"
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade"
       - name: Install Python
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt install python3"
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt -y install python3"
       - name: Install Pip
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "python -m pip install --upgrade pip"
       - name: Install Libraries
@@ -59,11 +59,12 @@ jobs:
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
-        run:  if [ -e "/opt/weather_station" ]; then rm -R ${{ vars.APP_DIR }}; fi
-      #- name: Create app directory ${{ vars.APP_DIR }}
-      #  run:  if [ ! -e "/opt/weather_station" ]; then mkdir ${{ vars.APP_DIR }}; fi
+        run:  | 
+          if [ -e "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '/opt/weather_station'" ]; 
+            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "rm -R ${{ vars.APP_DIR }}"; 
+          fi
       - name: Cloning Weather Station
-        run: git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
       - name: Test Weather API
         run: | 
           export API_KEY_WEATHER=${{ secrets.API_KEY_WEATHER }}
