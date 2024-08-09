@@ -48,6 +48,10 @@ jobs:
         run: python -c "import sys; print(sys.version)"
       - name: APT Update
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade"
+      - name: Setup VENV
+        run: |
+          python -m venv weather_station_venv
+          source weather_station_venv/bin/activate
       - name: Install Libraries
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "pip install requests pillow gpiozero pytest"
       - name: deploy Weather Station
