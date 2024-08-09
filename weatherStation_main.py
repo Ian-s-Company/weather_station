@@ -13,7 +13,7 @@ import argparse
 # Add the arguments to the parser
 
 ap = argparse.ArgumentParser(description='Get Weather Display Args.')
-ap.add_argument("-h", "--home_dir", required=False, help="home directory default is /opt/weather_station")
+ap.add_argument("-a", "--app_dir", required=False, help="application directory default is /opt/weather_station")
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
 ap.add_argument("-n", "--newsapikey", required=True, help="Key for News API (from the Washing Post as the default)", default="/opt/weather_station")
 ap.add_argument("-s", "--screensize", required=False, help="Options are 7x5in (800x600) and 2.7in (176x264)", default="2.7in")
@@ -23,7 +23,7 @@ ap.add_argument("-d", "--debug", required=False, help="Debug for Deployment", de
 
 args = vars(ap.parse_args())
 
-home_dir  = str(args['home_dir'])
+app_dir  = str(args['app_dir'])
 api_key_weather  = str(args['weatherapikey'])
 api_key_news  = str(args['newsapikey'])
 screen_size = str(args['screensize'])
@@ -33,7 +33,7 @@ lon = str(args['long'])
 debug = bool(args['debug'])
 
 logging.basicConfig(
-    filename=home_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
+    filename=app_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
 )
 
 if debug and screen_size == "7x5in":
@@ -443,9 +443,9 @@ class weather_station:
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
         # logging.info(current_info)
-        sunrise_icon = Image.open(home_dir + "/static_icons/sunrise.bmp")
+        sunrise_icon = Image.open(app_dir + "/static_icons/sunrise.bmp")
         sunrise_icon = sunrise_icon.resize((30, 30))
-        sunset_icon = Image.open(home_dir + "/static_icons/sunset.bmp")
+        sunset_icon = Image.open(app_dir + "/static_icons/sunset.bmp")
         sunset_icon = sunset_icon.resize((30, 30))
         Himage.paste(sunrise_icon, (225, 20))
         Himage.paste(sunset_icon, (225, 60))
@@ -669,9 +669,9 @@ class weather_station:
         epaperBlack7x5img.text(
             (290, 120), self.weather.current_sunset(), fill=0, font=font24
         )  # SUNSET TIME
-        sunrise_icon = Image.open(home_dir + "/static_icons/sunrise.bmp")
+        sunrise_icon = Image.open(app_dir + "/static_icons/sunrise.bmp")
         sunrise_icon = sunrise_icon.resize((30, 30))
-        sunset_icon = Image.open(home_dir + "/static_icons/sunset.bmp")
+        sunset_icon = Image.open(app_dir + "/static_icons/sunset.bmp")
         sunset_icon = sunset_icon.resize((30, 30))
         HimageRed.paste(sunrise_icon, (250, 90))
         HimageRed.paste(sunset_icon, (250, 120))
