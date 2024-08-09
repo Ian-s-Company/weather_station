@@ -11,6 +11,8 @@ import logging
 import argparse
 
 # Add the arguments to the parser
+
+ap = argparse.ArgumentParser(description='Get Weather Display Args.')
 ap.add_argument("-h", "--home_dir", required=False, help="home directory default is /opt/weather_station")
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
 ap.add_argument("-n", "--newsapikey", required=True, help="Key for News API (from the Washing Post as the default)", default="/opt/weather_station")
