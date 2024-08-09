@@ -13,9 +13,9 @@ import argparse
 # Add the arguments to the parser
 
 ap = argparse.ArgumentParser(description='Get Weather Display Args.')
-ap.add_argument("-a", "--app_dir", required=False, help="application directory default is /opt/weather_station")
+ap.add_argument("-a", "--app_dir", required=False, help="application directory default is /opt/weather_station", default="/opt/weather_station")
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
-ap.add_argument("-n", "--newsapikey", required=True, help="Key for News API (from the Washing Post as the default)", default="/opt/weather_station")
+ap.add_argument("-n", "--newsapikey", required=True, help="Key for News API (from the Washing Post as the default)")
 ap.add_argument("-s", "--screensize", required=False, help="Options are 7x5in (800x600) and 2.7in (176x264)", default="2.7in")
 ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191")
 ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738")
