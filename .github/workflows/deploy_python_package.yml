@@ -50,12 +50,12 @@ jobs:
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
         run:  | 
-          if [ -e "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '/opt/weather_station'" ]; 
+          if [ -d "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '${{ vars.APP_DIR }}/weather_station'" ]; 
             then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "rm -R ${{ vars.APP_DIR }}"; 
           fi
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
-      - name: APT Update
+      - name: APT and LibraryUpdate
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade:python -m venv weather_station_venv;source weather_station_venv/bin/activate;pip install requests pillow gpiozero pytest;"
       - name: Test Weather API
         run: | 
