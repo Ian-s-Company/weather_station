@@ -51,7 +51,7 @@ jobs:
       - name: Remove app directory ${{ vars.APP_DIR }}
         run:  | 
           if [ -d "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '${{ vars.APP_DIR }}'" ]; 
-            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "rm -fR ${{ vars.APP_DIR }}"; 
+            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo rm -fR ${{ vars.APP_DIR }}"; 
           fi
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
