@@ -47,7 +47,7 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
       - name: APT Update
-        run: ssh ${{ vars.USER }}@${{ secrets.HOSTNAME }} "sudo apt update; sudo apt upgrade"
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt upgrade"
       - name: Install Libraries
         run: pip install requests pillow gpiozero pytest
       - name: deploy Weather Station
