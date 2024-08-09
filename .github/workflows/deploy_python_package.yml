@@ -48,8 +48,12 @@ jobs:
         run: python -c "import sys; print(sys.version)"
       - name: APT Update
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt upgrade"
+      - name: Install Python
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt install python3"
+      - name: Install Pip
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "python -m pip install --upgrade pip"
       - name: Install Libraries
-        run: pip install requests pillow gpiozero pytest
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "pip install requests pillow gpiozero pytest"
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
