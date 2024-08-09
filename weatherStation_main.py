@@ -20,16 +20,18 @@ ap.add_argument("-s", "--screensize", required=False, help="Options are 7x5in (8
 ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191")
 ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738")
 ap.add_argument("-d", "--debug", required=False, help="Debug for Deployment", default="False")
+
 args = vars(ap.parse_args())
 
-home_dir  = string(args['home_dir'])
-api_key_weather  = string(args['weatherapikey'])
-api_key_news  = string(args['newsapikey'])
-screen_size = string(args['screensize'])
-lat = string(args['lat'])
-lon = string(args['long'])
+home_dir  = str(args['home_dir'])
+api_key_weather  = str(args['weatherapikey'])
+api_key_news  = str(args['newsapikey'])
+screen_size = str(args['screensize'])
+lat = str(args['lat'])
+lon = str(args['long'])
 
-debug = boolean(args['long'])
+debug = bool(args['debug'])
+
 logging.basicConfig(
     filename=home_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
 )
