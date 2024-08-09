@@ -46,14 +46,6 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: APT Update
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade"
-      - name: Setup VENV
-        run: |
-          ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "python -m venv weather_station_venv"
-          ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "source weather_station_venv/bin/activate"
-      - name: Install Libraries
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "pip install requests pillow gpiozero pytest"
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
@@ -63,6 +55,8 @@ jobs:
           fi
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
+      - name: APT Update
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade:python -m venv weather_station_venv;source weather_station_venv/bin/activate;pip install requests pillow gpiozero pytest;"
       - name: Test Weather API
         run: | 
           export API_KEY_WEATHER=${{ secrets.API_KEY_WEATHER }}
