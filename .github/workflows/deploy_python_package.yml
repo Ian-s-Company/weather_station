@@ -50,8 +50,8 @@ jobs:
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
         run:  | 
-          if [ -d "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '${{ vars.APP_DIR }}/weather_station'" ]; 
-            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "rm -R ${{ vars.APP_DIR }}"; 
+          if [ -d "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '${{ vars.APP_DIR }}'" ]; 
+            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "rm -fR ${{ vars.APP_DIR }}"; 
           fi
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
