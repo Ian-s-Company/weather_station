@@ -49,10 +49,7 @@ jobs:
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
-        run:  | 
-          if [ -d "ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} '${{ vars.APP_DIR }}'" ]; 
-            then ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo rm -fR ${{ vars.APP_DIR }}"; 
-          fi
+        run:  ssh -v ian@weatherdisplay 'if [ -d "/opt/weather_station" ]; then echo "Weather Station Dir found, deleting"; sudo rm -fR /opt/weather_station; else echo "No weather station directory"; fi'
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }}"
       - name: APT and LibraryUpdate
