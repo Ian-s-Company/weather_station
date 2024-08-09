@@ -1,15 +1,15 @@
 #!/bin/sh
 
 if [ ! -z "$API_KEY_WEATHER" ]; then
-  API_KEY_WEATHER=$1
+  API_KEY_WEATHER=$2
 fi
 
 if [ ! -z "$API_KEY_NEWS" ]; then
-  API_KEY_NEWS=$2
+  API_KEY_NEWS=$3
 fi
 
 if [ ! -z "$APP_DIR" ]; then
-  APP_DIR=$3
+  APP_DIR=$4
 else
   APP_DIR="/opt/weather_station"
 fi
