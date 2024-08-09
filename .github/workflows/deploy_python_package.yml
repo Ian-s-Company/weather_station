@@ -47,7 +47,7 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
       - name: APT Update
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "/usr/bin/sh sudo apt update; sudo apt upgrade"
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "/usr/bin/sh sudo apt update; sudo apt upgrade"
       - name: Install Python
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt install python3"
       - name: Install Pip
