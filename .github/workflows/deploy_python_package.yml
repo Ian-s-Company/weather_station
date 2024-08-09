@@ -46,14 +46,8 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-      - name: List TEst
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "ls"
       - name: APT Update
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade"
-      - name: Install Python
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt -y install python3"
-      - name: Install Pip
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "python -m pip install --upgrade pip"
       - name: Install Libraries
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "pip install requests pillow gpiozero pytest"
       - name: deploy Weather Station
