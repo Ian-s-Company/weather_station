@@ -60,9 +60,12 @@ jobs:
         run: | 
           scp waveshare_config.sh ${{ vars.USER }}@${{ vars.HOSTNAME }}:/tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'chmod +x /tmp/waveshare_config.sh'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp; sudo ./waveshare_config.sh'
+      - name: Configure SPI
+        run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
+      - name: CReboot Raspberry Pi
+        run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot'
           sleep 120
       - name: Starting Weather Station
