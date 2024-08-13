@@ -83,6 +83,9 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }}  echo "gpio -v" > /tmp/waveshare_config.sh" >> /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} chmod +x /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} cd /tmp
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }}  ./waveshare_config.sh
-      #- name: Starting Weather Station
-      #  run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} ./waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} sed -i '/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} reboot         
+          sleep 120
+      - name: Starting Weather Station
+        run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
