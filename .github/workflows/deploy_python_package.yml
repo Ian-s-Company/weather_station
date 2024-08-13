@@ -86,7 +86,7 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'chmod +x /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} './waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp; ./waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sed -i '/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'reboot'
           sleep 120
