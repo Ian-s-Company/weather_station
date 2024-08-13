@@ -58,38 +58,37 @@ jobs:
           pytest tests/test_weatherapi.py
       - name: Setup Waveshare Config File
         run: | 
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo apt update; sudo apt -y upgrade" > /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "apt install python3-venv" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "python -m venv weather_station_venv" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "source weather_station_venv/bin/activate" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "pip install requests pillow gpiozero pytest;" > /tmp/waveshare_config.sh
-
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "if [ -d '/tmp/waveshare' }; then rm -R /tmp/waveshare; fi" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "mkdir -p /tmp/waveshare" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd waveshare" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "wget https://github.com/joan2937/lg/archive/master.zip" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.71.tar.gz" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "wget https://project-downloads.drogon.net/wiringpi-latest.deb" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "git clone https://github.com/WiringPi/WiringPi" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "unzip master.zip" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "tar zxvf bcm2835-1.71.tar.gz" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp/waveshare/lg-master" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "make" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo make install" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo apt install gpiod libgpiod-dev wiringpi" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp/waveshare/bcm2835-1.71/" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo ./configure && sudo make && sudo make check && sudo make install" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo dpkg -i wiringpi-latest.deb" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "gpio -v" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp/waveshare/WiringPi" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "./build" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }}  echo "gpio -v" > /tmp/waveshare_config.sh" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} chmod +x /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} cd /tmp
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} ./waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} sed -i '/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} reboot         
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo apt update; sudo apt -y upgrade" > /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "apt install python3-venv" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "python -m venv weather_station_venv" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "source weather_station_venv/bin/activate" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "pip install requests pillow gpiozero pytest;" > /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "if [ -d '/tmp/waveshare' }; then rm -R /tmp/waveshare; fi" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "mkdir -p /tmp/waveshare" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd waveshare" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "wget https://github.com/joan2937/lg/archive/master.zip" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.71.tar.gz" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "wget https://project-downloads.drogon.net/wiringpi-latest.deb" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "git clone https://github.com/WiringPi/WiringPi" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "unzip master.zip" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "tar zxvf bcm2835-1.71.tar.gz" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp/waveshare/lg-master" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "make" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo make install" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo apt install gpiod libgpiod-dev wiringpi" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp/waveshare/bcm2835-1.71/" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo ./configure && sudo make && sudo make check && sudo make install" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo dpkg -i wiringpi-latest.deb" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp/waveshare/WiringPi" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "./build" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" > /tmp/waveshare_config.sh" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'chmod +x /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} './waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sed -i '/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'reboot'
           sleep 120
       - name: Starting Weather Station
         run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
