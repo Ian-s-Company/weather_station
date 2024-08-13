@@ -83,7 +83,7 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp/waveshare/WiringPi" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "./build" >> /tmp/waveshare_config.sh'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" > /tmp/waveshare_config.sh" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "gpio -v" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'chmod +x /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} './waveshare_config.sh'
