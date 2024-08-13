@@ -1,10 +1,7 @@
 #!/usr/bin/sh
 #
 apt update; apt -y upgrade
-apt install python3-venv
-cd ~/; python -m venv weather_station_venv
-source weather_station_venv/bin/activate
-pip install requests pillow gpiozero pytest;
+apt -y install python3-requests python3-pytest python3-pillow python3-gpiozero  fonts-open-sans
 cd /tmp
 if [ -d '/tmp/waveshare' ]; then rm -Rf /tmp/waveshare; fi
 mkdir -p /tmp/waveshare
