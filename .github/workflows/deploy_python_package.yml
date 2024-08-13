@@ -58,10 +58,10 @@ jobs:
           pytest tests/test_weatherapi.py
       - name: Setup Waveshare Config File
         run: | 
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade:python -m venv weather_station_venv;source weather_station_venv/bin/activate;pip install requests pillow gpiozero pytest;" > /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} apt install python3-venv" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} python -m venv weather_station_venv" >> /tmp/waveshare_config.sh
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} source weather_station_venv/bin/activate" >> /tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "sudo apt update; sudo apt -y upgrade:python -m venv weather_station_venv;source weather_station_venv/bin/activate;pip install requests pillow gpiozero pytest;" > /tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "apt install python3-venv" >> /tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "python -m venv weather_station_venv" >> /tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "source weather_station_venv/bin/activate" >> /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp" >> /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "if [ -d '/tmp/waveshare' }; then rm -R /tmp/waveshare; fi" >> /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "mkdir -p /tmp/waveshare" >> /tmp/waveshare_config.sh
