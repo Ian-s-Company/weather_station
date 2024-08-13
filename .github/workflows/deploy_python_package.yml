@@ -60,11 +60,11 @@ jobs:
         run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "sudo apt update; sudo apt -y upgrade" > /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "apt install python3-venv" >> /tmp/waveshare_config.sh'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "python -m venv weather_station_venv" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd ~/; python -m venv weather_station_venv" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "source weather_station_venv/bin/activate" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "pip install requests pillow gpiozero pytest;" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd /tmp" >> /tmp/waveshare_config.sh'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "if [ -d '/tmp/waveshare' ]; then rm -R /tmp/waveshare; fi" >> /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "if [ -d '/tmp/waveshare' ]; then rm -Rf /tmp/waveshare; fi" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "mkdir -p /tmp/waveshare" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "cd waveshare" >> /tmp/waveshare_config.sh'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'echo "wget https://github.com/joan2937/lg/archive/master.zip" >> /tmp/waveshare_config.sh'
