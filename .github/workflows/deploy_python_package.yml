@@ -60,6 +60,9 @@ jobs:
           pytest tests/test_weatherapi.py
       - name: Setup Waveshare Config File
         run: | 
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} apt install python3-venv 
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} python -m venv weather_station_venv
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} source weather_station_venv/bin/activate
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "cd /tmp" > /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "if [ -d '/tmp/waveshare' }; then rm -R /tmp/waveshare; fi" >> /tmp/waveshare_config.sh
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} echo "mkdir -p /tmp/waveshare" >> /tmp/waveshare_config.sh
