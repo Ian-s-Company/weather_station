@@ -1,12 +1,14 @@
 import pytest
 import os
 import sys
+
 util_path = os.path.dirname(__file__)
-relative_path = '..'
+relative_path = ".."
 full_path = os.path.join(util_path, relative_path)
 sys.path.append(full_path)
 sys.path.append(util_path)
 from weather import Weather
+
 
 @pytest.fixture
 def example_weather_data():
@@ -26,9 +28,7 @@ def test_connect_to_weather_data(example_weather_data):
     for data_set in example_weather_data:
         # print(data_set['latitude'], data_set['longitude'], data_set['api_id'], data_set['app_dir'])
         weather_inst = Weather(
-            data_set["latitude"],
-            data_set["longitude"],
-            data_set["api_id"]
+            data_set["latitude"], data_set["longitude"], data_set["api_id"]
         )
         weather_data = weather_inst.update()
         print(str(weather_data["lat"]))
