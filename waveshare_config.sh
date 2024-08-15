@@ -13,3 +13,4 @@ unzip E-Paper_code.zip -d e-Paper
 cd e-Paper/RaspberryPi_JetsonNano/
 cd python/examples
 #python3 epd_2in7_V2_test.py
+
