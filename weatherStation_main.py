@@ -18,26 +18,26 @@ ap.add_argument(
     "--app_dir",
     required=False,
     help="application directory default is /opt/weather_station",
-    default="/opt/weather_station",
+    default="/opt/weather_station", type=str
 )
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
 ap.add_argument(
     "-n",
     "--newsapikey",
     required=True,
-    help="Key for News API (from the Washing Post as the default)",
+    help="Key for News API (from the Washing Post as the default)", type=str
 )
 ap.add_argument(
     "-s",
     "--screensize",
     required=False,
     help="Options are 7x5in (800x600) and 2.7in (176x264)",
-    default="2.7in",
+    default="2.7in", type=str
 )
-ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191")
-ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738")
+ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191", type=str)
+ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738", type=str)
 ap.add_argument(
-    "-d", "--debug", required=False, help="Debug for Deployment", default="False"
+    "-d", "--debug", required=False, help="Debug for Deployment", default="False", type=bool
 )
 
 args = vars(ap.parse_args())
