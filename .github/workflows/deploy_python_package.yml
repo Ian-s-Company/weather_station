@@ -49,20 +49,24 @@ jobs:
       - name: deploy Weather Station
         run: echo "Trying to Deploy"
       - name: Remove app directory ${{ vars.APP_DIR }}
-        run:  ssh -v ian@weatherdisplay 'if [ -d "/opt/weather_station" ]; then echo "Weather Station Dir found, deleting"; sudo rm -fR /opt/weather_station; else echo "No weather station directory"; fi'
+        run:  ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'if [ -d "/opt/weather_station" ]; then echo "Weather Station Dir found, deleting"; sudo rm -fR /opt/weather_station; else echo "No weather station directory"; fi'
       - name: Cloning Weather Station
         run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }};sudo chmod +x ${{ vars.APP_DIR }}/weather-station*.sh"
-      - name: APT and LibraryUpdate
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo apt update; sudo apt -y upgrade:python -m venv weather_station_venv;source weather_station_venv/bin/activate;pip install requests pillow gpiozero pytest;"
       - name: Test Weather API
         run: | 
-          export PYTHONPATH=$PYTHONPATH:${{ vars.APP_DIR }}
           export API_KEY_WEATHER=${{ secrets.API_KEY_WEATHER }}
-          python -m pytest tests/test_weatherapi.py
-      - name: Test News API
+          pytest tests/test_weatherapi.py
+      - name: Setup Waveshare Config File
         run: | 
-          export PYTHONPATH=$PYTHONPATH:${{ vars.APP_DIR }}
-          export API_KEY_WEATHER=${{ secrets.API_KEY_NEWS }}
-          python -m pytest tests/test_newsapi.py
-      #- name: Starting Weather Station
-      #  run: python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}
+          scp waveshare_config.sh ${{ vars.USER }}@${{ vars.HOSTNAME }}:/tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'chmod +x /tmp/waveshare_config.sh'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp; sudo ./waveshare_config.sh'
+      - name: Configure SPI
+        run: | 
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
+      - name: Reboot Raspberry Pi
+        run: | 
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot'
+          sleep 120
+      - name: Starting Weather Station
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ~/; python -m venv weather_station_venv; source weather_station_venv/bin/activate; python ${{ vars.APP_DIR }}/weatherStation_main.py ${{ secrets.API_KEY_WEATHER }} ${{ secrets.API_KEY_NEWS }}'
