@@ -1,6 +1,7 @@
 import pytest
 from weather import Weather
 
+
 @pytest.fixture
 def example_weather_data():
     import os
@@ -8,14 +9,12 @@ def example_weather_data():
     API_KEY_WEATHER = os.environ["API_KEY_WEATHER"]
 
     return [
-        {
-            "latitude": "33.104191",
-            "longitude": "-96.67173",
-            "api_id": API_KEY_WEATHER
-        } 
+        {"latitude": "33.104191", "longitude": "-96.67173", "api_id": API_KEY_WEATHER}
     ]
 
+
 expected = {"lat": "33.1042", "lon": "-96.6717"}
+
 
 def test_connect_to_weather_data(example_weather_data):
     for data_set in example_weather_data:
