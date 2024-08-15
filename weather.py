@@ -291,11 +291,7 @@ class Weather:
             )
 
     def get_icon(self, icon):
-<<<<<<< HEAD
         icon_dir = self.app_dir + "/downloaded_icons/"
-=======
-        icon_dir = self.home_dir + "downloaded_icons/"
->>>>>>> main
         icon_jpg = icon_dir + str(icon) + ".jpg"
         icon_png = str(icon) + ".png"
         if not path.exists(icon_jpg):
