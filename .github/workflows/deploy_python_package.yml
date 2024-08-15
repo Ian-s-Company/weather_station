@@ -56,9 +56,9 @@ jobs:
         run: | 
           export API_KEY_WEATHER=${{ secrets.API_KEY_WEATHER }}
           pytest tests/test_weatherapi.py
-      - name: Test Weather API
+      - name: Test News API
         run: | 
-            export API_KEY_WEATHER=${{ secrets.API_KEY_NEWS }}
+            export API_KEY_NEWS=${{ secrets.API_KEY_NEWS }}
             pytest tests/test_newsapi.py
       - name: Setup Waveshare Config File
         run: | 

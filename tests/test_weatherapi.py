@@ -28,8 +28,7 @@ def test_connect_to_weather_data(example_weather_data):
         weather_inst = Weather(
             data_set["latitude"],
             data_set["longitude"],
-            data_set["api_id"],
-            data_set["app_dir"],
+            data_set["api_id"]
         )
         weather_data = weather_inst.update()
         print(str(weather_data["lat"]))
