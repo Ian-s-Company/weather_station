@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 import time
 import requests
 import locale
@@ -293,7 +291,7 @@ class Weather:
             )
 
     def get_icon(self, icon):
-        icon_dir = self.home_dir + "downloaded_icons/"
+        icon_dir = self.app_dir + "/downloaded_icons/"
         icon_jpg = icon_dir + str(icon) + ".jpg"
         icon_png = str(icon) + ".png"
         if not path.exists(icon_jpg):
