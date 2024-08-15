@@ -887,6 +887,8 @@ def main():
             logging.info("Screen is drawn")
             logging.info("Going to sleep.")
             logging.info("------------")
+            if debug == True:
+                exit
             time.sleep(900)
     elif screen_size == "7x5in":
         logging.info("Initializing EPD for 7x5in")

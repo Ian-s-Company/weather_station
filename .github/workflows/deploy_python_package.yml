@@ -74,4 +74,4 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot' || true
           sleep 120
       - name: Starting Weather Station
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; python ${{ vars.APP_DIR }}/weatherStation_main.py -debug true -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; python ${{ vars.APP_DIR }}/weatherStation_main.py -debug True -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
