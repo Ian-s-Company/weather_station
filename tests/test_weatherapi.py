@@ -1,12 +1,5 @@
 import pytest
-<<<<<<< HEAD
-=======
-import sys
-
-sys.path.append("/home/ianrscott/weather_station")
->>>>>>> main
 from weather import Weather
-
 
 @pytest.fixture
 def example_weather_data():

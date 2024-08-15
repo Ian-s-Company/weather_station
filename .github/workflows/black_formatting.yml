@@ -6,10 +6,6 @@ on:
   push:
     branches:
       - main
-<<<<<<< HEAD
-      - validate-from-a-fresh-install-of-raspberry-pi
-=======
->>>>>>> main
       
 jobs:
   linter_name:
@@ -33,8 +29,5 @@ jobs:
             There appear to be some python formatting errors in ${{ github.sha }}. This pull request
             uses the [psf/black](https://github.com/psf/black) formatter to fix these issues.
           base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
-<<<<<<< HEAD
           branch: actions/black
-=======
-          branch: actions/black
->>>>>>> main
+
