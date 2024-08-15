@@ -1,6 +1,9 @@
 import pytest
+import os
+import sys
+util_path = new_path = f'{os.getcwd()}/..'
+sys.path.append(util_path)
 from weather import Weather
-
 
 @pytest.fixture
 def example_weather_data():
