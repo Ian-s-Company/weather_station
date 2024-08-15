@@ -19,7 +19,7 @@ ap.add_argument(
     required=False,
     help="application directory default is /opt/weather_station",
     default="/opt/weather_station",
-    type=str
+    type=str,
 )
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
 ap.add_argument(
@@ -27,7 +27,7 @@ ap.add_argument(
     "--newsapikey",
     required=True,
     help="Key for News API (from the Washing Post as the default)",
-    type=str
+    type=str,
 )
 ap.add_argument(
     "-s",
