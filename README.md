@@ -29,6 +29,13 @@ I also set up a process to download weather icons if needed.
 5. Modify OS Customization as desired. I recommend setting locale, SSID, username, name, Enable SSD (public-key only and capture the key) to what makes sense for you.
 6. Save Settings and continue
 ## Configure OS on Raspberry Pi
+1. Setup ssh keys for ID with sudo access
 ## Configure Github Runner on Windows WSL and connection to Raspberry Pi
+1. Install Github Runner on local unix device or a WSL
+2. Setup SSH keys
+3. Use Raspberry Pi Keys and WSL Keys to setup passwordless login from WSL for 
 ## Install E-Paper Display on Raspberry Pi
+1. Physically attach the display to the Raspberry Pi
 ## Run Deploy process to setup Weather Display
+1. Update the proper vars in your environment, Application Directory, Weather API Key, and News API Key
+2. Execute Action to Deploy the Weather Station.
