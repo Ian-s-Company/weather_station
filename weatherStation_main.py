@@ -18,26 +18,38 @@ ap.add_argument(
     "--app_dir",
     required=False,
     help="application directory default is /opt/weather_station",
-    default="/opt/weather_station", type=str
+    default="/opt/weather_station",
+    type=str
 )
 ap.add_argument("-w", "--weatherapikey", required=True, help="Key for OpenWeather API")
 ap.add_argument(
     "-n",
     "--newsapikey",
     required=True,
-    help="Key for News API (from the Washing Post as the default)", type=str
+    help="Key for News API (from the Washing Post as the default)",
+    type=str
 )
 ap.add_argument(
     "-s",
     "--screensize",
     required=False,
     help="Options are 7x5in (800x600) and 2.7in (176x264)",
-    default="2.7in", type=str
+    default="2.7in",
+    type=str,
 )
-ap.add_argument("-l", "--lat", required=False, help="Lattitude", default="33.104191", type=str)
-ap.add_argument("-g", "--long", required=False, help="Longitude", default="-96.671738", type=str)
 ap.add_argument(
-    "-d", "--debug", required=False, help="Debug for Deployment", default="False", type=bool
+    "-l", "--lat", required=False, help="Lattitude", default="33.104191", type=str
+)
+ap.add_argument(
+    "-g", "--long", required=False, help="Longitude", default="-96.671738", type=str
+)
+ap.add_argument(
+    "-d",
+    "--debug",
+    required=False,
+    help="Debug for Deployment",
+    default=False,
+    type=bool,
 )
 
 args = vars(ap.parse_args())
@@ -868,6 +880,8 @@ class weather_station:
 def main():
     weather = Weather(lat, lon, api_key_weather)
     news = News(news_width)
+    if debug:
+        logging.info("Debug is On")
     if screen_size == "2.7in":
         logging.info("Initializing EPD for 2.7in")
         epd = epd2in7.EPD()
@@ -887,8 +901,8 @@ def main():
             logging.info("Screen is drawn")
             logging.info("Going to sleep.")
             logging.info("------------")
-            if debug == True:
-                exit
+            if debug:
+                sys.exit(0)
             time.sleep(900)
     elif screen_size == "7x5in":
         logging.info("Initializing EPD for 7x5in")
@@ -900,6 +914,8 @@ def main():
             logging.info("Screen is drawn")
             logging.info("Going to sleep.")
             logging.info("------------")
+            if debug:
+                sys.exit(0)
             time.sleep(900)
 
 
