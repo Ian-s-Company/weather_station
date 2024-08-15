@@ -62,7 +62,7 @@ jobs:
             pytest tests/test_newsapi.py
       - name: Setup Waveshare Config File
         run: | 
-          scp waveshare_config.sh ${{ vars.USER }}@${{ vars.HOSTNAME }}:/tmp/waveshare_config.sh
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo ${{ vars.APP_DIR }}/waveshare_config.sh'
       - name: Configure SPI
         run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
