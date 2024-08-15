@@ -63,7 +63,7 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd /tmp; sudo ./waveshare_config.sh'
       - name: Configure SPI
         run: | 
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/firmware/config.txt'
       - name: Reboot Raspberry Pi
         run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot'
