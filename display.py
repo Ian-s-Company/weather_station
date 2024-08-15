@@ -1,15 +1,11 @@
-# -*- coding:utf-8 -*-
-
 from PIL import Image, ImageDraw, ImageFont
 
-APP_DIR='/opt/weather_station' 
-
-#font_choice = 7
 font_choice = 4
+
 if font_choice == 1:
     project_font = "font/Architects_Daughter/ArchitectsDaughter-Regular.ttf"
 elif font_choice == 2:
-    project_font = APP_DIR + "font/Inconsolata/static/Inconsolata-SemiBold.ttf"
+    project_font = "font/Inconsolata/static/Inconsolata-SemiBold.ttf"
 elif font_choice == 3:
     project_font = "font/Comfortaa/static/Comfortaa-Light.ttf"
 elif font_choice == 4:
@@ -36,8 +32,8 @@ font48 = ImageFont.truetype(project_font, 48)
 
 class Display:
     def __init__(self):
-        self.im_black = Image.new('1', (800, 480), 255)
-        self.im_red = Image.new('1', (800, 480), 255)
+        self.im_black = Image.new("1", (800, 480), 255)
+        self.im_red = Image.new("1", (800, 480), 255)
         self.draw_black = ImageDraw.Draw(self.im_black)
         self.draw_red = ImageDraw.Draw(self.im_red)
 
