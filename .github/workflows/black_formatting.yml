@@ -6,7 +6,8 @@ on:
   push:
     branches:
       - main
-
+permissions:
+  contents: write
 jobs:
   linter_name:
     name: runner / black
