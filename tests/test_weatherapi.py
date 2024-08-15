@@ -1,7 +1,10 @@
 import pytest
 import os
 import sys
-util_path = new_path = f'{os.getcwd()}/..'
+util_path = os.path.dirname(__file__)
+relative_path = '..'
+full_path = os.path.join(util_path, relative_path)
+sys.path.append(full_path)
 sys.path.append(util_path)
 from weather import Weather
 
