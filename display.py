@@ -1,5 +1,11 @@
 from PIL import Image, ImageDraw, ImageFont
 
+<<<<<<< HEAD
+=======
+APP_DIR = "/opt/weather_station"
+
+# font_choice = 7
+>>>>>>> main
 font_choice = 4
 
 if font_choice == 1:
