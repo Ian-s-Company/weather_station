@@ -1,11 +1,7 @@
-# -*- coding:utf-8 -*-
-
 from PIL import Image, ImageDraw, ImageFont
 
-#APP_DIR = "/opt/weather_station"
-
-# font_choice = 7
 font_choice = 4
+
 if font_choice == 1:
     project_font = "font/Architects_Daughter/ArchitectsDaughter-Regular.ttf"
 elif font_choice == 2:
