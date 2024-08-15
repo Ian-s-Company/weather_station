@@ -2,44 +2,34 @@ INFO:root:Screen size is 2in7
 INFO:root:Initializing EPD for 2.7in
 DEBUG:epd2in7:e-Paper busy
 DEBUG:epd2in7:e-Paper busy release
+INFO:root:Creating Buttons
 DEBUG:epd2in7:e-Paper busy
 DEBUG:epd2in7:e-Paper busy release
-INFO:root:Creating Buttons
+INFO:root:-------Weather Update Begin 
+INFO:root:Checking Weather URL Status
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
-DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/onecall?lat=33.104191&lon=-96.671738&lang=en&appid=696a01e644791c546061076bc92e4cb4&units=imperial HTTP/1.1" 200 20269
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/onecall?lat=33.104191&lon=-96.671738&lang=en&appid=696a01e644791c546061076bc92e4cb4&units=imperial HTTP/1.1" 200 20399
+INFO:root:200
+INFO:root:Got data from Weather URL to return successfully
+INFO:root:-------Weather Update End 
+INFO:root:-------Pollution Update Begin 
+INFO:root:Checking Pollution URL Status
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/air_pollution?lat=33.104191&lon=-96.671738&lang=en&appid=696a01e644791c546061076bc92e4cb4 HTTP/1.1" 200 189
+INFO:root:200
+INFO:root:Got data from Pollution URL to return successfully
+INFO:root:-------Pollution Update End 
+INFO:root:-------News Update Begin 
+INFO:root:Checking News URL Status
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): newsapi.org:443
 DEBUG:urllib3.connectionpool:https://newsapi.org:443 "GET /v2/top-headlines?source=the-washington-post&apiKey=3ac6eaa80651499ea0c931a93104b260&country=us HTTP/1.1" 200 None
-INFO:root:Begin update @21/02/2022 08:34 at latitude 33.104191 longitude -96.671738
-INFO:root:{'dt': 1645454086, 'sunrise': 1645448646, 'sunset': 1645489009, 'temp': 59.43, 'feels_like': 59.49, 'pressure': 1012, 'humidity': 94, 'dew_point': 57.7, 'uvi': 0.63, 'clouds': 100, 'visibility': 2012, 'wind_speed': 10.36, 'wind_deg': 170, 'weather': [{'id': 701, 'main': 'Mist', 'description': 'mist', 'icon': '50d'}]}
+INFO:root:200
+INFO:root:Got data from News URL to return successfully
+INFO:root:-------News Update End
+INFO:root:Begin update @Aug 15 2024 at 11:29 at latitude 33.104191 longitude -96.671738
 DEBUG:epd2in7:Horizontal
 DEBUG:epd2in7:e-Paper busy
 DEBUG:epd2in7:e-Paper busy release
 INFO:root:Screen is drawn
 INFO:root:Going to sleep.
 INFO:root:------------
-INFO:root:Drawing Hourly Forecast
-DEBUG:epd2in7:Horizontal
-DEBUG:epd2in7:e-Paper busy
-DEBUG:epd2in7:e-Paper busy release
-INFO:root:Drawing Daily Forecast
-DEBUG:epd2in7:Horizontal
-DEBUG:epd2in7:e-Paper busy
-DEBUG:epd2in7:e-Paper busy release
-INFO:root:Drawing Button 5 screen
-DEBUG:epd2in7:Horizontal
-DEBUG:epd2in7:e-Paper busy
-DEBUG:epd2in7:e-Paper busy release
-INFO:root:Drawing Button 1 screen
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
-DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/onecall?lat=33.104191&lon=-96.671738&lang=en&appid=696a01e644791c546061076bc92e4cb4&units=imperial HTTP/1.1" 200 20271
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): newsapi.org:443
-DEBUG:urllib3.connectionpool:https://newsapi.org:443 "GET /v2/top-headlines?source=the-washington-post&apiKey=3ac6eaa80651499ea0c931a93104b260&country=us HTTP/1.1" 200 None
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
-DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/onecall?lat=33.104191&lon=-96.671738&lang=en&appid=696a01e644791c546061076bc92e4cb4&units=imperial HTTP/1.1" 200 20271
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): newsapi.org:443
-DEBUG:urllib3.connectionpool:https://newsapi.org:443 "GET /v2/top-headlines?source=the-washington-post&apiKey=3ac6eaa80651499ea0c931a93104b260&country=us HTTP/1.1" 200 None
-INFO:root:Begin update @21/02/2022 08:41 at latitude 33.104191 longitude -96.671738
-INFO:root:{'dt': 1645454516, 'sunrise': 1645448646, 'sunset': 1645489009, 'temp': 59.58, 'feels_like': 59.65, 'pressure': 1012, 'humidity': 94, 'dew_point': 57.85, 'uvi': 0.63, 'clouds': 100, 'visibility': 2012, 'wind_speed': 10.36, 'wind_deg': 170, 'weather': [{'id': 701, 'main': 'Mist', 'description': 'mist', 'icon': '50d'}]}
-DEBUG:epd2in7:Horizontal
-DEBUG:epd2in7:e-Paper busy
-DEBUG:epd2in7:e-Paper busy release
