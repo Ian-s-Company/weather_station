@@ -89,8 +89,7 @@ else:
     debug = bool(args["debug"])
 
 logging.basicConfig(
-    filename=app_dir + "/weatherStation.log", filemode="x",
-    filename=app_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
+    filename=app_dir + "/weatherStation.log", filemode="a", level=logging.DEBUG
 )
 
 if screen_size == "7x5in":
