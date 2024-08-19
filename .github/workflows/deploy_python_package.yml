@@ -69,9 +69,13 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=yes/dtparam=spi=yes/g' /boot/config.txt'
+      - name: Create Service
+        run: |
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo cp ${{ vars.APP_DIR }}/weatherstation.service /etc/systemd/system/'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl enable weatherstation'
       - name: Reboot Raspberry Pi
         run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot' || true
           sleep 120
-      - name: Starting Weather Station
+      - name: Starting Weather Station in DEBUG Mode
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo python ${{ vars.APP_DIR }}/weatherStation_main.py -d T -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
