@@ -4,7 +4,6 @@ import os.path
 from datetime import datetime
 
 
-
 now = datetime.now()
 dayweathfile = now.strftime("%d%m%Y") + ".txt"
 
