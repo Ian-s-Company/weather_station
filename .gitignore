@@ -5,3 +5,4 @@ downloaded_icons/*
 weatherStation.log
 tests/__pycache__
 tests/.pytest_cache
+config.cfg
