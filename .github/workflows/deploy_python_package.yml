@@ -72,7 +72,7 @@ jobs:
       - name: Create Service
         run: |
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo cp ${{ vars.APP_DIR }}/weatherstation.service /etc/systemd/system/'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i -e 's/<APP DIR>/${{ vars.APP_DIR }}/g' /etc/systemd/system/weatherstation.service'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i -e 's/<APP_DIR>/${{ vars.APP_DIR }}/g' /etc/systemd/system/weatherstation.service'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl enable weatherstation'
       - name: Reboot Raspberry Pi
         run: | 
