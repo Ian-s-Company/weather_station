@@ -11,7 +11,7 @@ case "$1" in
                 echo "Restarting WeatherStation and killing PID $pid"
                 kill $pid
         fi
-        cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE &
+        cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE
   ;;
   start)
         pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -19,7 +19,7 @@ case "$1" in
                 echo "WeatherStation is running, won't start"
         else
                 echo "Starting Weather Station"
-                cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE &
+                cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE
         fi
   ;;
   stop)
