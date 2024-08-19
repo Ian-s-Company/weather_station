@@ -69,10 +69,18 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=yes/dtparam=spi=yes/g' /boot/config.txt'
+  validate_weatherStation:
+    needs: deploy_weatherStation
+    runs-on: [self-hosted, linux]
+    environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: ${{ vars.APP_DIR }}
+    steps:
       - name: Create Service
         run: |
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo cp ${{ vars.APP_DIR }}/weatherstation.service /etc/systemd/system/'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i -e 's/<APP_DIR>/${{ vars.APP_DIR }}/g' /etc/systemd/system/weatherstation.service'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl enable weatherstation'
       - name: Reboot Raspberry Pi
         run: | 

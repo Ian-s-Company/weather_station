@@ -83,8 +83,12 @@ else:
     lon = str(args["long"])
     debug = args["debug"]
 
-# print (debug)
-# print (args)
+search_text = "<APP_DIR>"
+with open(r'weatherstation.service', 'r') as file: 
+    data = file.read() 
+    data = data.replace(search_text, app_dir) 
+with open(r'weatherstation.service', 'w') as file: 
+    file.write(data) 
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG)
