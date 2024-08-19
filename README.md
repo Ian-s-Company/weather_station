@@ -39,3 +39,7 @@ I also set up a process to download weather icons if needed.
 ## Run Deploy process to setup Weather Display
 1. Update the proper vars in your environment, Application Directory, Weather API Key, and News API Key
 2. Execute Action to Deploy the Weather Station.
+
+It should look something like this when you turn it on
+
+![alt text](pics/20240816_101228.jpg)
