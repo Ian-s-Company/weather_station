@@ -1,16 +1,16 @@
 [Unit]
 Description = Weather Display Station
-After = network.target # Assuming you want to start after network interfaces are made available
+After = network.target
  
 [Service]
 Type = simple
 ExecStart = python <APP_DIR> -c config.cfg
 User = root
 Group = root
-Restart = on-failure # Restart when there are errors
+Restart = on-failure
 SyslogIdentifier = <APP_DIR>/weather_display_service.log
 RestartSec = 30
 TimeoutStartSec = infinity
  
 [Install]
-WantedBy = multi-user.target # Make it accessible to other users
+WantedBy = multi-user.target

@@ -18,12 +18,7 @@ config.sections()
 # Add the arguments to the parser
 
 ap = argparse.ArgumentParser(description="Get Weather Display Args.")
-ap.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="Config File"
-)
+ap.add_argument("-c", "--config", required=False, help="Config File")
 ap.add_argument(
     "-a",
     "--app_dir",
@@ -61,25 +56,25 @@ ap.add_argument(
     help="Debug for Deployment",
     action="store_true",
 )
- 
+
 args = vars(ap.parse_args())
 
 config_file = args["config"]
 if config_file != None:
     if os.path.exists(config_file):
         config.read(config_file)
-        app_dir = config['DEFAULT']['APP_DIR']
-        api_key_weather = config['DEFAULT']['WEATHER_API_KEY']
-        api_key_news = config['DEFAULT']['NEWS_API_KEY']
-        screen_size = config['DEFAULT']['SCREEN_SIZE']
-        lat = config['DEFAULT']['LATTITUDE']
-        lon = config['DEFAULT']['LONGITUDE']
-        debug = config['DEFAULT'].get('DEBUG')
+        app_dir = config["DEFAULT"]["APP_DIR"]
+        api_key_weather = config["DEFAULT"]["WEATHER_API_KEY"]
+        api_key_news = config["DEFAULT"]["NEWS_API_KEY"]
+        screen_size = config["DEFAULT"]["SCREEN_SIZE"]
+        lat = config["DEFAULT"]["LATTITUDE"]
+        lon = config["DEFAULT"]["LONGITUDE"]
+        debug = config["DEFAULT"].get("DEBUG")
     else:
-        #print("Config file could not be found")
+        # print("Config file could not be found")
         exit(22)
 else:
-    #print("No config file specified")
+    # print("No config file specified")
     app_dir = str(args["app_dir"])
     api_key_weather = str(args["weatherapikey"])
     api_key_news = str(args["newsapikey"])
@@ -88,13 +83,11 @@ else:
     lon = str(args["long"])
     debug = args["debug"]
 
-#print (debug)
-#print (args)
+# print (debug)
+# print (args)
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    filename=app_dir + "/weatherStation.log", level=logging.DEBUG
-)
+logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG)
 
 if screen_size == "7x5in":
     logger.info("Screen size is 7x5in")
