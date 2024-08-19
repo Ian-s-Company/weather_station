@@ -39,7 +39,6 @@ class Weather:
         ]
 
     def update_pol(self):
-
         pollution_url = (
             "https://api.openweathermap.org/data/2.5/air_pollution?lat="
             + self.latitude
@@ -72,7 +71,6 @@ class Weather:
         return self.pol_data
 
     def update(self):
-
         weather_url = (
             "https://api.openweathermap.org/data/2.5/onecall?lat="
             + self.latitude
