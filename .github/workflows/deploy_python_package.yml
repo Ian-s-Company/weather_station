@@ -99,4 +99,4 @@ jobs:
       APP_DIR: ${{ vars.APP_DIR }}
     steps:
       - name: Starting Weather Station
-        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'systemctl start weatherstation'
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl start weatherstation'
