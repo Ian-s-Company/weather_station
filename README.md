@@ -43,3 +43,9 @@ I also set up a process to download weather icons if needed.
 It should look something like this when you turn it on
 
 ![alt text](pics/20240816_101228.jpg)
+
+When you click the top button it would have the same screen
+
+The second button would look like this:
+The third button would look like this:
+The fourth button would look like this:
