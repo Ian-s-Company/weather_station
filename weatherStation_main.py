@@ -116,7 +116,6 @@ def map_resize(val, in_mini, in_maxi, out_mini, out_maxi):
 
 
 class weather_station:
-
     def __init__(self, epd, weather, news):
         self.epd = epd
         self.weather = weather
@@ -190,7 +189,6 @@ class weather_station:
         return 0
 
     def button5(self):  # Other Stuff
-
         logger.info("Drawing Button 4 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
@@ -220,7 +218,6 @@ class weather_station:
         return 0
 
     def button4(self):
-
         logger.info("Drawing Button 5 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
