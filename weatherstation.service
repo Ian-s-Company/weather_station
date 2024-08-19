@@ -4,13 +4,8 @@ After = network.target
  
 [Service]
 Type = simple
-ExecStart = cd <APP_DIR>; ./weather-station.sh start /opt/weather_station_cfg/config.cfg
+ExecStart = <APP_DIR>/weather-station.sh start /opt/weather_station_cfg/config.cfg
 User = root
-Group = root
-Restart = on-failure
-SyslogIdentifier = <APP_DIR>/weather_display_service.log
-RestartSec = 30
-TimeoutStartSec = infinity
  
 [Install]
 WantedBy = multi-user.target

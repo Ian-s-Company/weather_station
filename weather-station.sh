@@ -2,6 +2,8 @@
 
 CONFIG_FILE=$2
 
+APP_DIR=$(awk '/^APP_DIR/{print $3}' "${CONFIG_FILE}")
+
 case "$1" in
   restart)
         pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -9,7 +11,7 @@ case "$1" in
                 echo "Restarting WeatherStation and killing PID $pid"
                 kill $pid
         fi
-        python weatherStation_main.py -c $CONFIG_FILE &
+        cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE &
   ;;
   start)
         pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -17,7 +19,7 @@ case "$1" in
                 echo "WeatherStation is running, won't start"
         else
                 echo "Starting Weather Station"
-                python weatherStation_main.py -c $CONFIG_FILE &
+                cd $APP_DIR; python weatherStation_main.py -c $CONFIG_FILE &
         fi
   ;;
   stop)
