@@ -1,8 +1,6 @@
 #!/bin/sh
 
-if [ ! -z "$API_KEY_WEATHER" ]; then
-  CONFIG_FILE=$2
-fi
+CONFIG_FILE=$2
 
 case "$1" in
   restart)
@@ -11,7 +9,7 @@ case "$1" in
                 echo "Restarting WeatherStation and killing PID $pid"
                 kill $pid
         fi
-        python $APP_DIR/weatherStation_main.py -c $CONFIG_FILE &
+        python weatherStation_main.py -c $CONFIG_FILE &
   ;;
   start)
         pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -19,7 +17,7 @@ case "$1" in
                 echo "WeatherStation is running, won't start"
         else
                 echo "Starting Weather Station"
-                python $APP_DIR/weatherStation_main.py -c $CONFIG_FILE &
+                python weatherStation_main.py -c $CONFIG_FILE &
         fi
   ;;
   stop)
