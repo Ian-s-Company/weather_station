@@ -7,14 +7,13 @@ from datetime import datetime
 from PIL import Image, ImageDraw
 from gpiozero import Button  # Pins 5,6,13,19
 import logging
-
+import os.path
 import argparse
 import configparser
 
 config = configparser.ConfigParser()
 config.sections()
 
-config.read('config.cfg')
 
 # Add the arguments to the parser
 
@@ -25,7 +24,6 @@ ap.add_argument(
     required=False,
     help="Config File"
 )
-
 ap.add_argument(
     "-a",
     "--app_dir",
@@ -66,15 +64,21 @@ ap.add_argument(
 )
 
 args = vars(ap.parse_args())
+
 config_file = str(args["config"])
 if config_file:
-    app_dir = config['DEFAULT']['APP_DIR']
-    api_key_weather = config['DEFAULT']['WEATHER_API_KEY']
-    api_key_news = config['DEFAULT']['NEWS_API_KEY']
-    screen_size = config['DEFAULT']['SCREEN_SIZE']
-    lat = config['DEFAULT']['LATTITUDE']
-    lon = config['DEFAULT']['LONGITUDE']
-    debug = config['DEFAULT']['DEBUG']
+    if os.path.exists('/config.cfg'):
+        config.read('/config.cfg')
+        app_dir = config['DEFAULT']['APP_DIR']
+        api_key_weather = config['DEFAULT']['WEATHER_API_KEY']
+        api_key_news = config['DEFAULT']['NEWS_API_KEY']
+        screen_size = config['DEFAULT']['SCREEN_SIZE']
+        lat = config['DEFAULT']['LATTITUDE']
+        lon = config['DEFAULT']['LONGITUDE']
+        debug = config['DEFAULT']['DEBUG']
+    else:
+        print("Config file could not be found")
+        exit(22)
 else:
     app_dir = str(args["app_dir"])
     api_key_weather = str(args["weatherapikey"])
@@ -85,6 +89,7 @@ else:
     debug = bool(args["debug"])
 
 logging.basicConfig(
+    filename=app_dir + "/weatherStation.log", filemode="x",
     filename=app_dir + "/weatherStation.log", filemode="w", level=logging.DEBUG
 )
 

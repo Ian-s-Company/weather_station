@@ -1,26 +1,7 @@
 #!/bin/sh
 
 if [ ! -z "$API_KEY_WEATHER" ]; then
-  API_KEY_WEATHER=$2
-fi
-
-if [ ! -z "$API_KEY_NEWS" ]; then
-  API_KEY_NEWS=$3
-fi
-
-if [ ! -z "$APP_DIR" ]; then
-  APP_DIR=$4
-else
-  APP_DIR="/opt/weather_station"
-fi
-
-if [ ! -z "$SCREEN_SIZE" ]; then
-  if [ $SCREEN_SIZE == "2.7in" ] || [ $SCREEN_SIZE == "7x5in" ]; then
-    SCREEN_SIZE=$5
-  else
-    echo "Screen Size is invalid, using 2.7in"
-    SCREEN_SIZE="2.7in"
-  fi
+  CONFIG_FILE=$2
 fi
 
 case "$1" in
@@ -30,7 +11,7 @@ case "$1" in
                 echo "Restarting WeatherStation and killing PID $pid"
                 kill $pid
         fi
-        python $APP_DIR/weatherStation_main.py -a $APP_DIR -w $API_KEY_WEATHER -n $API_KEY_NEWS -s $SCREEN_SIZE &
+        python $APP_DIR/weatherStation_main.py -c $CONFIG_FILE &
   ;;
   start)
         pid=`ps -ef | grep weatherStation | grep python | grep -v grep | awk '{ print $2 }'`
@@ -38,7 +19,7 @@ case "$1" in
                 echo "WeatherStation is running, won't start"
         else
                 echo "Starting Weather Station"
-                python $APP_DIR/weatherStation_main.py -a $APP_DIR -w $API_KEY_WEATHER -n $API_KEY_NEWS -s $SCREEN_SIZE &
+                python $APP_DIR/weatherStation_main.py -c $CONFIG_FILE &
         fi
   ;;
   stop)
@@ -51,5 +32,5 @@ case "$1" in
         fi
   ;;
   *)
-        echo "No arguments. Need (start|stop|restart) $API_KEY_WEATHER $API_KEY_NEWS $APP_DIR $SCREEN_SIZE (7.5in or 2.7in) &"
+        echo "No arguments. Need (start|stop|restart) $CONFIG_FILE &"
 esac
