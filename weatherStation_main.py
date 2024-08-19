@@ -64,12 +64,6 @@ ap.add_argument(
     default=False,
     type=bool,
 )
-ap.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="Config File"
-)
 
 args = vars(ap.parse_args())
 config_file = str(args["config"])
