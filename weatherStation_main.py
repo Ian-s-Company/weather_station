@@ -84,10 +84,10 @@ else:
     debug = args["debug"]
 
 search_text = "<APP_DIR>"
-with open(r'weatherstation.service', 'r') as file: 
+with open(app_dir + '/weatherstation.service', 'r') as file: 
     data = file.read() 
     data = data.replace(search_text, app_dir) 
-with open(r'weatherstation.service', 'w') as file: 
+with open(app_dir + '/weatherstation.service', 'w') as file: 
     file.write(data) 
 
 logger = logging.getLogger(__name__)
