@@ -4,7 +4,7 @@ After = network.target
  
 [Service]
 Type = simple
-ExecStart = python <APP_DIR> -c /opt/weather_station_cfg/config.cfg
+ExecStart = python <APP_DIR>/weatherStation_main.py -c /opt/weather_station_cfg/config.cfg
 User = root
 Group = root
 Restart = on-failure
