@@ -52,7 +52,7 @@ class Weather:
         while got_data == False:
             logging.info("Checking Pollution URL Status")
             try:
-                self.pol_data = requests.get(pollution_url)
+                self.pol_data = requests.get(pollution_url, timeout=30)
             except:
                 time.sleep(60)
                 continue
@@ -85,7 +85,7 @@ class Weather:
         while got_data == False:
             logging.info("Checking Weather URL Status")
             try:
-                self.weather_data = requests.get(weather_url)
+                self.weather_data = requests.get(weather_url, timeout=30)
             except:
                 time.sleep(60)
                 continue
@@ -296,7 +296,7 @@ class Weather:
         if not path.exists(icon_jpg):
             icon_updated_png = str(icon) + "-updated.png"
             url = "https://openweathermap.org/img/wn/" + icon_png
-            icon_response = requests.get(url, allow_redirects=True, stream=True)
+            icon_response = requests.get(url, allow_redirects=True, stream=True, timeout=30)
             icon_png = icon_dir + str(icon) + ".png"
             open(icon_png, "wb").write(icon_response.content)
             img = Image.open(icon_png)  # .convert("LA")
