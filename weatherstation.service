@@ -4,7 +4,7 @@ After = network.target # Assuming you want to start after network interfaces are
  
 [Service]
 Type = simple
-ExecStart = python <APP_DIR>
+ExecStart = python <APP_DIR> -c config.cfg
 User = root
 Group = root
 Restart = on-failure # Restart when there are errors

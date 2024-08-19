@@ -59,45 +59,49 @@ ap.add_argument(
     "--debug",
     required=False,
     help="Debug for Deployment",
-    default=False,
-    type=bool,
+    action="store_true",
 )
-
+ 
 args = vars(ap.parse_args())
 
-config_file = str(args["config"])
-if config_file:
-    if os.path.exists('/config.cfg'):
-        config.read('/config.cfg')
+config_file = args["config"]
+if config_file != None:
+    if os.path.exists(config_file):
+        config.read(config_file)
         app_dir = config['DEFAULT']['APP_DIR']
         api_key_weather = config['DEFAULT']['WEATHER_API_KEY']
         api_key_news = config['DEFAULT']['NEWS_API_KEY']
         screen_size = config['DEFAULT']['SCREEN_SIZE']
         lat = config['DEFAULT']['LATTITUDE']
         lon = config['DEFAULT']['LONGITUDE']
-        debug = config['DEFAULT']['DEBUG']
+        debug = config['DEFAULT'].get('DEBUG')
     else:
-        print("Config file could not be found")
+        #print("Config file could not be found")
         exit(22)
 else:
+    #print("No config file specified")
     app_dir = str(args["app_dir"])
     api_key_weather = str(args["weatherapikey"])
     api_key_news = str(args["newsapikey"])
     screen_size = str(args["screensize"])
     lat = str(args["lat"])
     lon = str(args["long"])
-    debug = bool(args["debug"])
+    debug = args["debug"]
 
+#print (debug)
+#print (args)
+
+logger = logging.getLogger(__name__)
 logging.basicConfig(
-    filename=app_dir + "/weatherStation.log", filemode="a", level=logging.DEBUG
+    filename=app_dir + "/weatherStation.log", level=logging.DEBUG
 )
 
 if screen_size == "7x5in":
-    logging.info("Screen size is 7x5in")
+    logger.info("Screen size is 7x5in")
     news_width = 340
     import epd7in5b_V2
 elif screen_size == "2.7in":
-    logging.info("Screen size is 2in7")
+    logger.info("Screen size is 2in7")
     news_width = 170
     import epd2in7
 else:
@@ -124,14 +128,14 @@ class weather_station:
         # self.epd.Clear(0xFF)
 
     def button1(self):  # Home Button
-        logging.info("Drawing Button 1 screen")
+        logger.info("Drawing Button 1 screen")
         self.weather.update()
         self.news.update(api_key_news)
         draw = self.draw2in7(self.epd)
         return 0
 
     def button2(self):  # Hourly Forecast
-        logging.info("Drawing Hourly Forecast")
+        logger.info("Drawing Hourly Forecast")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -160,7 +164,7 @@ class weather_station:
         return 0
 
     def button3(self):  # Daily Forecast
-        logging.info("Drawing Daily Forecast")
+        logger.info("Drawing Daily Forecast")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -190,7 +194,7 @@ class weather_station:
 
     def button5(self):  # Other Stuff
 
-        logging.info("Drawing Button 4 screen")
+        logger.info("Drawing Button 4 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -220,7 +224,7 @@ class weather_station:
 
     def button4(self):
 
-        logging.info("Drawing Button 5 screen")
+        logger.info("Drawing Button 5 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -488,7 +492,7 @@ class weather_station:
         self.weather.update_pol()
         self.news.update(api_key_news)
         current_info = self.weather.get_current()
-        logging.info(
+        logger.info(
             "Begin update @"
             + self.weather.current_time()
             + " at latitude "
@@ -498,7 +502,6 @@ class weather_station:
         )
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
-        # logging.info(current_info)
         sunrise_icon = Image.open(app_dir + "/static_icons/sunrise.bmp")
         sunrise_icon = sunrise_icon.resize((30, 30))
         sunset_icon = Image.open(app_dir + "/static_icons/sunset.bmp")
@@ -905,15 +908,15 @@ class weather_station:
 def main():
     weather = Weather(lat, lon, api_key_weather)
     news = News(news_width)
-    if debug:
-        logging.info("Debug is On")
+    if debug == True:
+        logger.info("Debug is On")
     else:
-        logging.info("Debug is Off")
+        logger.info("Debug is Off")
     if screen_size == "2.7in":
-        logging.info("Initializing EPD for 2.7in")
+        logger.info("Initializing EPD for 2.7in")
         epd = epd2in7.EPD()
         weather_station_inst = weather_station(epd, weather, news)
-        logging.info("Creating Buttons")
+        logger.info("Creating Buttons")
         btn1 = Button(5)
         btn1.when_pressed = weather_station_inst.button1
         btn2 = Button(6)
@@ -925,23 +928,23 @@ def main():
         while True:
             weather_station_inst = weather_station(epd, weather, news)
             weather_station_inst.draw2in7(epd)
-            logging.info("Screen is drawn")
-            logging.info("Going to sleep.")
-            logging.info("------------")
-            if debug:
+            logger.info("Screen is drawn")
+            logger.info("Going to sleep.")
+            logger.info("------------")
+            if debug == True:
                 sys.exit(0)
             time.sleep(900)
     elif screen_size == "7x5in":
-        logging.info("Initializing EPD for 7x5in")
+        logger.info("Initializing EPD for 7x5in")
         epd = epd7in5b_V2.EPD()
         while True:
-            logging.info("Drawing screen")
+            logger.info("Drawing screen")
             weather_station_inst = weather_station(epd, weather, news)
             weather_station_inst.draw7in5(epd)
-            logging.info("Screen is drawn")
-            logging.info("Going to sleep.")
-            logging.info("------------")
-            if debug:
+            logger.info("Screen is drawn")
+            logger.info("Going to sleep.")
+            logger.info("------------")
+            if debug == True:
                 sys.exit(0)
             time.sleep(900)
 
