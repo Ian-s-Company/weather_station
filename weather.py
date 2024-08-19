@@ -296,7 +296,9 @@ class Weather:
         if not path.exists(icon_jpg):
             icon_updated_png = str(icon) + "-updated.png"
             url = "https://openweathermap.org/img/wn/" + icon_png
-            icon_response = requests.get(url, allow_redirects=True, stream=True, timeout=30)
+            icon_response = requests.get(
+                url, allow_redirects=True, stream=True, timeout=30
+            )
             icon_png = icon_dir + str(icon) + ".png"
             open(icon_png, "wb").write(icon_response.content)
             img = Image.open(icon_png)  # .convert("LA")
