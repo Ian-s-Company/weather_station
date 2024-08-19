@@ -69,7 +69,7 @@ jobs:
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=no/dtparam=spi=yes/g' /boot/config.txt'
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo sed -i 's/#dtparam=spi=yes/dtparam=spi=yes/g' /boot/config.txt'
-  validate_weatherStation:
+  reboot_weatherStation:
     needs: deploy_weatherStation
     runs-on: [self-hosted, linux]
     environment: production
@@ -82,6 +82,17 @@ jobs:
         run: | 
           ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo reboot' || true
           sleep 120
+  validate_weatherStation:
+    needs: reboot_weatherStation
+    runs-on: [self-hosted, linux]
+    environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: ${{ vars.APP_DIR }}
+    steps:
+      - name: Stopping Weather Station if Running
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo weather-station.sh stop'
       - name: Starting Weather Station in DEBUG Mode
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo python ${{ vars.APP_DIR }}/weatherStation_main.py -d -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
       - name: Create Service
