@@ -46,6 +46,9 @@ I also set up a process to download weather icons if needed.
 
 # When you click the top button it would have the same screen
 
-# The second button would look like this:
-# The third button would look like this:
-# The fourth button would look like this:
+# The second button would look like this (Forecast in 3 hour increments):
+![alt text](pics/20240819_185850.jpg)
+# The third button would look like this (Forecast by day):
+![alt text](pics/20240819_185902.jpg)
+# The fourth button would look like this (Forecast by day with better spacing):
+![alt text](pics/20240819_185914.jpg)
