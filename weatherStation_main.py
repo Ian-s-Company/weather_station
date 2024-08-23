@@ -517,7 +517,7 @@ class weather_station:
         for i in current_info["weather"]:
             icon = self.weather.get_icon(i["icon"])
             icon_list.append(icon)
-            #cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
+            # cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
         if len(icon_list) == 2:
             cur_icon_name1 = icon_list[0]
             cur_icon_name2 = icon_list[1]
@@ -644,7 +644,9 @@ class weather_station:
         for i in current_info["weather"]:
             icon = self.weather.get_icon(i["icon"])
             icon_list.append(icon)
-            cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
+            cur_condition = self.weather.weather_description(
+                self.weather.current_weather()
+            )[1]
         if len(icon_list) == 2:
             cur_icon_name1 = icon_list[0]
             cur_icon_name2 = icon_list[1]
