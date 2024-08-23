@@ -554,29 +554,29 @@ class weather_station:
         )  # UVI
         test_image.text(
             (0, 20), "Current conditions", fill=0, font=font12
-        )  # CURRENT TEMP
+        )  # CURRENT CONDITIONS LABEL
         test_image.text(
             (0, 30),
             self.weather.weather_description(self.weather.current_weather())[1],
             fill=0,
             font=font16,
-        )  # CURRENT TEMP
+        )  # CURRENT CONDITIONS
         test_image.text(
             (0, 48), "Current Temp/Feels Like", fill=0, font=font12
-        )  # CURRENT TEMP
+        )  # CURRENT TEMP LABEL
         test_image.text(
-            (0, 55), str(round(current_info["temp"])), fill=0, font=font24
-        )  # CURRENT FEELS LIKE
-        test_image.text(
-            (35, 67), "/" + str(round(current_info["feels_like"])), fill=0, font=font24
-        )  # CURRENT TEMP
-        test_image.text((80, 60), "High/Low", fill=0, font=font12)
+            (0, 55),
+            str(round(current_info["temp"]) + "/" + round(current_info["feels_like"])),
+            fill=0,
+            font=font24,
+        )  # CURRENT TEMP and FEELS LIKE
+        test_image.text((80, 60), "High/Low", fill=0, font=font8)
         test_image.text(
             (80, 70),
             self.weather.current_daymax() + "/" + self.weather.current_daymin(),
             fill=0,
             font=font24,
-        )  # CURRENT HIGH/LOW
+        )  # CURRENT DAY HIGH/LOW
         test_image.text((0, 90), "Current Wind", fill=0, font=font12)
         test_image.text(
             (0, 102),
@@ -593,10 +593,7 @@ class weather_station:
             day_rain = 0
         test_image.text(
             (0, 130),
-            str(round(day_info["pop"] * 100))
-            + "%/"
-            + str(round(day_rain))
-            + " mm",
+            str(round(day_info["pop"] * 100)) + "%/" + str(round(day_rain)) + " mm",
             fill=0,
             font=font12,
         )  # Day Rain
