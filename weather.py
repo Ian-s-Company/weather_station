@@ -172,7 +172,7 @@ class Weather:
             direction = "NE"
         elif 58 <= deg < 80:
             direction = "ENE"
-        elif 79 <= deg < 101:
+        elif 81 <= deg < 101:
             direction = "E"
         elif 102 <= deg < 122:
             direction = "ESE"
@@ -188,7 +188,7 @@ class Weather:
             direction = "SW"
         elif 239 <= deg < 262:
             direction = "WSW"
-        elif 259 <= deg < 281:
+        elif 263 <= deg < 281:
             direction = "W"
         elif 282 <= deg < 303:
             direction = "WNW"

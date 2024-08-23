@@ -324,8 +324,8 @@ class weather_station:
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
         news_selected = self.news.selected_title()
-        draw.text((0, 155), "News:", fill=0, font=font12)
-        draw.text((30, 155), news_selected[0][0], fill=0, font=font12)
+        draw.text((0, 155), "News: ", fill=0, font=font12)
+        draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
         return draw
 
     def forecast(self, day_or_hour, no_of_time):
@@ -534,17 +534,17 @@ class weather_station:
             Himage.paste(cur_icon1, (100, 100))
         test_image.text((165, 20), "Sunrise", fill=0, font=font12)
         test_image.text(
-            (165, 30), self.weather.current_sunrise(), fill=0, font=font24
+            (165, 30), self.weather.current_sunrise(), fill=0, font=font20
         )  # SUNRISE TIME
         test_image.text((165, 50), "Sunset", fill=0, font=font12)
         test_image.text(
-            (165, 60), self.weather.current_sunset(), fill=0, font=font24
+            (165, 60), self.weather.current_sunset(), fill=0, font=font20
         )  # SUNSET TIME
-        test_image.text((165, 80), "Humidity", fill=0, font=font12)
+        test_image.text((165, 80), "Humidity %", fill=0, font=font12)
         test_image.text(
-            (165, 90), str(current_info["humidity"]), fill=0, font=font24
+            (165, 90), str(current_info["humidity"]), fill=0, font=font20
         )  # HUMIDTY
-        test_image.text((165, 110), "Clouds", fill=0, font=font12)
+        test_image.text((165, 110), "Cloud %", fill=0, font=font12)
         test_image.text(
             (165, 120), str(current_info["clouds"]), fill=0, font=font16
         )  # CLOUD COVER
@@ -565,7 +565,7 @@ class weather_station:
             (0, 48), "Current Temp/Feels Like", fill=0, font=font12
         )  # CURRENT TEMP
         test_image.text(
-            (0, 55), str(round(current_info["temp"])), fill=0, font=font36
+            (0, 55), str(round(current_info["temp"])), fill=0, font=font24
         )  # CURRENT FEELS LIKE
         test_image.text(
             (35, 67), "/" + str(round(current_info["feels_like"])), fill=0, font=font24
@@ -584,29 +584,22 @@ class weather_station:
             + " "
             + str(self.weather.wind_dir(current_info["wind_deg"])),
             fill=0,
-            font=font16,
+            font=font14,
         )  # CURRENT WIND
-        test_image.text((0, 116), "Rain H%/mm D%/mm", fill=0, font=font12)
-        if "rain" in hour_info:
-            hour_rain = hour_info["rain"]["1h"]
-        else:
-            hour_rain = 0
+        test_image.text((0, 116), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
         else:
             day_rain = 0
         test_image.text(
             (0, 130),
-            str(round(hour_info["pop"] * 100))
+            str(round(day_info["pop"] * 100))
             + "%/"
-            + str(round(hour_rain))
-            + " "
-            + str(round(day_info["pop"] * 100))
-            + "%/"
-            + str(round(day_rain)),
+            + str(round(day_rain)
+            + " mm"),
             fill=0,
-            font=font16,
-        )  # Hour/Day Rain
+            font=font12,
+        )  # Day Rain
         epd.display(epd.getbuffer(Himage))
 
         return test_image
