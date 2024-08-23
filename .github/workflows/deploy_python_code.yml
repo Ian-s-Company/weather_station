@@ -51,7 +51,7 @@ jobs:
       - name: Remove app directory ${{ vars.APP_DIR }}
         run:  ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'if [ -d "${{ vars.APP_DIR }}" ]; then echo "Weather Station Dir found, deleting"; sudo rm -fR ${{ vars.APP_DIR }}; else echo "No weather station directory"; fi'
       - name: Cloning Weather Station
-        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }};sudo chmod +x ${{ vars.APP_DIR }}/weather-station*.sh"
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone -b ${{GITHUB.REF_NAME}} https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }};sudo chmod +x ${{ vars.APP_DIR }}/weather-station*.sh"
   validate_weatherStation:
     needs: deploy_weatherStation_code
     runs-on: [self-hosted, linux]
