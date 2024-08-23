@@ -570,7 +570,7 @@ class weather_station:
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
-        test_image.text((80, 70), "Today High/Low", fill=0, font=font12)
+        test_image.text((85, 65), "Today High/Low", fill=0, font=font12)
         test_image.text(
             (80, 70),
             self.weather.current_daymax() + "/" + self.weather.current_daymin(),
