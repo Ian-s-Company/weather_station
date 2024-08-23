@@ -595,8 +595,8 @@ class weather_station:
             (0, 130),
             str(round(day_info["pop"] * 100))
             + "%/"
-            + str(round(day_rain)
-            + " mm"),
+            + str(round(day_rain))
+            + " mm",
             fill=0,
             font=font12,
         )  # Day Rain
