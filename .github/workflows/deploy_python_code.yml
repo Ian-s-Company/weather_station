@@ -1,0 +1,83 @@
+name: Deploy Python package
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - revise_button1_display
+
+jobs:
+  build_weatherStation:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python for build check
+        # This is the version of the action for setting up Python, not the Python version.
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.x'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x64'
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+  deploy_weatherStation:
+    needs: build_weatherStation
+    runs-on: [self-hosted, linux]
+    environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: ${{ vars.APP_DIR }}
+    steps:
+      - name: Set up Python for deployment
+        # This is the version of the action for setting up Python, not the Python version.
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.x'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x64'
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: deploy Weather Station
+        run: echo "Trying to Deploy"
+      - name: Remove app directory ${{ vars.APP_DIR }}
+        run:  ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'if [ -d "${{ vars.APP_DIR }}" ]; then echo "Weather Station Dir found, deleting"; sudo rm -fR ${{ vars.APP_DIR }}; else echo "No weather station directory"; fi'
+      - name: Cloning Weather Station
+        run: ssh ${{ vars.USER }}@${{ vars.HOSTNAME }} "sudo git clone https://github.com/Ian-s-Company/weather_station.git ${{ vars.APP_DIR }};sudo chmod +x ${{ vars.APP_DIR }}/weather-station*.sh"
+  validate_weatherStation:
+    needs: build_weatherStation
+    runs-on: [self-hosted, linux]
+    environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: ${{ vars.APP_DIR }}
+    steps:
+      - name: Stopping Weather Station if Running
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo ./weather-station.sh stop'
+      - name: Starting Weather Station in DEBUG Mode
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo python ${{ vars.APP_DIR }}/weatherStation_main.py -d -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
+      - name: Create Service
+        run: |
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo cp ${{ vars.APP_DIR }}/weatherstation.service /etc/systemd/system/'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl daemon-reload'
+          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl enable weatherstation'
+  start_weatherStation:
+    needs: validate_weatherStation
+    runs-on: [self-hosted, linux]
+    environment: production
+    env:
+      API_KEY_WEATHER:  ${{ secrets.API_KEY_WEATHER }}
+      API_KEY_NEWS:  ${{ secrets.API_KEY_NEWS }}
+      APP_DIR: ${{ vars.APP_DIR }}
+    steps:
+      - name: Starting Weather Station
+        run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl start weatherstation'
