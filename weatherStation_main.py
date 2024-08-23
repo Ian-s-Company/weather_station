@@ -566,7 +566,7 @@ class weather_station:
         )  # CURRENT TEMP LABEL
         test_image.text(
             (0, 55),
-            str(round(current_info["temp"]) + "/" + str(round(current_info["feels_like"]))),
+            str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
