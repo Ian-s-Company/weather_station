@@ -189,7 +189,7 @@ class weather_station:
         return 0
 
     def button5(self):  # Other Stuff
-        logger.info("Drawing Button 4 screen")
+        logger.info("Drawing Button 5 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -218,7 +218,7 @@ class weather_station:
         return 0
 
     def button4(self):
-        logger.info("Drawing Button 5 screen")
+        logger.info("Drawing Button 4 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -242,9 +242,18 @@ class weather_station:
         return 0
 
     def three_day_forecast(self, draw):  # Weekend Forecast
+        day_pixel_array = [
+            [0, 20],
+            [66, 20],
+            [132, 20],
+        ]
+        time = "day"
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
-            draw, icon = self.day_summary(self.weather, draw, day_info, start_pixel)
+            draw, icon = self.day_summary(draw, day_info, start_pixel)
+            Himage = Image.new(
+                "1", (self.epd.height, self.epd.width), 255
+            )  # 255: clear the frame
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + 1
         self.epd.display(self.epd.getbuffer(Himage))
@@ -508,9 +517,7 @@ class weather_station:
         for i in current_info["weather"]:
             icon = self.weather.get_icon(i["icon"])
             icon_list.append(icon)
-        cur_condition = self.weather.weather_description(
-            self.weather.current_weather()
-        )[1]
+            #cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
         if len(icon_list) == 2:
             cur_icon_name1 = icon_list[0]
             cur_icon_name2 = icon_list[1]
@@ -637,9 +644,7 @@ class weather_station:
         for i in current_info["weather"]:
             icon = self.weather.get_icon(i["icon"])
             icon_list.append(icon)
-        cur_condition = self.weather.weather_description(
-            self.weather.current_weather()
-        )[1]
+            cur_condition = self.weather.weather_description(self.weather.current_weather())[1]
         if len(icon_list) == 2:
             cur_icon_name1 = icon_list[0]
             cur_icon_name2 = icon_list[1]
