@@ -562,10 +562,10 @@ class weather_station:
             font=font16,
         )  # CURRENT CONDITIONS
         test_image.text(
-            (0, 48), "Current Temp/Feels Like", fill=0, font=font12
+            (0, 48), "Temp/Feels Like", fill=0, font=font12
         )  # CURRENT TEMP LABEL
         test_image.text(
-            (0, 55),
+            (0, 56),
             str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
