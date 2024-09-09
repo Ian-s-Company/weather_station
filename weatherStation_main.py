@@ -220,11 +220,16 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         draw = self.framework(draw)
-        hour_temps = []
-        hour_feels = []
-        for i in self.weather.get_hourly(None, 8):
-            hour_temps.append(i["temp"])
-            hour_feels.append(i["feels_like"])
+        #hour_temps = []
+        #hour_feels = []
+        day_temps = []
+        day_feels = []
+        #for i in self.weather.get_hourly(None, 8):
+        #    hour_temps.append(i["temp"])
+        #    hour_feels.append(i["feels_like"])
+        for i in self.weather.get_daily(None, 8):
+            day_temps.append(i["temp"])
+            day_feels.append(i["feels_like"])
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
@@ -233,11 +238,19 @@ class weather_station:
         draw.text((165, 90), str(self.weather.no2()), fill=0, font=font20)
         draw.text((165, 110), "Ozone", fill=0, font=font12)
         draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
+        '''
         draw = self.data_graph(
             self.weather, draw, hour_temps, ["temp/feels like"], [115, 140], [5, 20]
         )
         draw = self.data_graph(
             self.weather, draw, hour_feels, [""], [115, 140], [5, 20]
+        )
+        '''
+        draw = self.data_graph(
+            self.weather, draw, day_temps, ["temp/feels like"], [115, 140], [5, 20]
+        )
+        draw = self.data_graph(
+            self.weather, draw, day_feels, [""], [115, 140], [5, 20]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
