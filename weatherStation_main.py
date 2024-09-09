@@ -924,8 +924,6 @@ def main():
                 sleep_time = 15
             else:
                 sleep_time = 225
-            weather_station_inst.three_day_forecast()
-            time.sleep(sleep_time)
             weather_station_inst.button1()
             time.sleep(sleep_time)
             weather_station_inst.button2()
