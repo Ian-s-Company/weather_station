@@ -234,10 +234,10 @@ class weather_station:
         draw.text((165, 110), "Ozone", fill=0, font=font12)
         draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
         draw = self.data_graph(
-            self.weather, draw, hour_temps, ["temp/feels like"], [75, 140], [5, 95]
+            self.weather, draw, hour_temps, ["temp/feels like"], [75, 140], [5, 20]
         )
         draw = self.data_graph(
-            self.weather, draw, hour_feels, [""], [75, 140], [5, 95]
+            self.weather, draw, hour_feels, [""], [75, 140], [5, 20]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
