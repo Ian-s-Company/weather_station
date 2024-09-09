@@ -316,9 +316,9 @@ class weather_station:
             last_start_v = 0
             for j in weather_data:
                 start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
-                start_v = corner[1] - dot_size - weather_data[iter]
+                start_v = corner[1] - dot_size - float(weather_data[iter])
                 finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
-                finish_v = corner[1] + dot_size - weather_data[iter]
+                finish_v = corner[1] + dot_size - float(weather_data[iter])
                 draw.ellipse(
                     (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                     fill=fill_col,
