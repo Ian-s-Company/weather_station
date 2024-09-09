@@ -126,7 +126,7 @@ class weather_station:
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
         self.weather.update()
-        self.news.update(api_key_news)
+        self.news.update()
         draw = self.draw2in7(self.epd)
         return 0
 
@@ -188,35 +188,6 @@ class weather_station:
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
-    def button5(self):  # Other Stuff
-        logger.info("Drawing Button 5 screen")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
-        draw = self.framework(draw)
-        hour_temps = []
-        hour_feels = []
-        for i in self.weather.get_hourly(None, 8):
-            hour_temps.append(i["temp"])
-            hour_feels.append(i["feels_like"])
-        draw.text((165, 20), "CO", fill=0, font=font12)
-        draw.text((165, 30), str(self.weather.co()), fill=0, font=font24)
-        draw.text((165, 50), "NO", fill=0, font=font12)
-        draw.text((165, 60), str(self.weather.no()), fill=0, font=font24)
-        draw.text((165, 80), "NO2", fill=0, font=font12)
-        draw.text((165, 90), str(self.weather.no2()), fill=0, font=font24)
-        draw.text((165, 110), "Ozone", fill=0, font=font12)
-        draw.text((165, 120), str(self.weather.o3()), fill=0, font=font24)
-        draw = self.data_graph(
-            self.weather, draw, hour_temps, ["temp"], [55, 140], [5, 25], "black"
-        )
-        draw = self.data_graph(
-            self.weather, draw, hour_feels, ["feels_like"], [55, 140], [5, 83], "black"
-        )
-        self.epd.display(self.epd.getbuffer(Himage))
-        return 0
-
     def button4(self):
         logger.info("Drawing Button 4 screen")
         Himage = Image.new(
@@ -238,6 +209,35 @@ class weather_station:
             draw, icon = self.day_summary(draw, day_info, start_pixel)
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + 1
+        self.epd.display(self.epd.getbuffer(Himage))
+        return 0
+
+    def button5(self):  # Other Stuff
+        logger.info("Drawing Button 5 screen")
+        Himage = Image.new(
+            "1", (self.epd.height, self.epd.width), 255
+        )  # 255: clear the frame
+        draw = ImageDraw.Draw(Himage)
+        draw = self.framework(draw)
+        hour_temps = []
+        hour_feels = []
+        for i in self.weather.get_hourly(None, 8):
+            hour_temps.append(i["temp"])
+            hour_feels.append(i["feels_like"])
+        draw.text((165, 20), "CO", fill=0, font=font12)
+        draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
+        draw.text((165, 50), "NO", fill=0, font=font12)
+        draw.text((165, 60), str(self.weather.no()), fill=0, font=font20)
+        draw.text((165, 80), "NO2", fill=0, font=font12)
+        draw.text((165, 90), str(self.weather.no2()), fill=0, font=font20)
+        draw.text((165, 110), "Ozone", fill=0, font=font12)
+        draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
+        draw = self.data_graph(
+            self.weather, draw, hour_temps, ["temp"], [55, 140], [5, 25], "black"
+        )
+        draw = self.data_graph(
+            self.weather, draw, hour_feels, ["feels_like"], [55, 140], [5, 83], "black"
+        )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
@@ -495,7 +495,7 @@ class weather_station:
         )  # 255: clear the frame
         self.weather.update()
         self.weather.update_pol()
-        self.news.update(api_key_news)
+        self.news.update()
         current_info = self.weather.get_current()
         logger.info(
             "Begin update @"
@@ -610,7 +610,7 @@ class weather_station:
         HimageRed = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         self.weather.update()
         self.weather.update_pol()
-        self.news.update(api_key_news)
+        self.news.update()
         current_info = self.weather.get_current()
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
@@ -900,7 +900,7 @@ class weather_station:
 
 def main():
     weather = Weather(lat, lon, api_key_weather)
-    news = News(news_width)
+    news = News(news_width, api_key_news)
     if debug == True:
         logger.info("Debug is On")
     else:
