@@ -234,10 +234,10 @@ class weather_station:
         draw.text((165, 110), "Ozone", fill=0, font=font12)
         draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
         draw = self.data_graph(
-            self.weather, draw, hour_temps, ["temp/feels like"], [35, 140], [5, 75]
+            self.weather, draw, hour_temps, ["temp/feels like"], [75, 140], [5, 95]
         )
         draw = self.data_graph(
-            self.weather, draw, hour_feels, [""], [35, 140], [5, 75]
+            self.weather, draw, hour_feels, [""], [75, 140], [5, 79]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -311,10 +311,10 @@ class weather_station:
                     fill=fill_col,
                 )
                 if last_start_h != 0:
-                    draw.line((last_start_h - (dot_size / 2), 
-                               last_start_v + (dot_size / 2), 
-                               finish_h - (dot_size / 2), 
-                               finish_v + (dot_size / 2)),
+                    draw.line((last_start_h + (dot_size / 2), 
+                               last_start_v - (dot_size / 2), 
+                               finish_h + (dot_size / 2), 
+                               finish_v - (dot_size / 2)),
                                fill=0,width=1
                                )
                 last_start_h = start_h
