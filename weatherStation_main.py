@@ -308,7 +308,10 @@ class weather_station:
                     (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                     fill=fill_col,
                 )
-                draw.line(start_h,start_v, finish_h, finish_v)
+                draw.line(
+                    (start_h,start_v, finish_h, finish_v),
+            fill=0,
+            width=1)
                 iter = iter + 1
             draw.text(
                 (corner[0] + (graph_dim[1] / 2), corner[1]),
@@ -332,7 +335,7 @@ class weather_station:
         news_updates = self.news.update()
         news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
-        draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
+        draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
         return draw
 
     def forecast(self, day_or_hour, no_of_time):
