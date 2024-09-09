@@ -299,6 +299,8 @@ class weather_station:
         dot_size = 2
         iter = 0
         for i in elements:
+            last_start_h = 0
+            last_start_v = 0
             for j in weather_data:
                 start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
                 start_v = corner[1] - dot_size - weather_data[iter]
@@ -308,10 +310,10 @@ class weather_station:
                     (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                     fill=fill_col,
                 )
-                draw.line(
-                    (start_h,start_v, finish_h, finish_v),
-            fill=0,
-            width=1)
+                if last_start_h != 0:
+                    draw.line((last_start_h,last_start_v, finish_h, finish_v),fill=0,width=1)
+                last_start_h = start_h
+                last_start_v = start_v
                 iter = iter + 1
             draw.text(
                 (corner[0] + (graph_dim[1] / 2), corner[1]),
