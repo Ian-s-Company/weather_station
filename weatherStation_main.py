@@ -227,7 +227,7 @@ class weather_station:
         #for i in self.weather.get_hourly(None, 8):
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
-        for i in self.weather.get_daily(None, 8):
+        for i in self.weather.get_daily(7):
             day_temps.append(i["temp"])
             day_feels.append(i["feels_like"])
         draw.text((165, 20), "CO", fill=0, font=font12)
