@@ -32,10 +32,10 @@ class News:
                 continue
 
             if news_data.ok:
-                logging.info(self.news_data.status_code)
+                logging.info(news_data.status_code)
                 got_data = True
                 logging.info("Got data from News URL to return successfully")
-                news_list = self.news_data.json()
+                news_list = news_data.json()
             else:
                 logging.info("Waiting for the News URL to return successfully")
                 news_list = None
@@ -47,7 +47,7 @@ class News:
         list_news = []
         if news_list["status"] == "ok":
             for i in range(len(news_list["articles"])):
-                line = self.news_list["articles"][i]["title"]
+                line = news_list["articles"][i]["title"]
                 line = textwrap.wrap(line, width=self.width)
                 list_news.append(line)
         else:
