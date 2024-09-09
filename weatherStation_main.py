@@ -250,7 +250,7 @@ class weather_station:
         time = "day"
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
-            #draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
+            # draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
             draw, icon = self.day_summary(draw, day_info, start_pixel)
             Himage = Image.new(
                 "1", (self.epd.height, self.epd.width), 255
@@ -567,7 +567,9 @@ class weather_station:
         )  # CURRENT TEMP LABEL
         test_image.text(
             (0, 56),
-            str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
+            str(round(current_info["temp"]))
+            + "/"
+            + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
@@ -931,9 +933,9 @@ def main():
             time.sleep(sleep_time)
             weather_station_inst.button3(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button4(epd)            
+            weather_station_inst.button4(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button5(epd)            
+            weather_station_inst.button5(epd)
             time.sleep(sleep_time)
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
