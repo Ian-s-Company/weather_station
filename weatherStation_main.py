@@ -222,14 +222,14 @@ class weather_station:
         draw = self.framework(draw)
         #hour_temps = []
         #hour_feels = []
-        day_temps = []
-        day_feels = []
+        day_high_temps = []
+        day_low_temps = []
         #for i in self.weather.get_hourly(None, 8):
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
         for i in self.weather.get_daily_all():
-            day_temps.append(i["temp"])
-            day_feels.append(i["feels_like"])
+            day_high_temps.append(i["temp"]["max"])
+            day_low_temps.append(i["temp"]["min"])
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
@@ -247,10 +247,10 @@ class weather_station:
         )
         '''
         draw = self.data_graph(
-            self.weather, draw, day_temps, ["temp/feels like"], [115, 140], [5, 20]
+            self.weather, draw, day_high_temps, ["high/low"], [115, 140], [5, 20]
         )
         draw = self.data_graph(
-            self.weather, draw, day_feels, [""], [115, 140], [5, 20]
+            self.weather, draw, day_low_temps, [""], [115, 140], [5, 20]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
