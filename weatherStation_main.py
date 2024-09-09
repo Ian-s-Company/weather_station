@@ -923,17 +923,17 @@ def main():
                 sleep_time = 15
             else:
                 sleep_time = 225
-            weather_station_inst.three_day_forecast
+            weather_station_inst.three_day_forecast(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button1
+            weather_station_inst.button1(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button2
+            weather_station_inst.button2(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button3
+            weather_station_inst.button3(epd)
             time.sleep(sleep_time)
-            weather_station_inst.button4        
+            weather_station_inst.button4(epd)            
             time.sleep(sleep_time)
-            weather_station_inst.button5       
+            weather_station_inst.button5(epd)            
             time.sleep(sleep_time)
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
