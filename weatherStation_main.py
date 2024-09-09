@@ -195,7 +195,8 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         draw = self.open_framework(draw)
-        news_selected = self.news.selected_title()
+        news_updates = self.news.updates()
+        news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
         draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
@@ -271,6 +272,7 @@ class weather_station:
         start_pixel,
         fill_col="black",
     ):  # weather data is array of data, elements is the data field to be graphed
+        
         corner = [start_pixel[0], start_pixel[1] + graph_dim[0]]
 
         draw.line(
@@ -326,7 +328,8 @@ class weather_station:
         draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
-        news_selected = self.news.selected_title()
+        news_updates = self.news.updates()
+        news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
         return draw
@@ -729,7 +732,8 @@ class weather_station:
         HimageRed.paste(sunrise_icon, (250, 90))
         HimageRed.paste(sunset_icon, (250, 120))
 
-        news_selected = self.news.selected_title()
+        news_updates = self.news.updates()
+        news_selected = self.news.selected_title(news_updates)
         epaperBlack7x5img.text((410, 40), "News: ", fill=0, font=font24)
         epaperBlack7x5img.text((420, 70), news_selected[0][0], fill=0, font=font16)
         epaperBlack7x5img.text((420, 90), news_selected[1][0], fill=0, font=font16)
