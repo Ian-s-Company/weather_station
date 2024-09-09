@@ -18,8 +18,6 @@ class Weather:
         self.longitude = longitude
         self.api_key = api_id
         self.app_dir = app_dir
-
-    def initialize(self):
         self.max_lvl_pollution = {
             "co": 10000,
             "no": 30,

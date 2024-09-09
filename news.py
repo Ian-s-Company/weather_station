@@ -7,16 +7,17 @@ import time
 
 
 class News:
-    def __init__(self, width):
+    def __init__(self, width, api_id):
         self.width = width
+        self.api_key = api_id
 
-    def update(self, api_id):
+    def update(self):
         source = "the-washington-post"
         news_url = (
             "https://newsapi.org/v2/top-headlines?source="
             + source
             + "&apiKey="
-            + api_id
+            + self.api_key
             + "&country=us"
         )
         got_data = False
