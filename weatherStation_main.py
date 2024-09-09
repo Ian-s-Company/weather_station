@@ -195,7 +195,7 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         draw = self.open_framework(draw)
-        news_updates = self.news.updates()
+        news_updates = self.news.update()
         news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
@@ -328,7 +328,7 @@ class weather_station:
         draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
-        news_updates = self.news.updates()
+        news_updates = self.news.update()
         news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
@@ -732,7 +732,7 @@ class weather_station:
         HimageRed.paste(sunrise_icon, (250, 90))
         HimageRed.paste(sunset_icon, (250, 120))
 
-        news_updates = self.news.updates()
+        news_updates = self.news.update()
         news_selected = self.news.selected_title(news_updates)
         epaperBlack7x5img.text((410, 40), "News: ", fill=0, font=font24)
         epaperBlack7x5img.text((420, 70), news_selected[0][0], fill=0, font=font16)
