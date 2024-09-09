@@ -241,7 +241,7 @@ class weather_station:
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
-    def three_day_forecast(self, draw):  # Weekend Forecast
+    def three_day_forecast(self):  # Weekend Forecast
         day_pixel_array = [
             [0, 20],
             [66, 20],
@@ -250,6 +250,7 @@ class weather_station:
         time = "day"
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
+            #draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
             draw, icon = self.day_summary(draw, day_info, start_pixel)
             Himage = Image.new(
                 "1", (self.epd.height, self.epd.width), 255
@@ -918,13 +919,27 @@ def main():
         btn4.when_pressed = weather_station_inst.button4
         while True:
             weather_station_inst = weather_station(epd, weather, news)
-            weather_station_inst.draw2in7(epd)
+            if debug == True:
+                sleep_time = 15
+            else:
+                sleep_time = 225
+            weather_station_inst.three_day_forecast(epd)
+            time.sleep(sleep_time)
+            weather_station_inst.button1(epd)
+            time.sleep(sleep_time)
+            weather_station_inst.button2(epd)
+            time.sleep(sleep_time)
+            weather_station_inst.button3(epd)
+            time.sleep(sleep_time)
+            weather_station_inst.button4(epd)            
+            time.sleep(sleep_time)
+            weather_station_inst.button5(epd)            
+            time.sleep(sleep_time)
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
             logger.info("------------")
             if debug == True:
                 sys.exit(0)
-            time.sleep(900)
     elif screen_size == "7x5in":
         logger.info("Initializing EPD for 7x5in")
         epd = epd7in5b_V2.EPD()
