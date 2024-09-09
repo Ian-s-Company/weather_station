@@ -197,7 +197,7 @@ class weather_station:
         draw = self.open_framework(draw)
         news_selected = self.news.selected_title()
         draw.text((0, 155), "News: ", fill=0, font=font12)
-        draw.text((30, 155), news_selected[0][0], fill=0, font=font12)
+        draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
         draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
         draw.line((176, 20, 176, 150), fill=0, width=1)  # VERTICAL SEPARATION
         start_pixel = [0, 20]
@@ -233,10 +233,10 @@ class weather_station:
         draw.text((165, 110), "Ozone", fill=0, font=font12)
         draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
         draw = self.data_graph(
-            self.weather, draw, hour_temps, ["temp"], [55, 140], [5, 25], "black"
+            self.weather, draw, hour_temps, ["temp"], [55, 140], [5, 25]
         )
         draw = self.data_graph(
-            self.weather, draw, hour_feels, ["feels_like"], [55, 140], [5, 83], "black"
+            self.weather, draw, hour_feels, ["feels_like"], [55, 140], [5, 83]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -272,6 +272,7 @@ class weather_station:
         fill_col="black",
     ):  # weather data is array of data, elements is the data field to be graphed
         corner = [start_pixel[0], start_pixel[1] + graph_dim[0]]
+
         draw.line(
             (
                 start_pixel[0],
@@ -917,13 +918,14 @@ def main():
         btn3 = Button(13)
         btn3.when_pressed = weather_station_inst.button3
         btn4 = Button(19)
-        btn4.when_pressed = weather_station_inst.button4
+        btn4.when_pressed = weather_station_inst.button5
         while True:
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
                 sleep_time = 15
             else:
                 sleep_time = 225
+            '''
             weather_station_inst.button1()
             time.sleep(sleep_time)
             weather_station_inst.button2()
@@ -932,6 +934,7 @@ def main():
             time.sleep(sleep_time)
             weather_station_inst.button4()            
             time.sleep(sleep_time)
+            '''
             weather_station_inst.button5()            
             time.sleep(sleep_time)
             logger.info("Screen is drawn")
