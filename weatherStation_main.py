@@ -225,7 +225,7 @@ class weather_station:
         draw = ImageDraw.Draw(Himage)
         draw = self.open_framework(draw)
         news_selected = self.news.selected_title()
-        draw.text((0, 155), "News:", fill=0, font=font12)
+        draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((30, 155), news_selected[0][0], fill=0, font=font12)
         draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
         draw.line((176, 20, 176, 150), fill=0, width=1)  # VERTICAL SEPARATION
@@ -250,7 +250,7 @@ class weather_station:
         time = "day"
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
-            # draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
+            #draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
             draw, icon = self.day_summary(draw, day_info, start_pixel)
             Himage = Image.new(
                 "1", (self.epd.height, self.epd.width), 255
@@ -567,9 +567,7 @@ class weather_station:
         )  # CURRENT TEMP LABEL
         test_image.text(
             (0, 56),
-            str(round(current_info["temp"]))
-            + "/"
-            + str(round(current_info["feels_like"])),
+            str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
@@ -730,7 +728,7 @@ class weather_station:
         HimageRed.paste(sunset_icon, (250, 120))
 
         news_selected = self.news.selected_title()
-        epaperBlack7x5img.text((410, 40), "News:", fill=0, font=font24)
+        epaperBlack7x5img.text((410, 40), "News: ", fill=0, font=font24)
         epaperBlack7x5img.text((420, 70), news_selected[0][0], fill=0, font=font16)
         epaperBlack7x5img.text((420, 90), news_selected[1][0], fill=0, font=font16)
         epaperBlack7x5img.text((420, 110), news_selected[2][0], fill=0, font=font16)
@@ -925,17 +923,17 @@ def main():
                 sleep_time = 15
             else:
                 sleep_time = 225
-            weather_station_inst.three_day_forecast(epd)
+            weather_station_inst.three_day_forecast
             time.sleep(sleep_time)
-            weather_station_inst.button1(epd)
+            weather_station_inst.button1
             time.sleep(sleep_time)
-            weather_station_inst.button2(epd)
+            weather_station_inst.button2
             time.sleep(sleep_time)
-            weather_station_inst.button3(epd)
+            weather_station_inst.button3
             time.sleep(sleep_time)
-            weather_station_inst.button4(epd)
+            weather_station_inst.button4        
             time.sleep(sleep_time)
-            weather_station_inst.button5(epd)
+            weather_station_inst.button5       
             time.sleep(sleep_time)
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
