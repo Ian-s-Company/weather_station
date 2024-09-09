@@ -34,7 +34,8 @@ class Weather:
         self.prevision[1][6] = [
             self.data["daily"][0]["pressure"],
             round(self.data["daily"][0]["temp"]["day"], 0),
-        ]
+        ],
+        self.pol_data = self.update_pol()
 
     def update_pol(self):
         pollution_url = (
