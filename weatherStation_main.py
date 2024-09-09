@@ -250,7 +250,7 @@ class weather_station:
         time = "day"
         i = 1
         for start_pixel in day_pixel_array:
-            day_info = self.forecast(time, "day", i)
+            day_info = self.forecast(time, i)
             #draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
             draw, icon = self.day_summary(draw, day_info, start_pixel)
             Himage = Image.new(
