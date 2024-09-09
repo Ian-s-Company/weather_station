@@ -237,7 +237,7 @@ class weather_station:
             self.weather, draw, hour_temps, ["temp/feels like"], [75, 140], [5, 95]
         )
         draw = self.data_graph(
-            self.weather, draw, hour_feels, [""], [75, 140], [5, 79]
+            self.weather, draw, hour_feels, [""], [75, 140], [5, 95]
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -317,8 +317,8 @@ class weather_station:
                                finish_v - (dot_size / 2)),
                                fill=0,width=1
                                )
-                last_start_h = start_h
-                last_start_v = start_v
+                last_start_h = finish_h
+                last_start_v = finish_v
                 iter = iter + 1
             draw.text(
                 (corner[0] + (graph_dim[1] / 2), corner[1]),
