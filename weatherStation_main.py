@@ -320,9 +320,9 @@ class weather_station:
             weather_data = eval(str(j) + weather_metric) 
             print("The weather_data for this datapoint is " + str(weather_data))
             start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
-            start_v = corner[1] - dot_size - round(weather_data[iter])
+            start_v = corner[1] - dot_size - round(weather_data)
             finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
-            finish_v = corner[1] - dot_size - round(weather_data[iter])
+            finish_v = corner[1] - dot_size - round(weather_data)
             draw.ellipse(
                 (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                 fill=fill_col,
