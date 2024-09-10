@@ -129,12 +129,12 @@ class weather_station:
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
         draw.line((0, 150, 264, 152), fill=0, width=1)  # HORIZONTAL SEPARATION
-        return 0
+        return draw
 
     def get_date_header(self, draw):
         draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
         draw.line((0, 15, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
-        return 0
+        return draw
 
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
