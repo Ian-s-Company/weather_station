@@ -337,11 +337,11 @@ class weather_station:
             ) # Drawing Data Point
 
             if point_label_position == "top":
-                label_position = finish_v - (dot_size / 2) - 6
+                label_position = finish_v - dot_size - 15
             elif point_label_position == "bottom":
-                label_position = finish_v + (dot_size / 2) + 6
+                label_position = finish_v + dot_size + 2
             else:
-                label_position = finish_v + (dot_size / 2)
+                label_position = finish_v + dot_size
 
             draw.text(
                 (round(start_h - 4), 
@@ -365,12 +365,12 @@ class weather_station:
             if last_start_h != 0:
                 draw.line((last_start_h + (dot_size / 2), 
                             last_start_v - (dot_size / 2), 
-                            finish_h + (dot_size / 2), 
-                            finish_v - (dot_size / 2)),
+                            (finish_h + start_h) / 2, 
+                            (finish_v + start_v) / 2),
                             fill=0,width=1
                             )
-            last_start_h = finish_h
-            last_start_v = finish_v
+            last_start_h = (start_h + finish_h) / 2
+            last_start_v = (start_v + finish_v) / 2
             iter = iter + 1
         draw.text(
             (corner[0] + (graph_dim[1] / 2), 
