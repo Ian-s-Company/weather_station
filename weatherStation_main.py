@@ -294,7 +294,7 @@ class weather_station:
         fill_col="black",
         point_label_position=None,
         x_label=None,
-        title=None
+        title=""
     ):  # weather data is array of data, elements is the data field to be graphed
         
         corner = [start_pixel[0], start_pixel[1] + graph_dim[0]]
@@ -643,10 +643,10 @@ class weather_station:
             font=font16,
         )  # CURRENT CONDITIONS
         test_image.text(
-            (0, 48), "Temp/Feels Like", fill=0, font=font12
+            (0, 50), "Temp/Feels Like", fill=0, font=font12
         )  # CURRENT TEMP LABEL
         test_image.text(
-            (0, 56),
+            (0, 59),
             str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
