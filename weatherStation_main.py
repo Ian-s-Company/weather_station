@@ -136,12 +136,7 @@ class weather_station:
         draw.line((0, 15, 264, 15), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
-    def button1(self):  # Home Button
-        logger.info("Drawing Button 1 screen")
-        self.weather.update()
-        self.news.update()
-        draw = self.draw2in7(self.epd)
-        return 0
+
 
     def button2(self):  # Hourly Forecast
         logger.info("Drawing Hourly Forecast")
@@ -581,13 +576,18 @@ class weather_station:
         icon = icon.resize((45, 45))
         return draw, icon
 
-    def draw2in7(self, epd):
+    def button1(self):  # Home Button
+        logger.info("Drawing Button 1 screen")
+        self.weather.update()
+        self.news.update()
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         self.weather.update()
         self.weather.update_pol()
         self.news.update()
+        draw = self.get_news_footer(draw)
+        draw = self.get_date_header(draw)
         current_info = self.weather.get_current()
         logger.info(
             "Begin update @"
@@ -605,8 +605,8 @@ class weather_station:
         sunset_icon = sunset_icon.resize((30, 30))
         Himage.paste(sunrise_icon, (225, 20))
         Himage.paste(sunset_icon, (225, 60))
-        test_image = ImageDraw.Draw(Himage)
-        test_image = self.framework(test_image)
+        draw = ImageDraw.Draw(Himage)
+
         icon_list = []
         for i in current_info["weather"]:
             icon = self.weather.get_icon(i["icon"])
@@ -626,42 +626,42 @@ class weather_station:
             cur_icon1 = Image.open(cur_icon_name1)  # .convert('LA')
             cur_icon1 = cur_icon1.resize((40, 40), None, None, 3)
             Himage.paste(cur_icon1, (100, 100))
-        test_image.text((165, 20), "Sunrise", fill=0, font=font12)
-        test_image.text(
+        draw.text((165, 20), "Sunrise", fill=0, font=font12)
+        draw.text(
             (165, 30), self.weather.current_sunrise(), fill=0, font=font20
         )  # SUNRISE TIME
-        test_image.text((165, 50), "Sunset", fill=0, font=font12)
-        test_image.text(
+        draw.text((165, 50), "Sunset", fill=0, font=font12)
+        draw.text(
             (165, 60), self.weather.current_sunset(), fill=0, font=font20
         )  # SUNSET TIME
-        test_image.text((165, 80), "Humidity %", fill=0, font=font12)
-        test_image.text(
+        draw.text((165, 80), "Humidity %", fill=0, font=font12)
+        draw.text(
             (165, 90), str(current_info["humidity"]), fill=0, font=font20
         )  # HUMIDTY
-        test_image.text(
+        draw.text(
             (0, 25),
             self.weather.weather_description(self.weather.current_weather())[1].upper(),
             fill=0,
             font=font16,
         )  # CURRENT CONDITIONS
-        test_image.text(
+        draw.text(
             (0, 50), "Temp/Feels Like", fill=0, font=font12
         )  # CURRENT TEMP LABEL
-        test_image.text(
+        draw.text(
             (0, 59),
             str(round(current_info["temp"])) + "/" + str(round(current_info["feels_like"])),
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
-        test_image.text((85, 66), "High/Low", fill=0, font=font12)
-        test_image.text(
+        draw.text((85, 66), "High/Low", fill=0, font=font12)
+        draw.text(
             (80, 75),
             self.weather.current_daymax() + "/" + self.weather.current_daymin(),
             fill=0,
             font=font24,
         )  # CURRENT DAY HIGH/LOW
-        test_image.text((2, 115), "Wind", fill=0, font=font12)
-        test_image.text(
+        draw.text((2, 115), "Wind", fill=0, font=font12)
+        draw.text(
             (2, 130),
             str(current_info["wind_speed"])
             + " "
@@ -669,20 +669,20 @@ class weather_station:
             fill=0,
             font=font14,
         )  # CURRENT WIND
-        test_image.text((165, 116), "Rain 24h", fill=0, font=font12)
+        draw.text((165, 116), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
         else:
             day_rain = 0
-        test_image.text(
+        draw.text(
             (165, 130),
             str(round(day_info["pop"] * 100)) + "%/" + str(round(day_rain)) + " mm",
             fill=0,
             font=font12,
         )  # Day Rain
-        epd.display(epd.getbuffer(Himage))
+        draw.display(draw.getbuffer(Himage))
 
-        return test_image
+        return draw
 
     def draw7in5(self, epd):  # 800 x 480
         HimageBlack = Image.new(
