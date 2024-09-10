@@ -228,8 +228,8 @@ class weather_station:
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
         for i in self.weather.get_daily_all():
-            day_high_temps[i["dt"]] = i["temp"]["max"]
-            day_low_temps[i["dt"]] = i["temp"]["min"]
+            day_high_temps[str(i["dt"])] = i["temp"]["max"]
+            day_low_temps[str(i["dt"])] = i["temp"]["min"]
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
