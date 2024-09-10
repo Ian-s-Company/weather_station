@@ -136,8 +136,6 @@ class weather_station:
         draw.line((0, 15, 264, 15), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
-
-
     def button2(self):  # Hourly Forecast
         logger.info("Drawing Hourly Forecast")
         Himage = Image.new(
@@ -241,26 +239,6 @@ class weather_station:
         draw = self.data_graph(
             self.weather, draw, daily_all, '["temp"]["min"]', [150, 240], [5, 5], point_label_position="bottom"
         )
-        self.epd.display(self.epd.getbuffer(Himage))
-        return 0
-
-    def three_day_forecast(self):  # Weekend Forecast
-        day_pixel_array = [
-            [0, 20],
-            [66, 20],
-            [132, 20],
-        ]
-        time = "day"
-        i = 1
-        for start_pixel in day_pixel_array:
-            day_info = self.forecast(time, i)
-            #draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
-            draw, icon = self.day_summary(draw, day_info, start_pixel)
-            Himage = Image.new(
-                "1", (self.epd.height, self.epd.width), 255
-            )  # 255: clear the frame
-            Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
-            i = i + 1
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
@@ -380,23 +358,6 @@ class weather_station:
             fill=0,
             font=font12,
         )
-        return draw
-
-    def open_framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
-        draw.line((0, 15, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
-        draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
-        return draw
-
-    def framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
-        draw.line((0, 20, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
-        draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
-        draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
-        news_updates = self.news.update()
-        news_selected = self.news.selected_title(news_updates)
-        draw.text((0, 155), "News: ", fill=0, font=font12)
-        draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
         return draw
 
     def forecast(self, day_or_hour, no_of_time):
@@ -611,9 +572,9 @@ class weather_station:
             cur_icon1 = Image.open(cur_icon_name1)  # .convert('LA')
             cur_icon1 = cur_icon1.resize((40, 40), None, None, 3)
             Himage.paste(cur_icon1, (100, 100))
-        draw.text((165, 20), "Sunrise", fill=0, font=font12)
+        draw.text((165, 18), "Sunrise", fill=0, font=font12)
         draw.text(
-            (165, 30), self.weather.current_sunrise(), fill=0, font=font20
+            (165, 28), self.weather.current_sunrise(), fill=0, font=font20
         )  # SUNRISE TIME
         draw.text((165, 53), "Sunset", fill=0, font=font12)
         draw.text(
