@@ -386,7 +386,7 @@ class weather_station:
             last_start_v = (start_v + finish_v) / 2
             iter = iter + 1
         draw.text(
-            (corner[0] + (graph_dim[1] / 2) - 60, 
+            (corner[0] + round(graph_dim[1] / 2) - 60, 
             start_pixel[1]),
             title,
             fill=0,
@@ -658,22 +658,22 @@ class weather_station:
             fill=0,
             font=font24,
         )  # CURRENT DAY HIGH/LOW
-        test_image.text((0, 90), "Current Wind", fill=0, font=font12)
+        test_image.text((2, 130), "Current Wind", fill=0, font=font12)
         test_image.text(
-            (0, 102),
+            (2, 130),
             str(current_info["wind_speed"])
             + " "
             + str(self.weather.wind_dir(current_info["wind_deg"])),
             fill=0,
             font=font14,
         )  # CURRENT WIND
-        test_image.text((0, 116), "Rain 24h", fill=0, font=font12)
+        test_image.text((165, 116), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
         else:
             day_rain = 0
         test_image.text(
-            (0, 130),
+            (165, 130),
             str(round(day_info["pop"] * 100)) + "%/" + str(round(day_rain)) + " mm",
             fill=0,
             font=font12,
