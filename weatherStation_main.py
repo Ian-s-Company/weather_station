@@ -332,6 +332,7 @@ class weather_station:
                     position = 6
                 elif point_label_position == "bottom":
                     position = -6
+                print("The timestamp for this datapoint is " + str(timestamp))
                 if x_label == "day":
                     date_string = datetime.fromtimestamp(timestamp)
                     short_day = date_string.strftime("%a")
