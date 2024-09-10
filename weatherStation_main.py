@@ -253,6 +253,26 @@ class weather_station:
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
+    def button6(self):  # Other Stuff
+        logger.info("Drawing Button 5 screen")
+        Himage = Image.new(
+            "1", (self.epd.height, self.epd.width), 255
+        )  # 255: clear the frame
+        draw = ImageDraw.Draw(Himage)
+
+        day_high_temps = {}
+        day_low_temps = {}
+
+        daily_all = self.weather.get_daily_all()
+        draw = self.data_graph(
+            self.weather, draw, daily_all, '["temp"]["max"]', [150, 240], [5, 5], point_label_position="top", x_label="day"
+        )
+        draw = self.data_graph(
+            self.weather, draw, daily_all, '["temp"]["min"]', [150, 240], [5, 5], point_label_position="bottom"
+        )
+        self.epd.display(self.epd.getbuffer(Himage))
+        return 0
+
     def three_day_forecast(self):  # Weekend Forecast
         day_pixel_array = [
             [0, 20],
@@ -356,7 +376,7 @@ class weather_station:
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
-                    (round(start_h - 6), 
+                    (round(start_h -4), 
                     corner[1]),
                     short_day,
                     fill=0,
@@ -1003,7 +1023,7 @@ def main():
             weather_station_inst.button4()            
             time.sleep(sleep_time)
             '''
-            weather_station_inst.button5()            
+            weather_station_inst.button6()            
             time.sleep(sleep_time)
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
