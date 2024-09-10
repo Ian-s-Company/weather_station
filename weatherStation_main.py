@@ -336,7 +336,7 @@ class weather_station:
                 print("Labelling with " + str(round(start_h - 4)) + ", " + str(corner[1] - position) + ", and " + str(round(weather_data)))
                 draw.text(
                     (round(start_h - 4), 
-                    finish_v + (dot_size / 2) - position),
+                    finish_v + (dot_size / 2) + position),
                     str(round(weather_data)),
                     fill=0,
                     font=font8,
@@ -347,7 +347,7 @@ class weather_station:
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
-                    (round(start_h - (dot_size / 2)), 
+                    (round(start_h - 4), 
                     corner[1]),
                     short_day,
                     fill=0,
@@ -364,7 +364,8 @@ class weather_station:
             last_start_v = finish_v
             iter = iter + 1
         draw.text(
-            (corner[0] + (graph_dim[1] / 2), corner[1]),
+            (corner[0] + (graph_dim[1] / 2), 
+            corner[1]),
             "",
             fill=0,
             font=font8,
