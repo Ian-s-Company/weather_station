@@ -219,7 +219,7 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw = self.framework(draw)
+        draw = self.open_framework(draw)
         #hour_temps = []
         #hour_feels = []
         day_high_temps = {}
