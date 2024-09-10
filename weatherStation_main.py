@@ -683,7 +683,7 @@ class weather_station:
             fill=0,
             font=font12,
         )  # Day Rain
-        draw.display(self.epd.getbuffer(Himage))
+        self.epd.display(self.epd.getbuffer(Himage))
 
         return draw
 
