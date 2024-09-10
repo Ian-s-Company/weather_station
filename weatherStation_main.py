@@ -326,16 +326,16 @@ class weather_station:
             start_v = corner[1] - dot_size - round(weather_data)
             finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
             finish_v = corner[1] - dot_size - round(weather_data)
-            print("Start Horizontal: " + start_h)
-            print("Finish Horizontal: " + finish_h)
-            print("Start Vertical: " + start_v)
-            print("Finish Vertical: " + finish_v)
+            print("Start Horizontal: " + str(start_h))
+            print("Finish Horizontal: " + str(finish_h))
+            print("Start Vertical: " + str(start_v))
+            print("Finish Vertical: " + str(finish_v))
             
             draw.ellipse(
                 (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                 fill=fill_col,
             ) # Drawing Data Point
-            
+
             if point_label_position == "top":
                 label_position = finish_v - (dot_size / 2) - 6
             elif point_label_position == "bottom":
