@@ -222,8 +222,8 @@ class weather_station:
         draw = self.framework(draw)
         #hour_temps = []
         #hour_feels = []
-        day_high_temps = []
-        day_low_temps = []
+        day_high_temps = {}
+        day_low_temps = {}
         #for i in self.weather.get_hourly(None, 8):
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
