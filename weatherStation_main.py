@@ -136,7 +136,7 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
         draw.line((0, 16, 264, 16), fill=0, width=1)
         time = "hour"
         hour_pixel_array = [
@@ -165,15 +165,15 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)
-        draw.line((0, 20, 264, 20), fill=0, width=1)
-        start_pixel = [0, 20]
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
+        draw.line((0, 16, 264, 16), fill=0, width=1)
+        start_pixel = [0, 16]
         time = "day"
         day_pixel_array = [
-            [0, 20],
-            [66, 20],
-            [132, 20],
-            [198, 20],
+            [0, 16],
+            [66, 16],
+            [132, 16],
+            [198, 16],
             [0, 100],
             [66, 100],
             [132, 100],
