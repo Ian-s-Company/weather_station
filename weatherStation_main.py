@@ -1013,8 +1013,8 @@ def main():
             time.sleep(sleep_time)
             weather_station_inst.button6()            
             time.sleep(sleep_time)
-            #weather_station_inst.button4()            
-            #time.sleep(sleep_time)
+            weather_station_inst.button5()            
+            time.sleep(sleep_time)
 
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
