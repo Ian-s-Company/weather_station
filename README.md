@@ -43,7 +43,7 @@ I also set up a process to download weather icons if needed.
 # It should look something like this when you turn it on 
 ( I can provide information on the lego case if you are interested)
 
-![alt text](pics/20240909_121826.jpg)
+![alt text](pics/20240910_161604.jpg)
 
 # When you click the top button it would have the same screen
 
@@ -51,5 +51,5 @@ I also set up a process to download weather icons if needed.
 ![alt text](pics/20240819_185850.jpg)
 # The third button would look like this (Forecast by day):
 ![alt text](pics/20240819_185902.jpg)
-# The fourth button would look like this (Forecast by day with better spacing):
-![alt text](pics/20240819_185914.jpg)
+# The fourth button would look like this (Forecast by day graph):
+![alt text](pics/20240910_161931.jpg)
