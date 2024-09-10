@@ -194,28 +194,6 @@ class weather_station:
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
-    def button4(self):
-        logger.info("Drawing Button 4 screen")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
-        draw = self.get_news_footer(draw)
-        draw = self.get_date_header(draw)
-        draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
-        draw.line((176, 20, 176, 150), fill=0, width=1)  # VERTICAL SEPARATION
-        start_pixel = [0, 20]
-        time = "day"
-        day_pixel_array = [[0, 20], [89, 20], [177, 20]]
-        i = 0
-        for start_pixel in day_pixel_array:
-            day_info = self.forecast(time, i)
-            draw, icon = self.day_summary(draw, day_info, start_pixel)
-            Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
-            i = i + 1
-        self.epd.display(self.epd.getbuffer(Himage))
-        return 0
-
     def button5(self):  # Other Stuff
         logger.info("Drawing Button 5 screen")
         Himage = Image.new(
@@ -239,6 +217,10 @@ class weather_station:
         draw.text((2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20)  # CLOUD COVER
         draw.text((2, 50), "UVI", fill=0, font=font12)
         draw.text((2, 60), str(self.weather.current_uvi()), fill=0, font=font20)  # UVI
+        draw.text((2, 20), "Dew Point", fill=0, font=font12)
+        draw.text((2, 30), str(self.weather.current_dew_point()), fill=0, font=font20)  # Dew Point
+        draw.text((2, 50), "Pressure", fill=0, font=font12)
+        draw.text((2, 60), str(self.weather.current_pressure()), fill=0, font=font20)  # Pressure
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 

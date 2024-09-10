@@ -143,6 +143,12 @@ class Weather:
     def current_uvi(self):
         return "{:.0f}".format(self.data["current"]["uvi"])
 
+    def current_dew_point(self):
+        return "{:.0f}".format(self.data["current"]["dew_point"])
+
+    def current_pressure(self):
+        return "{:.0f}".format(self.data["current"]["pressure"])
+
     def current_feelslike(self):
         return "{:.0f}".format(self.data["current"]["feels_like"])
 
