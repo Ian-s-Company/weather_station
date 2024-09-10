@@ -245,10 +245,10 @@ class weather_station:
         )
         '''
         draw = self.data_graph(
-            self.weather, draw, daily_all, ["temp"]["max"], [115, 140], [5, 20], point_label_position="top", x_label="day"
+            self.weather, draw, daily_all, '["temp"]["max"]', [115, 140], [5, 20], point_label_position="top", x_label="day"
         )
         draw = self.data_graph(
-            self.weather, draw, daily_all, ["temp"]["min"], [115, 140], [5, 20], point_label_position="bottom"
+            self.weather, draw, daily_all, '["temp"]["min"]', [115, 140], [5, 20], point_label_position="bottom"
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
