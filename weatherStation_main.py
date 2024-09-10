@@ -576,7 +576,7 @@ class weather_station:
         icon = icon.resize((45, 45))
         return draw, icon
 
-    def button1(self):  # Home Button
+    def button1(self, epd):  # Home Button
         logger.info("Drawing Button 1 screen")
         self.weather.update()
         self.news.update()
@@ -596,7 +596,7 @@ class weather_station:
             + " longitude "
             + lon
         )
-        
+
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
         sunrise_icon = Image.open(app_dir + "/static_icons/sunrise.bmp")
@@ -683,7 +683,7 @@ class weather_station:
             fill=0,
             font=font12,
         )  # Day Rain
-        draw.display(draw.getbuffer(Himage))
+        draw.display(epd.getbuffer(Himage))
 
         return draw
 
