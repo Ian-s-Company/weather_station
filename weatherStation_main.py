@@ -128,7 +128,7 @@ class weather_station:
         news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
-        draw.line((0, 150, 264, 152), fill=0, width=1)  # HORIZONTAL SEPARATION
+        draw.line((0, 150, 264, 154), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
     def get_date_header(self, draw):
@@ -639,11 +639,8 @@ class weather_station:
             (165, 90), str(current_info["humidity"]), fill=0, font=font20
         )  # HUMIDTY
         test_image.text(
-            (0, 20), "Current conditions", fill=0, font=font12
-        )  # CURRENT CONDITIONS LABEL
-        test_image.text(
-            (0, 30),
-            self.weather.weather_description(self.weather.current_weather())[1],
+            (0, 25),
+            self.weather.weather_description(self.weather.current_weather())[1].upper(),
             fill=0,
             font=font16,
         )  # CURRENT CONDITIONS
@@ -656,14 +653,14 @@ class weather_station:
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
-        test_image.text((85, 63), "High/Low", fill=0, font=font12)
+        test_image.text((85, 66), "High/Low", fill=0, font=font12)
         test_image.text(
-            (80, 70),
+            (80, 75),
             self.weather.current_daymax() + "/" + self.weather.current_daymin(),
             fill=0,
             font=font24,
         )  # CURRENT DAY HIGH/LOW
-        test_image.text((2, 110), "Current Wind", fill=0, font=font12)
+        test_image.text((2, 115), "Wind", fill=0, font=font12)
         test_image.text(
             (2, 130),
             str(current_info["wind_speed"])
