@@ -342,10 +342,12 @@ class weather_station:
             print("Corner is: " + str(corner))
             print("Pixel Spacing is: " + str(pixel_spacing))
             print("Iteration is: " + str(iter))
-            start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
+            
+            start_h = corner[0] - dot_size + (pixel_spacing * iter)
             start_v = corner[1] - dot_size - round(weather_data)
-            finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
+            finish_h = corner[0] + dot_size + (pixel_spacing * iter)
             finish_v = corner[1] + dot_size - round(weather_data)
+
             print("Start Horizontal: " + str(start_h))
             print("Finish Horizontal: " + str(finish_h))
             print("Start Vertical: " + str(start_v))
@@ -357,18 +359,18 @@ class weather_station:
             ) # Drawing Data Point
 
             if point_label_position == "top":
-                label_position = finish_v - dot_size - 15
+                label_position = finish_v - dot_size - 18
             elif point_label_position == "bottom":
                 label_position = finish_v + dot_size + 2
             else:
                 label_position = finish_v + dot_size
 
             draw.text(
-                (round(start_h - 4), 
+                (round(start_h - 6), 
                 label_position),
                 str(round(weather_data)),
                 fill=0,
-                font=font8,
+                font=font12,
             )
 
             date_string = datetime.fromtimestamp(timestamp)
@@ -376,11 +378,11 @@ class weather_station:
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
-                    (round(start_h -4), 
+                    (round(start_h -6), 
                     corner[1]),
                     short_day,
                     fill=0,
-                    font=font8
+                    font=font12
                 )
             if last_start_h != 0:
                 draw.line((last_start_h + (dot_size / 2), 
@@ -393,11 +395,11 @@ class weather_station:
             last_start_v = (start_v + finish_v) / 2
             iter = iter + 1
         draw.text(
-            (corner[0] + (graph_dim[1] / 2), 
-            corner[1]),
-            "",
+            (corner[0] + (graph_dim[1] / 2) -20, 
+            start_pixel[1]),
+            "Daily High/Low",
             fill=0,
-            font=font8,
+            font=font16,
         )
         return draw
 
