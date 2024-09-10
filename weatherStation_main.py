@@ -374,7 +374,7 @@ class weather_station:
             )
 
             date_string = datetime.fromtimestamp(timestamp)
-
+            short_date = date_string.strftime("%D")
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
@@ -400,6 +400,12 @@ class weather_station:
             "Daily High/Low",
             fill=0,
             font=font16,
+        )
+        draw.text(
+            (2,2),
+            short_date,
+            fill=0,
+            font=font12,
         )
         return draw
 
