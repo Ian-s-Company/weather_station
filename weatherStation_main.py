@@ -586,8 +586,7 @@ class weather_station:
         self.weather.update()
         self.weather.update_pol()
         self.news.update()
-        draw = self.get_news_footer(draw)
-        draw = self.get_date_header(draw)
+
         current_info = self.weather.get_current()
         logger.info(
             "Begin update @"
@@ -597,6 +596,7 @@ class weather_station:
             + " longitude "
             + lon
         )
+        
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
         sunrise_icon = Image.open(app_dir + "/static_icons/sunrise.bmp")
@@ -605,7 +605,10 @@ class weather_station:
         sunset_icon = sunset_icon.resize((30, 30))
         Himage.paste(sunrise_icon, (225, 20))
         Himage.paste(sunset_icon, (225, 60))
+
         draw = ImageDraw.Draw(Himage)
+        draw = self.get_news_footer(draw)
+        draw = self.get_date_header(draw)
 
         icon_list = []
         for i in current_info["weather"]:
