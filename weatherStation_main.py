@@ -217,10 +217,10 @@ class weather_station:
         draw.text((2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20)  # CLOUD COVER
         draw.text((2, 50), "UVI", fill=0, font=font12)
         draw.text((2, 60), str(self.weather.current_uvi()), fill=0, font=font20)  # UVI
-        draw.text((2, 20), "Dew Point", fill=0, font=font12)
-        draw.text((2, 30), str(self.weather.current_dew_point()), fill=0, font=font20)  # Dew Point
-        draw.text((2, 50), "Pressure", fill=0, font=font12)
-        draw.text((2, 60), str(self.weather.current_pressure()), fill=0, font=font20)  # Pressure
+        draw.text((2, 80), "Dew Point", fill=0, font=font12)
+        draw.text((2, 90), str(self.weather.current_dew_point()), fill=0, font=font20)  # Dew Point
+        draw.text((2, 110), "Pressure", fill=0, font=font12)
+        draw.text((2, 120), str(self.weather.current_pressure()), fill=0, font=font20)  # Pressure
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
