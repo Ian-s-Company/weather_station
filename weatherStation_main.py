@@ -333,7 +333,7 @@ class weather_station:
                 position = -6
 
             if position != None:
-                print("Labelling with " + int(round(start_h - 4), corner[1] - position) + " and " + round(weather_data))
+                print("Labelling with " + str(round(start_h - 4), corner[1] - position) + " and " + str(round(weather_data)))
                 draw.text(
                     (round(start_h - 4), corner[1] - position),
                     round(weather_data),
