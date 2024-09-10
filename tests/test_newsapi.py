@@ -29,7 +29,7 @@ expected = {"status": "ok"}
 def test_connect_to_news_data(example_news_data):
     for data_set in example_news_data:
         news_inst = News(170)
-        news_data = news_inst.update(data_set["api_id"])
+        news_data = news_inst.update()
         print(news_data)
         status_string = str(news_data["status"])
         print("The status string is: " + status_string)
