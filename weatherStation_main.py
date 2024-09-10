@@ -325,7 +325,7 @@ class weather_station:
             start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
             start_v = corner[1] - dot_size - round(weather_data)
             finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
-            finish_v = corner[1] - dot_size - round(weather_data)
+            finish_v = corner[1] + dot_size - round(weather_data)
             print("Start Horizontal: " + str(start_h))
             print("Finish Horizontal: " + str(finish_h))
             print("Start Vertical: " + str(start_v))
