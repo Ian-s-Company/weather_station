@@ -128,12 +128,12 @@ class weather_station:
         news_selected = self.news.selected_title(news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
-        draw.line((0, 150, 264, 154), fill=0, width=1)  # HORIZONTAL SEPARATION
+        draw.line((0, 154, 264, 154), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
     def get_date_header(self, draw):
         draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
-        draw.line((0, 15, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
+        draw.line((0, 15, 264, 15), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
     def button1(self):  # Home Button
