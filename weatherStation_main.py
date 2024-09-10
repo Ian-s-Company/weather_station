@@ -328,9 +328,9 @@ class weather_station:
                 fill=fill_col,
             )
             if point_label_position == "top":
-                label_position = finish_v + (dot_size / 2) + 6
-            elif point_label_position == "bottom":
                 label_position = finish_v + (dot_size / 2) - 6
+            elif point_label_position == "bottom":
+                label_position = finish_v + (dot_size / 2) + 6
             else:
                 label_position = finish_v + (dot_size / 2)
 
