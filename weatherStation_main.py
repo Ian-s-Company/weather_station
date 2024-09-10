@@ -342,11 +342,10 @@ class weather_station:
                     date_string = datetime.fromtimestamp(timestamp)
                     short_day = date_string.strftime("%a")
                     draw.text(
-                        (start_h + (dot_size / 2) - position, 
-                        start_v - (dot_size / 2)),
+                        (int(start_h - 4), corner[1]),
                         short_day,
                         fill=0,
-                        font=font8
+                        font=font8,
                     )
                 if last_start_h != 0:
                     draw.line((last_start_h + (dot_size / 2), 
@@ -358,12 +357,6 @@ class weather_station:
                 last_start_h = finish_h
                 last_start_v = finish_v
                 iter = iter + 1
-                draw.text(
-                    (start_h - 4, corner[1]),
-                    i,
-                    fill=0,
-                    font=font8,
-                )
             draw.text(
                 (corner[0] + (graph_dim[1] / 2), corner[1]),
                 i,
