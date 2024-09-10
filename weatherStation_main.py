@@ -228,8 +228,8 @@ class weather_station:
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
         for i in self.weather.get_daily_all():
-            day_high_temps.append(i["temp"]["max"] + ":" + i["dt"])
-            day_low_temps.append(i["temp"]["min"] + ":" + i["dt"])
+            day_high_temps.append((i["temp"]["max"],i["dt"]))
+            day_low_temps.append((i["temp"]["min"],i["dt"]))
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
@@ -311,8 +311,8 @@ class weather_station:
             width=1,
         )  # VERTICAL LINE
         pixel_spacing = int(graph_dim[1] / len(weather_data))
-        timestamp = weather_data.split(':')[1]
-        weather_data = weather_data.split(':')[0]
+        timestamp = weather_data[1]
+        weather_data = weather_data[0]
         dot_size = 2
         iter = 0
         for i in elements:
