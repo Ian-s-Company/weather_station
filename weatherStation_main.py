@@ -311,14 +311,15 @@ class weather_station:
             width=1,
         )  # VERTICAL LINE
         pixel_spacing = int(graph_dim[1] / len(weather_data))
-        timestamp = weather_data[1]
-        weather_data = weather_data[0]
+
         dot_size = 2
         iter = 0
         for i in elements:
             last_start_h = 0
             last_start_v = 0
             for j in weather_data:
+                timestamp = weather_data[1]
+                weather_data = weather_data[0]                
                 start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
                 start_v = corner[1] - dot_size - float(weather_data[iter])
                 finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
