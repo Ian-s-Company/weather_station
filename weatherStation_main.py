@@ -997,7 +997,7 @@ def main():
         btn3 = Button(13)
         btn3.when_pressed = weather_station_inst.button3
         btn4 = Button(19)
-        btn4.when_pressed = weather_station_inst.button4
+        btn4.when_pressed = weather_station_inst.button6
         while True:
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
