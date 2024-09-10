@@ -361,7 +361,7 @@ class weather_station:
             if point_label_position == "top":
                 label_position = finish_v - dot_size - 18
             elif point_label_position == "bottom":
-                label_position = finish_v + dot_size + 2
+                label_position = finish_v + dot_size
             else:
                 label_position = finish_v + dot_size
 
