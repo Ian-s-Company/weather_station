@@ -65,11 +65,6 @@ jobs:
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo ./weather-station.sh stop'
       - name: Starting Weather Station in DEBUG Mode
         run: ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'cd ${{ vars.APP_DIR }}; sudo python ${{ vars.APP_DIR }}/weatherStation_main.py -d -w ${{ secrets.API_KEY_WEATHER }} -n ${{ secrets.API_KEY_NEWS }}'
-      - name: Create Service
-        run: |
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo cp ${{ vars.APP_DIR }}/weatherstation.service /etc/systemd/system/'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl daemon-reload'
-          ssh -v ${{ vars.USER }}@${{ vars.HOSTNAME }} 'sudo systemctl enable weatherstation'
   start_weatherStation:
     needs: validate_weatherStation
     runs-on: [self-hosted, linux]
