@@ -615,13 +615,13 @@ class weather_station:
         draw.text(
             (165, 30), self.weather.current_sunrise(), fill=0, font=font20
         )  # SUNRISE TIME
-        draw.text((165, 50), "Sunset", fill=0, font=font12)
+        draw.text((165, 53), "Sunset", fill=0, font=font12)
         draw.text(
-            (165, 60), self.weather.current_sunset(), fill=0, font=font20
+            (165, 63), self.weather.current_sunset(), fill=0, font=font20
         )  # SUNSET TIME
-        draw.text((165, 80), "Humidity %", fill=0, font=font12)
+        draw.text((165, 85), "Humidity", fill=0, font=font12)
         draw.text(
-            (165, 90), str(current_info["humidity"]), fill=0, font=font20
+            (165, 95), str(current_info["humidity"]) + "%", fill=0, font=font20
         )  # HUMIDTY
         draw.text(
             (0, 25),
@@ -654,13 +654,13 @@ class weather_station:
             fill=0,
             font=font14,
         )  # CURRENT WIND
-        draw.text((165, 116), "Rain 24h", fill=0, font=font12)
+        draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
         else:
             day_rain = 0
         draw.text(
-            (165, 130),
+            (165, 135),
             str(round(day_info["pop"] * 100)) + "%/" + str(round(day_rain)) + " mm",
             fill=0,
             font=font12,
