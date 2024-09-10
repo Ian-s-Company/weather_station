@@ -343,9 +343,9 @@ class weather_station:
             print("Pixel Spacing is: " + str(pixel_spacing))
             print("Iteration is: " + str(iter))
             
-            start_h = corner[0] - dot_size + (pixel_spacing * iter)
+            start_h = corner[0] - dot_size + round((pixel_spacing * (iter + .5)))
             start_v = corner[1] - dot_size - round(weather_data)
-            finish_h = corner[0] + dot_size + (pixel_spacing * iter)
+            finish_h = corner[0] + dot_size + round((pixel_spacing * (iter + .5)))
             finish_v = corner[1] + dot_size - round(weather_data)
 
             print("Start Horizontal: " + str(start_h))
@@ -395,7 +395,7 @@ class weather_station:
             last_start_v = (start_v + finish_v) / 2
             iter = iter + 1
         draw.text(
-            (corner[0] + (graph_dim[1] / 2) -20, 
+            (corner[0] + (graph_dim[1] / 2) - 60, 
             start_pixel[1]),
             "Daily High/Low",
             fill=0,
