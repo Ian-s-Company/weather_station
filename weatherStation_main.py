@@ -576,7 +576,7 @@ class weather_station:
         icon = icon.resize((45, 45))
         return draw, icon
 
-    def button1(self, epd):  # Home Button
+    def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
         self.weather.update()
         self.news.update()
@@ -683,7 +683,7 @@ class weather_station:
             fill=0,
             font=font12,
         )  # Day Rain
-        draw.display(epd.getbuffer(Himage))
+        draw.display(self.epd.getbuffer(Himage))
 
         return draw
 
