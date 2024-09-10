@@ -315,7 +315,7 @@ class weather_station:
         last_start_h = 0
         last_start_v = 0
         for j in weather_data:
-            print("The timestamp for this datapoint is " + str(j))
+            print("The entry for this datapoint is " + str(j))
             timestamp = j['dt']
             weather_data = eval(str(j) + weather_metric)          
             start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
