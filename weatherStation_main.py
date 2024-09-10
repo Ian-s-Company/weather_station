@@ -325,6 +325,8 @@ class weather_station:
         iter = 0
         last_start_h = 0
         last_start_v = 0
+        date_string = datetime.fromtimestamp(weather_data[0]['dt'])
+        short_date = date_string.strftime("%D")
         for j in weather_data:
             logger.info("The entry for this datapoint is " + str(j))
             timestamp = j['dt']
@@ -365,7 +367,6 @@ class weather_station:
             )
 
             date_string = datetime.fromtimestamp(timestamp)
-            short_date = date_string.strftime("%D")
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
@@ -393,7 +394,7 @@ class weather_station:
             font=font16,
         )
         draw.text(
-            (4,2),
+            (4,4),
             short_date,
             fill=0,
             font=font12,
