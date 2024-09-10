@@ -18,8 +18,6 @@ class Weather:
         self.longitude = longitude
         self.api_key = api_id
         self.app_dir = app_dir
-
-    def initialize(self):
         self.max_lvl_pollution = {
             "co": 10000,
             "no": 30,
@@ -36,7 +34,8 @@ class Weather:
         self.prevision[1][6] = [
             self.data["daily"][0]["pressure"],
             round(self.data["daily"][0]["temp"]["day"], 0),
-        ]
+        ],
+        self.pol_data = self.update_pol()
 
     def update_pol(self):
         pollution_url = (
@@ -108,6 +107,9 @@ class Weather:
 
     def get_daily(self, day):
         return self.data["daily"][day]
+    
+    def get_daily_all(self):
+        return self.data["daily"]
 
     def get_hourly(self, hour=None, max=0):
         if hour != None:
@@ -140,6 +142,12 @@ class Weather:
 
     def current_uvi(self):
         return "{:.0f}".format(self.data["current"]["uvi"])
+
+    def current_dew_point(self):
+        return "{:.0f}".format(self.data["current"]["dew_point"])
+
+    def current_pressure(self):
+        return "{:.0f}".format(self.data["current"]["pressure"])
 
     def current_feelslike(self):
         return "{:.0f}".format(self.data["current"]["feels_like"])
