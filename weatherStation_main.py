@@ -228,32 +228,22 @@ class weather_station:
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
         daily_all = self.weather.get_daily_all()
-        draw.text((165, 20), "CO", fill=0, font=font12)
-        draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
-        draw.text((165, 50), "NO", fill=0, font=font12)
-        draw.text((165, 60), str(self.weather.no()), fill=0, font=font20)
-        draw.text((165, 80), "NO2", fill=0, font=font12)
-        draw.text((165, 90), str(self.weather.no2()), fill=0, font=font20)
-        draw.text((165, 110), "Ozone", fill=0, font=font12)
-        draw.text((165, 120), str(self.weather.o3()), fill=0, font=font20)
-        '''
-        draw = self.data_graph(
-            self.weather, draw, hour_temps, ["temp/feels like"], [115, 140], [5, 20]
-        )
-        draw = self.data_graph(
-            self.weather, draw, hour_feels, [""], [115, 140], [5, 20]
-        )
-        '''
-        draw = self.data_graph(
-            self.weather, draw, daily_all, '["temp"]["max"]', [115, 140], [5, 20], point_label_position="top", x_label="day"
-        )
-        draw = self.data_graph(
-            self.weather, draw, daily_all, '["temp"]["min"]', [115, 140], [5, 20], point_label_position="bottom"
-        )
+        draw.text((127, 20), "CO", fill=0, font=font12)
+        draw.text((127, 30), str(self.weather.co()), fill=0, font=font20)
+        draw.text((127, 50), "NO", fill=0, font=font12)
+        draw.text((127, 60), str(self.weather.no()), fill=0, font=font20)
+        draw.text((127, 80), "NO2", fill=0, font=font12)
+        draw.text((127, 90), str(self.weather.no2()), fill=0, font=font20)
+        draw.text((127, 110), "Ozone", fill=0, font=font12)
+        draw.text((127, 120), str(self.weather.o3()), fill=0, font=font20)
+        draw.text((2, 20), "Cloud %", fill=0, font=font12)
+        draw.text((2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20)  # CLOUD COVER
+        draw.text((2, 50), "UVI", fill=0, font=font12)
+        draw.text((2, 60), str(self.weather.current_uvi()), fill=0, font=font20)  # UVI
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
 
-    def button6(self):  # Other Stuff
+    def button6(self):  # Daily High/Low Graph
         logger.info("Drawing Button 5 screen")
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
@@ -265,7 +255,7 @@ class weather_station:
 
         daily_all = self.weather.get_daily_all()
         draw = self.data_graph(
-            self.weather, draw, daily_all, '["temp"]["max"]', [150, 240], [5, 5], point_label_position="top", x_label="day"
+            self.weather, draw, daily_all, '["temp"]["max"]', [150, 240], [5, 5], point_label_position="top", x_label="day", title="Daily High/Low"
         )
         draw = self.data_graph(
             self.weather, draw, daily_all, '["temp"]["min"]', [150, 240], [5, 5], point_label_position="bottom"
@@ -303,7 +293,8 @@ class weather_station:
         start_pixel,
         fill_col="black",
         point_label_position=None,
-        x_label=None
+        x_label=None,
+        title=None
     ):  # weather data is array of data, elements is the data field to be graphed
         
         corner = [start_pixel[0], start_pixel[1] + graph_dim[0]]
@@ -335,23 +326,23 @@ class weather_station:
         last_start_h = 0
         last_start_v = 0
         for j in weather_data:
-            print("The entry for this datapoint is " + str(j))
+            logger.info("The entry for this datapoint is " + str(j))
             timestamp = j['dt']
             weather_data = eval(str(j) + weather_metric) 
-            print("The weather_data for this datapoint is " + str(weather_data))
-            print("Corner is: " + str(corner))
-            print("Pixel Spacing is: " + str(pixel_spacing))
-            print("Iteration is: " + str(iter))
+            logger.info("The weather_data for this datapoint is " + str(weather_data))
+            logger.info("Corner is: " + str(corner))
+            logger.info("Pixel Spacing is: " + str(pixel_spacing))
+            logger.info("Iteration is: " + str(iter))
             
             start_h = corner[0] - dot_size + round((pixel_spacing * (iter + .5)))
             start_v = corner[1] - dot_size - round(weather_data)
             finish_h = corner[0] + dot_size + round((pixel_spacing * (iter + .5)))
             finish_v = corner[1] + dot_size - round(weather_data)
 
-            print("Start Horizontal: " + str(start_h))
-            print("Finish Horizontal: " + str(finish_h))
-            print("Start Vertical: " + str(start_v))
-            print("Finish Vertical: " + str(finish_v))
+            logger.info("Start Horizontal: " + str(start_h))
+            logger.info("Finish Horizontal: " + str(finish_h))
+            logger.info("Start Vertical: " + str(start_v))
+            logger.info("Finish Vertical: " + str(finish_v))
             
             draw.ellipse(
                 (round(start_h), round(start_v), round(finish_h), round(finish_v)),
@@ -361,7 +352,7 @@ class weather_station:
             if point_label_position == "top":
                 label_position = finish_v - dot_size - 18
             elif point_label_position == "bottom":
-                label_position = finish_v + dot_size
+                label_position = finish_v + dot_size + 1
             else:
                 label_position = finish_v + dot_size
 
@@ -397,12 +388,12 @@ class weather_station:
         draw.text(
             (corner[0] + (graph_dim[1] / 2) - 60, 
             start_pixel[1]),
-            "Daily High/Low",
+            title,
             fill=0,
             font=font16,
         )
         draw.text(
-            (2,2),
+            (4,2),
             short_date,
             fill=0,
             font=font12,
@@ -642,14 +633,6 @@ class weather_station:
         test_image.text(
             (165, 90), str(current_info["humidity"]), fill=0, font=font20
         )  # HUMIDTY
-        test_image.text((165, 110), "Cloud %", fill=0, font=font12)
-        test_image.text(
-            (165, 120), str(current_info["clouds"]), fill=0, font=font16
-        )  # CLOUD COVER
-        test_image.text((220, 110), "UVI", fill=0, font=font12)
-        test_image.text(
-            (220, 120), str(current_info["uvi"]), fill=0, font=font16
-        )  # UVI
         test_image.text(
             (0, 20), "Current conditions", fill=0, font=font12
         )  # CURRENT CONDITIONS LABEL
@@ -1014,25 +997,25 @@ def main():
         btn3 = Button(13)
         btn3.when_pressed = weather_station_inst.button3
         btn4 = Button(19)
-        btn4.when_pressed = weather_station_inst.button5
+        btn4.when_pressed = weather_station_inst.button4
         while True:
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
                 sleep_time = 15
             else:
                 sleep_time = 225
-            '''
+
             weather_station_inst.button1()
             time.sleep(sleep_time)
             weather_station_inst.button2()
             time.sleep(sleep_time)
             weather_station_inst.button3()
             time.sleep(sleep_time)
-            weather_station_inst.button4()            
-            time.sleep(sleep_time)
-            '''
             weather_station_inst.button6()            
             time.sleep(sleep_time)
+            #weather_station_inst.button4()            
+            #time.sleep(sleep_time)
+
             logger.info("Screen is drawn")
             logger.info("Going to sleep.")
             logger.info("------------")
