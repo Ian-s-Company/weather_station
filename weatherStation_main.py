@@ -123,6 +123,17 @@ class weather_station:
         self.epd.init()
         # self.epd.Clear(0xFF)
 
+    def get_news_footer(self, draw):
+        news_updates = self.news.update()
+        news_selected = self.news.selected_title(news_updates)
+        draw.text((0, 155), "News: ", fill=0, font=font12)
+        draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
+        draw.line((0, 150, 264, 152), fill=0, width=1)  # HORIZONTAL SEPARATION
+
+    def get_date_header(self, draw):
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
+        draw.line((0, 15, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
+
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
         self.weather.update()
@@ -136,8 +147,7 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
-        draw.line((0, 16, 264, 16), fill=0, width=1)
+        draw = self.get_date_header(draw)
         time = "hour"
         hour_pixel_array = [
             [0, 16],
@@ -165,8 +175,7 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
-        draw.line((0, 16, 264, 16), fill=0, width=1)
+        draw = self.get_date_header(draw)
         start_pixel = [0, 16]
         time = "day"
         day_pixel_array = [
@@ -194,11 +203,8 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw = self.open_framework(draw)
-        news_updates = self.news.update()
-        news_selected = self.news.selected_title(news_updates)
-        draw.text((0, 155), "News: ", fill=0, font=font12)
-        draw.text((35, 155), news_selected[0][0], fill=0, font=font12)
+        draw = self.get_news_footer(draw)
+        draw = self.get_date_header(draw)
         draw.line((88, 20, 88, 150), fill=0, width=1)  # VERTICAL SEPARATION
         draw.line((176, 20, 176, 150), fill=0, width=1)  # VERTICAL SEPARATION
         start_pixel = [0, 20]
@@ -219,14 +225,10 @@ class weather_station:
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw = self.open_framework(draw)
-        #hour_temps = []
-        #hour_feels = []
+        draw = self.get_news_footer(draw)
+        draw = self.get_date_header(draw)
         day_high_temps = {}
         day_low_temps = {}
-        #for i in self.weather.get_hourly(None, 8):
-        #    hour_temps.append(i["temp"])
-        #    hour_feels.append(i["feels_like"])
         daily_all = self.weather.get_daily_all()
         draw.text((127, 20), "CO", fill=0, font=font12)
         draw.text((127, 30), str(self.weather.co()), fill=0, font=font20)
@@ -394,7 +396,7 @@ class weather_station:
             font=font16,
         )
         draw.text(
-            (4,4),
+            (8,4),
             short_date,
             fill=0,
             font=font12,
