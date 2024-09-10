@@ -332,8 +332,8 @@ class weather_station:
                 elif point_label_position == "bottom":
                     position = -6
                 draw.text(
-                    (start_h + (dot_size / 2) - position, 
-                    start_v - (dot_size / 2)),
+                    (round(start_h + (dot_size / 2) - position), 
+                    round(start_v - (dot_size / 2))),
                     j,
                     fill=0,
                     font=font8
@@ -342,7 +342,7 @@ class weather_station:
                     date_string = datetime.fromtimestamp(timestamp)
                     short_day = date_string.strftime("%a")
                     draw.text(
-                        (int(start_h - 4), corner[1]),
+                        (round(start_h - 4), corner[1]),
                         short_day,
                         fill=0,
                         font=font8,
