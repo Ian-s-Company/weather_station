@@ -319,22 +319,25 @@ class weather_station:
             timestamp = j['dt']
             weather_data = eval(str(j) + weather_metric) 
             print("The weather_data for this datapoint is " + str(weather_data))
+            print("Corner is: " + str(corner))
+            print("Pixel Spacing is: " + str(pixel_spacing))
+            print("Iteration is: " + str(iter))
             start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
             start_v = corner[1] - dot_size - round(weather_data)
             finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
             finish_v = corner[1] - dot_size - round(weather_data)
+
             draw.ellipse(
                 (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                 fill=fill_col,
-            )
+            ) # Drawing Data Point
             if point_label_position == "top":
-                label_position = finish_v + (dot_size / 2) - 6
+                label_position = finish_v - (dot_size / 2) - 6
             elif point_label_position == "bottom":
                 label_position = finish_v + (dot_size / 2) + 6
             else:
                 label_position = finish_v + (dot_size / 2)
 
-            print("Labelling with " + str(round(start_h - 4)) + ", " + str(corner[1] - label_position) + ", and " + str(round(weather_data)))
             draw.text(
                 (round(start_h - 4), 
                 label_position),
