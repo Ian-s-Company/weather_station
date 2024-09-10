@@ -137,13 +137,13 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)
-        draw.line((0, 20, 264, 20), fill=0, width=1)
+        draw.line((0, 16, 264, 16), fill=0, width=1)
         time = "hour"
         hour_pixel_array = [
-            [0, 20],
-            [66, 20],
-            [132, 20],
-            [198, 20],
+            [0, 16],
+            [66, 16],
+            [132, 16],
+            [198, 16],
             [0, 100],
             [66, 100],
             [132, 100],
@@ -401,14 +401,14 @@ class weather_station:
         return draw
 
     def open_framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)
-        draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
+        draw.line((0, 15, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
     def framework(self, draw):
-        draw.text((0, 0), self.weather.current_time(), fill=0, font=font16)
-        draw.line((0, 20, 264, 20), fill=0, width=1)  # HORIZONTAL SEPARATION
+        draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
+        draw.line((0, 20, 264, 16), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((0, 150, 264, 150), fill=0, width=1)  # HORIZONTAL SEPARATION
         draw.line((162, 20, 162, 150), fill=0, width=1)  # VERTICAL SEPARATION
         news_updates = self.news.update()
@@ -658,7 +658,7 @@ class weather_station:
             fill=0,
             font=font24,
         )  # CURRENT DAY HIGH/LOW
-        test_image.text((2, 130), "Current Wind", fill=0, font=font12)
+        test_image.text((2, 110), "Current Wind", fill=0, font=font12)
         test_image.text(
             (2, 130),
             str(current_info["wind_speed"])
