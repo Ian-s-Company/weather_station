@@ -328,26 +328,27 @@ class weather_station:
                 fill=fill_col,
             )
             if point_label_position == "top":
-                position = 6
+                label_position = finish_v + (dot_size / 2) + 6
             elif point_label_position == "bottom":
-                position = -6
+                label_position = finish_v + (dot_size / 2) - 6
+            else:
+                label_position = finish_v + (dot_size / 2)
 
-            if position != None:
-                print("Labelling with " + str(round(start_h - 4)) + ", " + str(corner[1] - position) + ", and " + str(round(weather_data)))
-                draw.text(
-                    (round(start_h - 4), 
-                    finish_v + (dot_size / 2) + position),
-                    str(round(weather_data)),
-                    fill=0,
-                    font=font8,
-                )
+            print("Labelling with " + str(round(start_h - 4)) + ", " + str(corner[1] - label_position) + ", and " + str(round(weather_data)))
+            draw.text(
+                (round(start_h - 4), 
+                label_position),
+                str(round(weather_data)),
+                fill=0,
+                font=font8,
+            )
 
             date_string = datetime.fromtimestamp(timestamp)
 
             if x_label == 'day':
                 short_day = date_string.strftime("%a")
                 draw.text(
-                    (round(start_h - 4), 
+                    (round(start_h - 6), 
                     corner[1]),
                     short_day,
                     fill=0,
