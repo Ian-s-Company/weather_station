@@ -40,9 +40,10 @@ I also set up a process to download weather icons if needed.
 1. Update the proper vars in your environment, Application Directory, Weather API Key, and News API Key
 2. Execute Action to Deploy the Weather Station.
 
-# It should look something like this when you turn it on
+# It should look something like this when you turn it on 
+( I can provide information on the lego case if you are interested)
 
-![alt text](pics/20240816_101228.jpg)
+![alt text](pics/20240909_121826.jpg)
 
 # When you click the top button it would have the same screen
 
