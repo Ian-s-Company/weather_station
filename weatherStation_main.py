@@ -331,22 +331,23 @@ class weather_station:
                     position = 6
                 elif point_label_position == "bottom":
                     position = -6
+                if x_label == "day":
+                    date_string = datetime.fromtimestamp(timestamp)
+                    short_day = date_string.strftime("%a")
+                    draw.text(
+                        (round(start_h - 4), corner[1] - position),
+                        short_day,
+                        fill=0,
+                        font=font8,
+                    )
+
                 draw.text(
-                    (round(start_h + (dot_size / 2) - position), 
+                    (round(start_h + (dot_size / 2)), 
                     round(start_v - (dot_size / 2))),
                     j,
                     fill=0,
                     font=font8
                 )
-                if x_label == "day":
-                    date_string = datetime.fromtimestamp(timestamp)
-                    short_day = date_string.strftime("%a")
-                    draw.text(
-                        (round(start_h - 4), corner[1]),
-                        short_day,
-                        fill=0,
-                        font=font8,
-                    )
                 if last_start_h != 0:
                     draw.line((last_start_h + (dot_size / 2), 
                                last_start_v - (dot_size / 2), 
