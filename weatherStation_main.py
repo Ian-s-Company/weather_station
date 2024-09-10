@@ -228,8 +228,8 @@ class weather_station:
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
         for i in self.weather.get_daily_all():
-            day_high_temps.append(i["temp"]["max"])
-            day_low_temps.append(i["temp"]["min"])
+            day_high_temps.append(i["temp"]["max"] + ":" + i["dt"])
+            day_low_temps.append(i["temp"]["min"] + ":" + i["dt"])
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
@@ -247,10 +247,10 @@ class weather_station:
         )
         '''
         draw = self.data_graph(
-            self.weather, draw, day_high_temps, ["high/low"], [115, 140], [5, 20]
+            self.weather, draw, day_high_temps, [""], [115, 140], [5, 20], point_label_position="top", x_label="day"
         )
         draw = self.data_graph(
-            self.weather, draw, day_low_temps, [""], [115, 140], [5, 20]
+            self.weather, draw, day_low_temps, [""], [115, 140], [5, 20], point_label_position="bottom"
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -284,6 +284,8 @@ class weather_station:
         graph_dim,
         start_pixel,
         fill_col="black",
+        point_label_position=None,
+        x_label=None
     ):  # weather data is array of data, elements is the data field to be graphed
         
         corner = [start_pixel[0], start_pixel[1] + graph_dim[0]]
@@ -309,6 +311,8 @@ class weather_station:
             width=1,
         )  # VERTICAL LINE
         pixel_spacing = int(graph_dim[1] / len(weather_data))
+        timestamp = weather_data.split(':')[1]
+        weather_data = weather_data.split(':')[0]
         dot_size = 2
         iter = 0
         for i in elements:
@@ -318,11 +322,32 @@ class weather_station:
                 start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
                 start_v = corner[1] - dot_size - float(weather_data[iter])
                 finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
-                finish_v = corner[1] + dot_size - float(weather_data[iter])
+                finish_v = corner[1] - dot_size - float(weather_data[iter])
                 draw.ellipse(
                     (round(start_h), round(start_v), round(finish_h), round(finish_v)),
                     fill=fill_col,
                 )
+                if point_label_position == "top":
+                    position = 6
+                elif point_label_position == "bottom":
+                    position = -6
+                draw.text(
+                    (start_h + (dot_size / 2) - position, 
+                    start_v - (dot_size / 2)),
+                    j,
+                    fill=0,
+                    font=font8
+                )
+                if x_label == "day":
+                    date_string = datetime.fromtimestamp(timestamp)
+                    short_day = date_string.strftime("%a")
+                    draw.text(
+                        (start_h + (dot_size / 2) - position, 
+                        start_v - (dot_size / 2)),
+                        short_day,
+                        fill=0,
+                        font=font8
+                    )
                 if last_start_h != 0:
                     draw.line((last_start_h + (dot_size / 2), 
                                last_start_v - (dot_size / 2), 
@@ -333,9 +358,15 @@ class weather_station:
                 last_start_h = finish_h
                 last_start_v = finish_v
                 iter = iter + 1
+                draw.text(
+                    (start_h - 4, corner[1]),
+                    i,
+                    fill=0,
+                    font=font8,
+                )
             draw.text(
                 (corner[0] + (graph_dim[1] / 2), corner[1]),
-                i.upper(),
+                i,
                 fill=0,
                 font=font8,
             )
