@@ -227,9 +227,7 @@ class weather_station:
         #for i in self.weather.get_hourly(None, 8):
         #    hour_temps.append(i["temp"])
         #    hour_feels.append(i["feels_like"])
-        for i in self.weather.get_daily_all():
-            day_high_temps[str(i["dt"])] = i["temp"]["max"]
-            day_low_temps[str(i["dt"])] = i["temp"]["min"]
+        daily_all = self.weather.get_daily_all()
         draw.text((165, 20), "CO", fill=0, font=font12)
         draw.text((165, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((165, 50), "NO", fill=0, font=font12)
@@ -247,10 +245,10 @@ class weather_station:
         )
         '''
         draw = self.data_graph(
-            self.weather, draw, day_high_temps, [""], [115, 140], [5, 20], point_label_position="top", x_label="day"
+            self.weather, draw, daily_all, ["temp"]["max"], [115, 140], [5, 20], point_label_position="top", x_label="day"
         )
         draw = self.data_graph(
-            self.weather, draw, day_low_temps, [""], [115, 140], [5, 20], point_label_position="bottom"
+            self.weather, draw, daily_all, ["temp"]["min"], [115, 140], [5, 20], point_label_position="bottom"
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -280,8 +278,8 @@ class weather_station:
         weather,
         draw,
         weather_data,
-        elements,
-        graph_dim,
+        weather_metric, 
+        graph_dim, # size of Graph
         start_pixel,
         fill_col="black",
         point_label_position=None,
@@ -314,58 +312,60 @@ class weather_station:
 
         dot_size = 2
         iter = 0
-        for i in elements:
-            last_start_h = 0
-            last_start_v = 0
-            for j in weather_data:
-                timestamp = weather_data[0]
-                weather_data = weather_data[1]                
-                start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
-                start_v = corner[1] - dot_size - float(weather_data[iter])
-                finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
-                finish_v = corner[1] - dot_size - float(weather_data[iter])
-                draw.ellipse(
-                    (round(start_h), round(start_v), round(finish_h), round(finish_v)),
-                    fill=fill_col,
-                )
-                if point_label_position == "top":
-                    position = 6
-                elif point_label_position == "bottom":
-                    position = -6
-                print("The timestamp for this datapoint is " + str(timestamp))
-                if x_label == "day":
-                    date_string = datetime.fromtimestamp(timestamp)
-                    short_day = date_string.strftime("%a")
-                    draw.text(
-                        (round(start_h - 4), corner[1] - position),
-                        short_day,
-                        fill=0,
-                        font=font8,
-                    )
+        last_start_h = 0
+        last_start_v = 0
+        for j in weather_data:
+            print("The timestamp for this datapoint is " + str(weather_data))
+            timestamp = j['dt']
+            weather_data = eval(j + weather_metric)          
+            start_h = corner[0] - dot_size + (pixel_spacing * (iter + 1))
+            start_v = corner[1] - dot_size - float(weather_data[iter])
+            finish_h = corner[0] + dot_size + (pixel_spacing * (iter + 1))
+            finish_v = corner[1] - dot_size - float(weather_data[iter])
+            draw.ellipse(
+                (round(start_h), round(start_v), round(finish_h), round(finish_v)),
+                fill=fill_col,
+            )
+            if point_label_position == "top":
+                position = 6
+            elif point_label_position == "bottom":
+                position = -6
 
+            if position != None:
+                draw.text(
+                    (round(start_h - 4), corner[1] - position),
+                    weather_data,
+                    fill=0,
+                    font=font8,
+                )
+
+            date_string = datetime.fromtimestamp(timestamp)
+
+            if x_label == 'day':
+                short_day = date_string.strftime("%a")
                 draw.text(
                     (round(start_h + (dot_size / 2)), 
-                    round(start_v - (dot_size / 2))),
-                    j,
+                    corner[1]),
+                    short_day,
                     fill=0,
                     font=font8
                 )
-                if last_start_h != 0:
-                    draw.line((last_start_h + (dot_size / 2), 
-                               last_start_v - (dot_size / 2), 
-                               finish_h + (dot_size / 2), 
-                               finish_v - (dot_size / 2)),
-                               fill=0,width=1
-                               )
-                last_start_h = finish_h
-                last_start_v = finish_v
-                iter = iter + 1
-            draw.text(
-                (corner[0] + (graph_dim[1] / 2), corner[1]),
-                i,
-                fill=0,
-                font=font8,
-            )
+            if last_start_h != 0:
+                draw.line((last_start_h + (dot_size / 2), 
+                            last_start_v - (dot_size / 2), 
+                            finish_h + (dot_size / 2), 
+                            finish_v - (dot_size / 2)),
+                            fill=0,width=1
+                            )
+            last_start_h = finish_h
+            last_start_v = finish_v
+            iter = iter + 1
+        draw.text(
+            (corner[0] + (graph_dim[1] / 2), corner[1]),
+            "",
+            fill=0,
+            font=font8,
+        )
         return draw
 
     def open_framework(self, draw):
