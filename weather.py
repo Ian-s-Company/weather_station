@@ -6,7 +6,6 @@ import locale
 # import os.path
 import logging
 from os import path
-from datetime import datetime
 from PIL import Image
 
 locale.setlocale(locale.LC_TIME, "")
@@ -29,13 +28,6 @@ class Weather:
             "nh3": 100,
         }
         self.prevision = [0, [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]
-        self.data = self.update()
-        self.prevision[0] = self.data["daily"][0]["dt"]
-        self.prevision[1][6] = [
-            self.data["daily"][0]["pressure"],
-            round(self.data["daily"][0]["temp"]["day"], 0),
-        ],
-        self.pol_data = self.update_pol()
 
     def update_pol(self):
         pollution_url = (
