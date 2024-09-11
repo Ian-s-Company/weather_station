@@ -121,11 +121,13 @@ class weather_station:
         self.weather = weather
         self.news = news
         self.epd.init()
+        self.weather.update()
+        self.weather.update_pol()
+        self.news_updates = self.news.update()
         # self.epd.Clear(0xFF)
 
     def get_news_footer(self, draw):
-        news_updates = self.news.update()
-        news_selected = self.news.selected_title(news_updates)
+        news_selected = self.news.selected_title(self.news_updates)
         draw.text((0, 155), "News: ", fill=0, font=font12)
         draw.text((38, 155), news_selected[0][0], fill=0, font=font12)
         draw.line((0, 154, 264, 154), fill=0, width=1)  # HORIZONTAL SEPARATION
@@ -521,14 +523,9 @@ class weather_station:
 
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
-        self.weather.update()
-        self.news.update()
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
-        self.weather.update()
-        self.weather.update_pol()
-        self.news.update()
 
         current_info = self.weather.get_current()
         logger.info(
@@ -635,9 +632,7 @@ class weather_station:
             "1", (epd.width, epd.height), 255
         )  # 255: clear the frame
         HimageRed = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
-        self.weather.update()
-        self.weather.update_pol()
-        self.news.update()
+        
         current_info = self.weather.get_current()
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
@@ -755,8 +750,7 @@ class weather_station:
         HimageRed.paste(sunrise_icon, (250, 90))
         HimageRed.paste(sunset_icon, (250, 120))
 
-        news_updates = self.news.update()
-        news_selected = self.news.selected_title(news_updates)
+        news_selected = self.news.selected_title(self.news_updates)
         epaperBlack7x5img.text((410, 40), "News: ", fill=0, font=font24)
         epaperBlack7x5img.text((420, 70), news_selected[0][0], fill=0, font=font16)
         epaperBlack7x5img.text((420, 90), news_selected[1][0], fill=0, font=font16)
