@@ -459,23 +459,14 @@ class weather_station:
             (start_pixel[0], start_pixel[1]), hour_info[4], fill=0, font=font12
         )  # HOUR
         draw.text(
-            (start_pixel[0] + 35, start_pixel[1] + 12),
+            (start_pixel[0] + 35, start_pixel[1] + 15),
             str(hour_info[2]),
             fill=0,
             font=font16,
         )  # HOUR TEMP
         draw.text(
-            (start_pixel[0] + 35, start_pixel[1] + 35),
-            str(hour_info[3]),
-            fill=0,
-            font=font16,
-        )  # HOUR FEELS LIKE
-        draw.text(
             (start_pixel[0] + 40, start_pixel[1] + 27), "degs", fill=0, font=font8
         )  # HOUR TEMP
-        draw.text(
-            (start_pixel[0] + 40, start_pixel[1] + 50), "feels", fill=0, font=font8
-        )  # HOUR FEELS LIKE
         draw.text(
             (start_pixel[0], start_pixel[1] + 53),
             str(hour_info[5]) + "% " + str(hour_info[6]),
@@ -483,7 +474,7 @@ class weather_station:
             font=font12,
         )
         draw.text(
-            (start_pixel[0], start_pixel[1] + 63),
+            (start_pixel[0], start_pixel[1] + 65),
             str(hour_info[7]) + "mph " + self.weather.wind_dir(hour_info[8]),
             fill=0,
             font=font12,
