@@ -465,9 +465,6 @@ class weather_station:
             font=font16,
         )  # HOUR TEMP
         draw.text(
-            (start_pixel[0] + 40, start_pixel[1] + 27), "degs", fill=0, font=font8
-        )  # HOUR TEMP
-        draw.text(
             (start_pixel[0], start_pixel[1] + 53),
             str(hour_info[5]) + "% " + str(hour_info[6]),
             fill=0,
