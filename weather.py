@@ -99,7 +99,7 @@ class Weather:
 
     def get_daily(self, day):
         return self.data["daily"][day]
-    
+
     def get_daily_all(self):
         return self.data["daily"]
 
