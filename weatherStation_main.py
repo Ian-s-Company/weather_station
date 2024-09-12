@@ -236,10 +236,10 @@ class weather_station:
 
         daily_all = self.weather.get_daily_all()
         draw = self.data_graph(
-            self.weather, draw, daily_all, '["temp"]["max"]', [150, 240], [5, 5], point_label_position="top", x_label="day", title="Daily High/Low"
+            self.weather, draw, daily_all, '["temp"]["max"]', [150, 250], [5, 5], point_label_position="top", x_label="day", title="Daily High/Low"
         )
         draw = self.data_graph(
-            self.weather, draw, daily_all, '["temp"]["min"]', [150, 240], [5, 5], point_label_position="bottom"
+            self.weather, draw, daily_all, '["temp"]["min"]', [150, 250], [5, 5], point_label_position="bottom"
         )
         self.epd.display(self.epd.getbuffer(Himage))
         return 0
@@ -929,6 +929,8 @@ def main():
         btn4 = Button(19)
         btn4.when_pressed = weather_station_inst.button6
         while True:
+            logger.info("Updating Screen")
+            epd = epd2in7.EPD()
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
                 sleep_time = 15
