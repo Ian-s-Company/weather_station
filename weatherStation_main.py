@@ -140,7 +140,7 @@ class weather_station:
 
     def epd_initialize(self):
         self.epd.init()
-        self.epd.cler()
+        self.epd.clear()
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
@@ -786,6 +786,7 @@ class weather_station:
             i = i + 1
 
         epd.display(epd.getbuffer(HimageBlack), epd.getbuffer(HimageRed))
+        self.epd_finish()
 
         return epaperBlack7x5img, epaperRed7x5img
 
