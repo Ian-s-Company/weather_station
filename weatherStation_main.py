@@ -146,10 +146,10 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         return (draw, Himage)
-    
+
     def epd_finish(self):
         self.epd.sleep()
-        
+
     def button2(self):  # Hourly Forecast
         logger.info("Drawing Hourly Forecast")
         draw, Himage = self.epd_initialize()
@@ -636,7 +636,7 @@ class weather_station:
             "1", (epd.width, epd.height), 255
         )  # 255: clear the frame
         HimageRed = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
-        
+
         current_info = self.weather.get_current()
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
