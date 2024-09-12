@@ -31,10 +31,12 @@ class Weather:
         self.prevision = [0, [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]
         self.data = self.update()
         self.prevision[0] = self.data["daily"][0]["dt"]
-        self.prevision[1][6] = [
-            self.data["daily"][0]["pressure"],
-            round(self.data["daily"][0]["temp"]["day"], 0),
-        ],
+        self.prevision[1][6] = (
+            [
+                self.data["daily"][0]["pressure"],
+                round(self.data["daily"][0]["temp"]["day"], 0),
+            ],
+        )
         self.pol_data = self.update_pol()
 
     def update_pol(self):
@@ -107,7 +109,7 @@ class Weather:
 
     def get_daily(self, day):
         return self.data["daily"][day]
-    
+
     def get_daily_all(self):
         return self.data["daily"]
 
