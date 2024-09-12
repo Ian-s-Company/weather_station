@@ -138,12 +138,21 @@ class weather_station:
         draw.line((0, 15, 264, 15), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
-    def button2(self):  # Hourly Forecast
-        logger.info("Drawing Hourly Forecast")
+    def epd_initialize(self):
+        self.epd.init()
+        self.epd.cler()
         Himage = Image.new(
             "1", (self.epd.height, self.epd.width), 255
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
+        return (draw, Himage)
+    
+    def epd_finish(self):
+        self.epd.sleep()
+        
+    def button2(self):  # Hourly Forecast
+        logger.info("Drawing Hourly Forecast")
+        draw, Himage = self.epd_initialize()
         draw = self.get_date_header(draw)
         time = "hour"
         hour_pixel_array = [
@@ -164,14 +173,12 @@ class weather_station:
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + hour_span
         self.epd.display(self.epd.getbuffer(Himage))
+        self.epd_finish()
         return 0
 
     def button3(self):  # Daily Forecast
         logger.info("Drawing Daily Forecast")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
+        draw, Himage = self.epd_initialize()
         draw = self.get_date_header(draw)
         start_pixel = [0, 16]
         time = "day"
@@ -192,14 +199,12 @@ class weather_station:
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + 1
         self.epd.display(self.epd.getbuffer(Himage))
+        self.epd_finish()
         return 0
 
     def button5(self):  # Other Stuff
         logger.info("Drawing Button 5 screen")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
+        draw, Himage = self.epd_initialize()
         draw = self.get_news_footer(draw)
         draw = self.get_date_header(draw)
         day_high_temps = {}
@@ -222,18 +227,12 @@ class weather_station:
         draw.text((2, 110), "Pressure", fill=0, font=font12)
         draw.text((2, 120), str(self.weather.current_pressure()), fill=0, font=font20)  # Pressure
         self.epd.display(self.epd.getbuffer(Himage))
+        self.epd_finish()
         return 0
 
     def button6(self):  # Daily High/Low Graph
         logger.info("Drawing Button 5 screen")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
-
-        day_high_temps = {}
-        day_low_temps = {}
-
+        draw, Himage = self.epd_initialize()
         daily_all = self.weather.get_daily_all()
         draw = self.data_graph(
             self.weather, draw, daily_all, '["temp"]["max"]', [150, 250], [5, 5], point_label_position="top", x_label="day", title="Daily High/Low"
@@ -242,6 +241,7 @@ class weather_station:
             self.weather, draw, daily_all, '["temp"]["min"]', [150, 250], [5, 5], point_label_position="bottom"
         )
         self.epd.display(self.epd.getbuffer(Himage))
+        self.epd_finish()
         return 0
 
     def data_graph(
@@ -511,10 +511,8 @@ class weather_station:
 
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
-        Himage = Image.new(
-            "1", (self.epd.height, self.epd.width), 255
-        )  # 255: clear the frame
-
+        draw, Himage = self.epd_initialize()
+        draw = self.get_date_header(draw)
         current_info = self.weather.get_current()
         logger.info(
             "Begin update @"
@@ -612,6 +610,7 @@ class weather_station:
             font=font12,
         )  # Day Rain
         self.epd.display(self.epd.getbuffer(Himage))
+        self.epd_finish()
 
         return draw
 
