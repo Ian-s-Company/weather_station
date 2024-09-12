@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - revise_button1_display
+      - '!master'
+      - '*revise_display*'
+      - revise_button_display
 
 jobs:
   build_weatherStation:
