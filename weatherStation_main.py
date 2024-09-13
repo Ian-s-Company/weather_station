@@ -600,7 +600,7 @@ class weather_station:
         draw.text((10, 80), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
         draw.text(
             (10, 95),
-            + str(round(current_info["feels_like"]))+ str("\xb0"),
+            str(round(current_info["feels_like"]))+ str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT FEELS LIKE
