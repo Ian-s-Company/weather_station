@@ -653,7 +653,7 @@ class weather_station:
         )  # CURRENT WIND
         wind_deg = self.weather.curent_wind_deg()
         arrow_icon = arrow_icon.rotate(angle=-wind_deg,fillcolor="#FFFFFF")
-        Himage.paste(arrow_icon, (60, 135))
+        Himage.paste(arrow_icon, (60, 130))
         #draw.text((100, 130), str(wind_deg), fill=0, font=font12)
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
