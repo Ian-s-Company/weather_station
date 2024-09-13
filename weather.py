@@ -368,6 +368,7 @@ class Weather:
         return alert_descrip
 
     def co(self): # Carbon Monoxide
+        
         if 0 < self.pol_data["list"][0]["components"]["co"] < 4400:
             status = "good"
         elif 4400 < self.pol_data["list"][0]["components"]["co"] < 9400:
@@ -385,6 +386,7 @@ class Weather:
         return self.pol_data["list"][0]["components"]["no"]
 
     def no2(self): # Nitrogen Dioxide
+
         if 0 < self.pol_data["list"][0]["components"]["no2"] < 40:
             status = "good"
         elif 40 < self.pol_data["list"][0]["components"]["no2"] < 70:
@@ -400,6 +402,7 @@ class Weather:
 
 
     def o3(self): # Ozone
+
         if 0 < self.pol_data["list"][0]["components"]["o3"] < 60:
             status = "good"
         elif 60 < self.pol_data["list"][0]["components"]["o3"] < 100:
@@ -414,6 +417,7 @@ class Weather:
         return self.pol_data["list"][0]["components"]["o3"], status
 
     def so2(self): # Sulpher Dioxide
+
         if 0 < self.pol_data["list"][0]["components"]["so2"] < 20:
             status = "good"
         elif 20 < self.pol_data["list"][0]["components"]["so2"] < 80:
@@ -425,7 +429,7 @@ class Weather:
         elif 350 < self.pol_data["list"][0]["components"]["so2"]:
             status = "very poor"
 
-        return self.pol_data["list"][0]["components"]["so2"]
+        return self.pol_data["list"][0]["components"]["so2"], status
 
     def pm2_5(self): 
         return self.pol_data["list"][0]["components"]["pm2_5"]

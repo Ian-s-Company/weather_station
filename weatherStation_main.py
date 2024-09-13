@@ -609,13 +609,13 @@ class weather_station:
             font=font20,
         )  # CURRENT FEELS LIKE
         draw.text(
-            (80, 65),
+            (90, 45),
             self.weather.current_daymax()+ str("\xb0"),
             fill=0,
             font=font16,
         )  # CURRENT DAY HIGH
         draw.text(
-            (80, 80),
+            (90, 60),
             self.weather.current_daymin()+ str("\xb0"),
             fill=0,
             font=font16,
