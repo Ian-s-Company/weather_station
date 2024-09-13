@@ -162,43 +162,42 @@ class Weather:
     def current_sunset(self):
         return time.strftime("%H:%M", time.localtime(self.data["current"]["sunset"]))
 
-    def wind_dir(self, wind_dir):
-        deg = wind_dir
-        if deg < 11 or deg >= 349:
+    def wind_dir(self, wind_dir_deg):
+        if wind_dir_deg < 11 or wind_dir_deg >= 349:
             direction = "N"
-        elif 12 <= deg < 34:
+        elif 12 <= wind_dir_deg < 34:
             direction = "NNE"
-        elif 35 <= deg < 57:
+        elif 35 <= wind_dir_deg < 57:
             direction = "NE"
-        elif 58 <= deg < 80:
+        elif 58 <= wind_dir_deg < 80:
             direction = "ENE"
-        elif 81 <= deg < 101:
+        elif 81 <= wind_dir_deg < 101:
             direction = "E"
-        elif 102 <= deg < 122:
+        elif 102 <= wind_dir_deg < 122:
             direction = "ESE"
-        elif 123 <= deg < 145:
+        elif 123 <= wind_dir_deg < 145:
             direction = "SE"
-        elif 146 <= deg < 168:
+        elif 146 <= wind_dir_deg < 168:
             direction = "SSE"
-        elif 169 <= deg < 192:
+        elif 169 <= wind_dir_deg < 192:
             direction = "S"
-        elif 193 <= deg < 215:
+        elif 193 <= wind_dir_deg < 215:
             direction = "SSW"
-        elif 216 <= deg < 238:
+        elif 216 <= wind_dir_deg < 238:
             direction = "SW"
-        elif 239 <= deg < 262:
+        elif 239 <= wind_dir_deg < 262:
             direction = "WSW"
-        elif 263 <= deg < 281:
+        elif 263 <= wind_dir_deg < 281:
             direction = "W"
-        elif 282 <= deg < 303:
+        elif 282 <= wind_dir_deg < 303:
             direction = "WNW"
-        elif 304 <= deg < 326:
+        elif 304 <= wind_dir_deg < 326:
             direction = "NW"
-        elif 327 <= deg < 349:
+        elif 327 <= wind_dir_deg < 349:
             direction = "NNW"
         else:
             direction = "N/A"
-        return direction, deg
+        return direction, wind_dir_deg
 
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]
