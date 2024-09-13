@@ -438,9 +438,10 @@ class weather_station:
             fill=0,
             font=font12,
         )
+        wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
-            str(day_info[7]) + " " + self.weather.wind_dir(day_info[8]),
+            str(day_info[7]) + " " + wind_dir,
             fill=0,
             font=font12,
         )
@@ -467,6 +468,7 @@ class weather_station:
             fill=0,
             font=font16,
         )
+
         draw.text(
             (start_pixel[0], start_pixel[1] + 101),
             str(day_info[7]) + " " + self.weather.wind_dir(day_info[8]),
@@ -522,9 +524,10 @@ class weather_station:
             fill=0,
             font=font16,
         )
+        wind_dir, wind_deg = self.weather.wind_dir(hour_info[8])
         draw.text(
             (start_pixel[0], start_pixel[1] + 105),
-            str(hour_info[7]) + " " + self.weather.wind_dir(hour_info[8]),
+            str(hour_info[7]) + " " + wind_dir,
             fill=0,
             font=font16,
         )
@@ -633,7 +636,8 @@ class weather_station:
             font=font14,
         )  # CURRENT WIND
         wind_dir, wind_deg = self.weather.wind_dir(current_info["wind_deg"])
-        arrow_icon = arrow_icon.rotate(wind_deg, fillcolor=0)
+        if wind_deg != 360:
+            arrow_icon = arrow_icon.rotate(wind_deg, fillcolor=0)
 
         Himage.paste(arrow_icon, (70, 130))
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
@@ -727,11 +731,12 @@ class weather_station:
             font=font36,
         )  # CURRENT HIGH/LOW
         epaperBlack7x5img.text((300, 165), "Wind", fill=0, font=font16)
+        wind_dir, wind_deg = self.weather.wind_dir(current_info["wind_deg"])
         epaperBlack7x5img.text(
             (300, 180),
             str(current_info["wind_speed"])
             + " "
-            + str(self.weather.wind_dir(current_info["wind_deg"])),
+            + str(wind_dir),
             fill=0,
             font=font24,
         )  # CURRENT WIND
