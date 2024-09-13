@@ -198,7 +198,7 @@ class Weather:
             direction = "NNW"
         else:
             direction = "N/A"
-        return direction
+        return deg, direction
 
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]

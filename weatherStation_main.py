@@ -632,38 +632,9 @@ class weather_station:
             fill=0,
             font=font14,
         )  # CURRENT WIND
-        if self.weather.wind_dir(current_info["wind_deg"]) == "N":
-            arrow_icon = arrow_icon.rotate(270)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "NNE":
-            arrow_icon = arrow_icon.rotate(292.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "NE":
-            arrow_icon = arrow_icon.rotate(315)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "ENE":
-            arrow_icon = arrow_icon.rotate(337.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "E":
-            arrow_icon = arrow_icon.rotate(0)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "ESE":
-            arrow_icon = arrow_icon.rotate(22.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "SE":
-            arrow_icon = arrow_icon.rotate(45)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "SSE":
-            arrow_icon = arrow_icon.rotate(67.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "S":
-            arrow_icon = arrow_icon.rotate(90)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "SSW":
-            arrow_icon = arrow_icon.rotate(112.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "SW":
-            arrow_icon = arrow_icon.rotate(135)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "WSW":
-            arrow_icon = arrow_icon.rotate(157.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "W":
-            arrow_icon = arrow_icon.rotate(180)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "WNW":
-            arrow_icon = arrow_icon.rotate(202.5)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "NW":
-            arrow_icon = arrow_icon.rotate(225)
-        elif self.weather.wind_dir(current_info["wind_deg"]) == "NNW":
-            arrow_icon = arrow_icon.rotate(247.50)
+        wind_dir, wind_deg = self.weather.wind_dir(current_info["wind_deg"])
+        arrow_icon = arrow_icon.rotate(wind_deg, fillcolor=0)
+
         Himage.paste(arrow_icon, (70, 130))
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
