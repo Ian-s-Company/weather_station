@@ -368,7 +368,17 @@ class Weather:
         return alert_descrip
 
     def co(self):
-        return self.pol_data["list"][0]["components"]["co"]
+        if 0 < self.pol_data["list"][0]["components"]["co"] < 4400:
+            status = "good"
+        elif 4400 < self.pol_data["list"][0]["components"]["co"] < 9400:
+            status = "fair"
+        elif 9400 < self.pol_data["list"][0]["components"]["co"] < 12400:
+            status = "moderate"
+        elif 12400 < self.pol_data["list"][0]["components"]["co"] < 15400:
+            status = "poor"
+        elif 15400 < self.pol_data["list"][0]["components"]["co"]:
+            status = "very poor"
+        return self.pol_data["list"][0]["components"]["co"], status
 
     def no(self):
         return self.pol_data["list"][0]["components"]["no"]

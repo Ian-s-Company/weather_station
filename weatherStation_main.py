@@ -212,13 +212,13 @@ class weather_station:
         day_high_temps = {}
         day_low_temps = {}
         daily_all = self.weather.get_daily_all()
-        draw.text((127, 20), "CO", fill=0, font=font12)
+        draw.text((127, 20), "CO (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 30), str(self.weather.co()), fill=0, font=font20)
-        draw.text((127, 50), "NO", fill=0, font=font12)
-        draw.text((127, 60), str(self.weather.no()), fill=0, font=font20)
-        draw.text((127, 80), "NO2", fill=0, font=font12)
+        draw.text((127, 50), "NO (\u03BCg/m\u00b3)", fill=0, font=font12)
+        draw.text((127, 60), str(self.weather.no()[1] (self.weather.no()[0])), fill=0, font=font16)
+        draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 90), str(self.weather.no2()), fill=0, font=font20)
-        draw.text((127, 110), "Ozone", fill=0, font=font12)
+        draw.text((127, 110), "Ozone (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 120), str(self.weather.o3()), fill=0, font=font20)
         draw.text((2, 20), "Cloud %", fill=0, font=font12)
         draw.text(
