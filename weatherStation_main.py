@@ -440,7 +440,7 @@ class weather_station:
         )
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
-            str(day_info[7]) + "mph " + self.weather.wind_dir(day_info[8]),
+            str(day_info[7]) + " " + self.weather.wind_dir(day_info[8]),
             fill=0,
             font=font12,
         )
@@ -469,7 +469,7 @@ class weather_station:
         )
         draw.text(
             (start_pixel[0], start_pixel[1] + 101),
-            str(day_info[7]) + "mph " + self.weather.wind_dir(day_info[8]),
+            str(day_info[7]) + " " + self.weather.wind_dir(day_info[8]),
             fill=0,
             font=font16,
         )
@@ -495,7 +495,7 @@ class weather_station:
         )
         draw.text(
             (start_pixel[0], start_pixel[1] + 65),
-            str(hour_info[7]) + "mph " + self.weather.wind_dir(hour_info[8]),
+            str(hour_info[7]) + " " + self.weather.wind_dir(hour_info[8]),
             fill=0,
             font=font12,
         )
@@ -524,7 +524,7 @@ class weather_station:
         )
         draw.text(
             (start_pixel[0], start_pixel[1] + 105),
-            str(hour_info[7]) + "mph " + self.weather.wind_dir(hour_info[8]),
+            str(hour_info[7]) + " " + self.weather.wind_dir(hour_info[8]),
             fill=0,
             font=font16,
         )
@@ -553,7 +553,7 @@ class weather_station:
         sunset_icon = Image.open(app_dir + "/static_icons/sunset.bmp")
         sunset_icon = sunset_icon.resize((30, 30))
         arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
-        arrow_icon = arrow_icon.resize((30, 30))
+        arrow_icon = arrow_icon.resize((15, 15))
         Himage.paste(sunrise_icon, (225, 20))
         Himage.paste(sunset_icon, (225, 60))
 
@@ -663,7 +663,7 @@ class weather_station:
             arrow_icon = arrow_icon.rotate(225)
         elif self.weather.wind_dir(current_info["wind_deg"]) == "NNW":
             arrow_icon = arrow_icon.rotate(247.50)
-        Himage.paste(arrow_icon, (80, 130))
+        Himage.paste(arrow_icon, (70, 130))
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
