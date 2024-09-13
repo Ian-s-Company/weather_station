@@ -217,7 +217,7 @@ class weather_station:
         draw.text((127, 30), str(co_status.upper() + " (" + str(co_num) + ")"), fill=0, font=font20)
         so2_num, so2_status = self.weather.so2()
         draw.text((127, 50), "SO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 60), str(so2_status.upper() (so2_num)), fill=0, font=font16)
+        draw.text((127, 60), str(so2_status.upper() + " (" + str(so2_num) + ")"), fill=0, font=font16)
         no2_num, no2_status = self.weather.no2()
         draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 90), str(no2_status.upper() + " (" + str(no2_num) + ")") , fill=0, font=font20)
