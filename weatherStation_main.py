@@ -645,7 +645,7 @@ class weather_station:
         )  # CURRENT DAY LOW
         draw.text((2, 130), "Wind: ", fill=0, font=font12)
         draw.text(
-            (40, 130),
+            (40, 128),
             str(current_info["wind_speed"])
             ,
             fill=0,
@@ -653,7 +653,7 @@ class weather_station:
         )  # CURRENT WIND
         wind_deg = self.weather.curent_wind_deg()
         arrow_icon = arrow_icon.rotate(angle=-wind_deg,fillcolor="#FFFFFF")
-        Himage.paste(arrow_icon, (70, 130))
+        Himage.paste(arrow_icon, (60, 120))
         #draw.text((100, 130), str(wind_deg), fill=0, font=font12)
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
@@ -991,7 +991,7 @@ def main():
             epd = epd2in7.EPD()
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
-                sleep_time = 15
+                sleep_time = 8
             else:
                 sleep_time = 225
 
