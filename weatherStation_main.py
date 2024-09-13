@@ -574,11 +574,9 @@ class weather_station:
             cur_icon1 = Image.open(cur_icon_name1)  # .convert('LA')
             cur_icon1 = cur_icon1.resize((40, 40), None, None, 3)
             Himage.paste(cur_icon1, (100, 100))
-        draw.text((165, 18), "Sunrise", fill=0, font=font12)
         draw.text(
             (165, 28), self.weather.current_sunrise(), fill=0, font=font20
         )  # SUNRISE TIME
-        draw.text((165, 53), "Sunset", fill=0, font=font12)
         draw.text(
             (165, 63), self.weather.current_sunset(), fill=0, font=font20
         )  # SUNSET TIME
@@ -601,13 +599,18 @@ class weather_station:
             fill=0,
             font=font24,
         )  # CURRENT TEMP and FEELS LIKE
-        draw.text((85, 66), "High/Low", fill=0, font=font12)
+        draw.text(
+            (80, 65),
+            self.weather.current_daymax(),
+            fill=0,
+            font=font16,
+        )  # CURRENT DAY HIGH
         draw.text(
             (80, 75),
-            self.weather.current_daymax() + "/" + self.weather.current_daymin(),
+            self.weather.current_daymin(),
             fill=0,
-            font=font24,
-        )  # CURRENT DAY HIGH/LOW
+            font=font16,
+        )  # CURRENT DAY LOW
         draw.text((2, 115), "Wind", fill=0, font=font12)
         draw.text(
             (2, 130),
