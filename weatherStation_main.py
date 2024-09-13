@@ -445,7 +445,7 @@ class weather_station:
         arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
-            str(day_info[7]) + " " + wind_dir,
+            str(day_info[7]),
             fill=0,
             font=font12,
         )
@@ -479,7 +479,7 @@ class weather_station:
         arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 101),
-            str(day_info[7]) + " " + wind_dir,
+            str(day_info[7]),
             fill=0,
             font=font16,
         )
@@ -510,7 +510,7 @@ class weather_station:
         arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 65),
-            str(hour_info[7]) + " " + wind_dir,
+            str(hour_info[7]),
             fill=0,
             font=font12,
         )
@@ -544,7 +544,7 @@ class weather_station:
         arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 105),
-            str(hour_info[7]) + " " + wind_dir,
+            str(hour_info[7]),
             fill=0,
             font=font16,
         )
