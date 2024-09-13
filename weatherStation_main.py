@@ -135,8 +135,9 @@ class weather_station:
         draw.line((0, 154, 264, 154), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
-    def get_date_header(self, draw):
+    def get_date_header(self, draw, title=""):
         draw.text((0, 0), self.weather.current_time(), fill=0, font=font12)
+        draw.text((120, 0), title, fill=0, font=font12)
         draw.line((0, 15, 264, 15), fill=0, width=1)  # HORIZONTAL SEPARATION
         return draw
 
@@ -155,7 +156,7 @@ class weather_station:
     def button2(self):  # Hourly Forecast
         logger.info("Drawing Hourly Forecast")
         draw, Himage = self.epd_initialize()
-        draw = self.get_date_header(draw)
+        draw = self.get_date_header(draw, "Hourly")
         time = "hour"
         hour_pixel_array = [
             [0, 16],
@@ -181,7 +182,7 @@ class weather_station:
     def button3(self):  # Daily Forecast
         logger.info("Drawing Daily Forecast")
         draw, Himage = self.epd_initialize()
-        draw = self.get_date_header(draw)
+        draw = self.get_date_header(draw, "Daily")
         start_pixel = [0, 16]
         time = "day"
         day_pixel_array = [
@@ -208,7 +209,7 @@ class weather_station:
         logger.info("Drawing Button 5 screen")
         draw, Himage = self.epd_initialize()
         draw = self.get_news_footer(draw)
-        draw = self.get_date_header(draw)
+        draw = self.get_date_header(draw, "Pollution")
         day_high_temps = {}
         day_low_temps = {}
         daily_all = self.weather.get_daily_all()
@@ -556,7 +557,6 @@ class weather_station:
     def button1(self):  # Home Button
         logger.info("Drawing Button 1 screen")
         draw, Himage = self.epd_initialize()
-        draw = self.get_date_header(draw)
         current_info = self.weather.get_current()
         logger.info(
             "Begin update @"
@@ -580,7 +580,7 @@ class weather_station:
 
         draw = ImageDraw.Draw(Himage)
         draw = self.get_news_footer(draw)
-        draw = self.get_date_header(draw)
+        draw = self.get_date_header(draw, "Current")
 
         icon_list = []
         for i in current_info["weather"]:
