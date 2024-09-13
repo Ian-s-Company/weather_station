@@ -418,13 +418,13 @@ class weather_station:
         )  # DAY NAME
         draw.text(
             (start_pixel[0] + 35, start_pixel[1] + 12),
-            str(day_info[2]),
+            str(day_info[2]) + str("\xb0"),
             fill=0,
             font=font16,
         )  # DAY HIGH
         draw.text(
             (start_pixel[0] + 35, start_pixel[1] + 35),
-            str(day_info[3]),
+            str(day_info[3])+ str("\xb0"),
             fill=0,
             font=font16,
         )  # DAY LOW
@@ -479,7 +479,7 @@ class weather_station:
         )  # HOUR
         draw.text(
             (start_pixel[0] + 35, start_pixel[1] + 15),
-            str(hour_info[2]),
+            str(hour_info[2])+ str("\xb0"),
             fill=0,
             font=font16,
         )  # HOUR TEMP
@@ -590,24 +590,29 @@ class weather_station:
             fill=0,
             font=font16,
         )  # CURRENT CONDITIONS
-        draw.text((0, 50), "Temp/Feels Like", fill=0, font=font12)  # CURRENT TEMP LABEL
+        draw.text((0, 50), "Temp", fill=0, font=font12)  # CURRENT TEMP LABEL
         draw.text(
-            (0, 59),
-            str(round(current_info["temp"]))
-            + "/"
-            + str(round(current_info["feels_like"])),
+            (0, 60),
+            str(round(current_info["temp"]))+ str("\xb0"),
             fill=0,
-            font=font24,
-        )  # CURRENT TEMP and FEELS LIKE
+            font=font20,
+        )  # CURRENT TEMP
+        draw.text((10, 80), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
+        draw.text(
+            (10, 95),
+            + str(round(current_info["feels_like"]))+ str("\xb0"),
+            fill=0,
+            font=font20,
+        )  # CURRENT FEELS LIKE
         draw.text(
             (80, 65),
-            self.weather.current_daymax(),
+            self.weather.current_daymax()+ str("\xb0"),
             fill=0,
             font=font16,
         )  # CURRENT DAY HIGH
         draw.text(
-            (80, 75),
-            self.weather.current_daymin(),
+            (80, 80),
+            self.weather.current_daymin()+ str("\xb0"),
             fill=0,
             font=font16,
         )  # CURRENT DAY LOW
