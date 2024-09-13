@@ -214,16 +214,16 @@ class weather_station:
         daily_all = self.weather.get_daily_all()
         co_num, co_status = self.weather.co()
         draw.text((127, 20), "CO (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 30), str(co_status + " (" + co_num + ")"), fill=0, font=font20)
+        draw.text((127, 30), str(co_status + " (" + str(co_num) + ")"), fill=0, font=font20)
         so2_num, so2_status = self.weather.so2()
         draw.text((127, 50), "SO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 60), str(so2_status (so2_num)), fill=0, font=font16)
         no2_num, no2_status = self.weather.no2()
         draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 90), str(no2_status + " (" + no2_num + ")") , fill=0, font=font20)
+        draw.text((127, 90), str(no2_status + " (" + str(no2_num) + ")") , fill=0, font=font20)
         o3_num, o3_status = self.weather.o3()
         draw.text((127, 110), "Ozone (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 120), str(o3_status + " (" + o3_num + ")"), fill=0, font=font20)
+        draw.text((127, 120), str(o3_status + " (" + str(o3_num) + ")"), fill=0, font=font20)
         draw.text((2, 20), "Cloud %", fill=0, font=font12)
         draw.text(
             (2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20
@@ -601,9 +601,9 @@ class weather_station:
             fill=0,
             font=font20,
         )  # CURRENT TEMP
-        draw.text((10, 80), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
+        draw.text((10, 84), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
         draw.text(
-            (10, 95),
+            (10, 93),
             str(round(current_info["feels_like"]))+ str("\xb0"),
             fill=0,
             font=font20,
