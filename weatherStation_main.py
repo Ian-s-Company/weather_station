@@ -388,7 +388,7 @@ class weather_station:
     def forecast(self, day_or_hour, no_of_time):
         if day_or_hour == "day":
             weather_info = self.weather.get_daily(no_of_time)
-            name = datetime.fromtimestamp(weather_info["dt"]).strftime("%A")
+            name = datetime.fromtimestamp(weather_info["dt"]).strftime("%D")
             high = round(weather_info["temp"]["max"])
             low = round(weather_info["temp"]["min"])
         elif day_or_hour == "hour":
