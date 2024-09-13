@@ -579,10 +579,10 @@ class weather_station:
             cur_icon1 = cur_icon1.resize((40, 40), None, None, 3)
             Himage.paste(cur_icon1, (100, 100))
         draw.text(
-            (172, 23), self.weather.current_sunrise(), fill=0, font=font16
+            (176, 23), self.weather.current_sunrise(), fill=0, font=font16
         )  # SUNRISE TIME
         draw.text(
-            (172, 60), self.weather.current_sunset(), fill=0, font=font16
+            (176, 60), self.weather.current_sunset(), fill=0, font=font16
         )  # SUNSET TIME
         draw.text((165, 85), "Humidity", fill=0, font=font12)
         draw.text(
