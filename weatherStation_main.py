@@ -171,7 +171,7 @@ class weather_station:
         i = 0
         for start_pixel in hour_pixel_array:
             hour_info = self.forecast(time, i)
-            draw, icon = self.hour_summary(draw, hour_info, start_pixel)
+            draw, icon = self.hour_summary(draw, Himage, hour_info, start_pixel)
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + hour_span
         self.epd.display(self.epd.getbuffer(Himage))
@@ -197,7 +197,7 @@ class weather_station:
         i = 0
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
-            draw, icon = self.day_summary(draw, day_info, start_pixel)
+            draw, icon = self.day_summary(draw, Himage, day_info, start_pixel)
             Himage.paste(icon, (start_pixel[0], start_pixel[1] + 13))
             i = i + 1
         self.epd.display(self.epd.getbuffer(Himage))
@@ -416,7 +416,7 @@ class weather_station:
         w_dir = round(weather_info["wind_deg"])
         return icon, detail, high, low, name, pop, rain, w_spd, w_dir
 
-    def day_summary(self, draw, day_info, start_pixel):
+    def day_summary(self, draw, Himage, day_info, start_pixel):
         draw.text(
             (start_pixel[0], start_pixel[1]), day_info[4], fill=0, font=font12
         )  # DAY NAME
@@ -438,18 +438,23 @@ class weather_station:
             fill=0,
             font=font12,
         )
+
         wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
+        arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
+        arrow_icon = arrow_icon.resize((10, 10))
+        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
             str(day_info[7]) + " " + wind_dir,
             fill=0,
             font=font12,
         )
+        Himage.paste(arrow_icon, (start_pixel[0] + 10, start_pixel[1] + 63))
         icon = Image.open(day_info[0])
         icon = icon.resize((30, 30))
         return draw, icon
 
-    def day_summary_large(self, draw, day_info, start_pixel):
+    def day_summary_large(self, draw, Himage, day_info, start_pixel):
         draw.text(
             (start_pixel[0], start_pixel[1]), day_info[4], fill=0, font=font12
         )  # DAY NAME
@@ -469,17 +474,21 @@ class weather_station:
             font=font16,
         )
         wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
+        arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
+        arrow_icon = arrow_icon.resize((15,15))
+        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 101),
             str(day_info[7]) + " " + wind_dir,
             fill=0,
             font=font16,
         )
+        Himage.paste(arrow_icon, (start_pixel[0] + 10, start_pixel[1] + 101))
         icon = Image.open(day_info[0])
         icon = icon.resize((45, 45))
         return draw, icon
 
-    def hour_summary(self, draw, hour_info, start_pixel):
+    def hour_summary(self, draw, Himage, hour_info, start_pixel):
         draw.text(
             (start_pixel[0], start_pixel[1]), hour_info[4], fill=0, font=font12
         )  # HOUR
@@ -496,17 +505,21 @@ class weather_station:
             font=font12,
         )
         wind_dir, wind_deg = self.weather.wind_dir(hour_info[8])
+        arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
+        arrow_icon = arrow_icon.resize((10, 10))
+        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 65),
             str(hour_info[7]) + " " + wind_dir,
             fill=0,
             font=font12,
         )
+        Himage.paste(arrow_icon, (start_pixel[0] + 10, start_pixel[1] + 65))
         icon = Image.open(hour_info[0])
         icon = icon.resize((30, 30))
         return draw, icon
 
-    def hour_summary_large(self, draw, hour_info, start_pixel):
+    def hour_summary_large(self, draw, Himage, hour_info, start_pixel):
         draw.text(
             (start_pixel[0] + 15, start_pixel[1]), hour_info[4], fill=0, font=font16
         )  # HOUR
@@ -526,12 +539,16 @@ class weather_station:
             font=font16,
         )
         wind_dir, wind_deg = self.weather.wind_dir(hour_info[8])
+        arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
+        arrow_icon = arrow_icon.resize((15, 15))
+        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 105),
             str(hour_info[7]) + " " + wind_dir,
             fill=0,
             font=font16,
         )
+        Himage.paste(arrow_icon, (start_pixel[0] + 10, start_pixel[1] + 105))
         icon = Image.open(hour_info[0])
         icon = icon.resize((45, 45))
         return draw, icon
@@ -803,7 +820,7 @@ class weather_station:
         for start_pixel in hour_pixel_array:
             hour_info = self.forecast(time, i)
             epaperBlack7x5img, icon = self.hour_summary_large(
-                epaperBlack7x5img, hour_info, start_pixel
+                epaperBlack7x5img, HimageBlack, hour_info, start_pixel
             )
             HimageRed.paste(icon, (start_pixel[0] + 15, start_pixel[1] + 20))
             i = i + hour_span
@@ -823,7 +840,7 @@ class weather_station:
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
             epaperBlack7x5img, icon = self.day_summary_large(
-                epaperBlack7x5img, day_info, start_pixel
+                epaperBlack7x5img, HimageBlack, day_info, start_pixel
             )
             HimageRed.paste(icon, (start_pixel[0] + 15, start_pixel[1] + 20))
             i = i + 1
