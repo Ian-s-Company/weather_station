@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from weather import *
 from news import *
 from display import *
@@ -222,13 +224,13 @@ class weather_station:
         draw.text(
             (2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20
         )  # CLOUD COVER
-        draw.text((2, 50), "UVI", fill=0, font=font12)
+        draw.text((2, 50), "UVI Index", fill=0, font=font12)
         draw.text((2, 60), str(self.weather.current_uvi()), fill=0, font=font20)  # UVI
         draw.text((2, 80), "Dew Point", fill=0, font=font12)
         draw.text(
-            (2, 90), str(self.weather.current_dew_point()), fill=0, font=font20
+            (2, 90), str(self.weather.current_dew_point() + str("\xb0")), fill=0, font=font20
         )  # Dew Point
-        draw.text((2, 110), "Pressure", fill=0, font=font12)
+        draw.text((2, 110), "Pressure (hPa)", fill=0, font=font12)
         draw.text(
             (2, 120), str(self.weather.current_pressure()), fill=0, font=font20
         )  # Pressure
