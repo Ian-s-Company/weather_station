@@ -204,7 +204,7 @@ class weather_station:
         self.epd_finish()
         return 0
 
-    def button5(self):  # Other Stuff
+    def button5(self):  # Pollution and other Metrics 
         logger.info("Drawing Button 5 screen")
         draw, Himage = self.epd_initialize()
         draw = self.get_news_footer(draw)
@@ -215,7 +215,8 @@ class weather_station:
         draw.text((127, 20), "CO (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 30), str(self.weather.co()), fill=0, font=font20)
         draw.text((127, 50), "NO (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 60), str(self.weather.no()[1] (self.weather.no()[0])), fill=0, font=font16)
+        no_num, no_status = self.weather.no()
+        draw.text((127, 60), str(no_status (no_num)), fill=0, font=font16)
         draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
         draw.text((127, 90), str(self.weather.no2()), fill=0, font=font20)
         draw.text((127, 110), "Ozone (\u03BCg/m\u00b3)", fill=0, font=font12)
