@@ -646,7 +646,7 @@ class weather_station:
         draw.text((2, 130), "Wind: ", fill=0, font=font12)
         draw.text(
             (40, 128),
-            str(current_info["wind_speed"])
+            str(round(current_info["wind_speed"]))
             ,
             fill=0,
             font=font14,
