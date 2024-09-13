@@ -212,15 +212,18 @@ class weather_station:
         day_high_temps = {}
         day_low_temps = {}
         daily_all = self.weather.get_daily_all()
+        co_num, co_status = self.weather.co()
         draw.text((127, 20), "CO (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 30), str(self.weather.co()), fill=0, font=font20)
-        draw.text((127, 50), "NO (\u03BCg/m\u00b3)", fill=0, font=font12)
-        no_num, no_status = self.weather.no()
-        draw.text((127, 60), str(no_status (no_num)), fill=0, font=font16)
+        draw.text((127, 30), str(co_status + " (" + co_num + ")"), fill=0, font=font20)
+        so2_num, so2_status = self.weather.so2()
+        draw.text((127, 50), "SO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
+        draw.text((127, 60), str(so2_status (so2_num)), fill=0, font=font16)
+        no2_num, no2_status = self.weather.no2()
         draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 90), str(self.weather.no2()), fill=0, font=font20)
+        draw.text((127, 90), str(no2_status + " (" + no2_num + ")") , fill=0, font=font20)
+        o3_num, o3_status = self.weather.o3()
         draw.text((127, 110), "Ozone (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 120), str(self.weather.o3()), fill=0, font=font20)
+        draw.text((127, 120), str(o3_status + " (" + o3_num + ")"), fill=0, font=font20)
         draw.text((2, 20), "Cloud %", fill=0, font=font12)
         draw.text(
             (2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font20
