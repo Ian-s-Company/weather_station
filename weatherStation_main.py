@@ -438,7 +438,7 @@ class weather_station:
             fill=0,
             font=font12,
         )
-        wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
+        wind_dir = self.weather.wind_dir(day_info[8])
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
             str(day_info[7]) + " " + wind_dir,
