@@ -594,16 +594,16 @@ class weather_station:
             fill=0,
             font=font16,
         )  # CURRENT CONDITIONS
-        draw.text((0, 50), "Temp", fill=0, font=font12)  # CURRENT TEMP LABEL
+        draw.text((5, 50), "Temp", fill=0, font=font12)  # CURRENT TEMP LABEL
         draw.text(
-            (0, 60),
+            (5, 60),
             str(round(current_info["temp"]))+ str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT TEMP
-        draw.text((10, 84), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
+        draw.text((20, 84), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
         draw.text(
-            (10, 93),
+            (20, 93),
             str(round(current_info["feels_like"]))+ str("\xb0"),
             fill=0,
             font=font20,
