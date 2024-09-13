@@ -449,7 +449,7 @@ class weather_station:
             fill=0,
             font=font12,
         )
-        Himage.paste(arrow_icon, (start_pixel[0] + 20, start_pixel[1] + 63))
+        Himage.paste(arrow_icon, (start_pixel[0] + 20, start_pixel[1] + 66))
         icon = Image.open(day_info[0])
         icon = icon.resize((30, 30))
         return draw, icon
@@ -514,7 +514,7 @@ class weather_station:
             fill=0,
             font=font12,
         )
-        Himage.paste(arrow_icon, (start_pixel[0] + 20, start_pixel[1] + 63))
+        Himage.paste(arrow_icon, (start_pixel[0] + 20, start_pixel[1] + 66))
         icon = Image.open(hour_info[0])
         icon = icon.resize((30, 30))
         return draw, icon
