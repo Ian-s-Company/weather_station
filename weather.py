@@ -162,7 +162,7 @@ class Weather:
     def current_sunset(self):
         return time.strftime("%H:%M", time.localtime(self.data["current"]["sunset"]))
 
-    def wind_dir(self, wind_dir_deg):
+    def wind_dir(wind_dir_deg):
         if wind_dir_deg < 11 or wind_dir_deg >= 349:
             direction = "N"
         elif 12 <= wind_dir_deg < 34:
@@ -201,6 +201,10 @@ class Weather:
 
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]
+        return description
+    
+    def curent_wind_deg(self):
+        description = self.data["current"]['wind_deg']
         return description
 
     def current_condition(self):
