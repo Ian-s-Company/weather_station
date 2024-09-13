@@ -626,8 +626,9 @@ class weather_station:
         draw.text(
             (2, 130),
             str(current_info["wind_speed"])
-            + " "
-            + str(self.weather.wind_dir(current_info["wind_deg"])),
+            #+ " "
+            #+ str(self.weather.wind_dir(current_info["wind_deg"]))
+            ,
             fill=0,
             font=font14,
         )  # CURRENT WIND
