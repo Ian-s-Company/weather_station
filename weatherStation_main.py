@@ -638,7 +638,7 @@ class weather_station:
         )  # CURRENT WIND
         wind_deg = self.weather.curent_wind_deg()
         if wind_deg != 360:
-            arrow_icon = arrow_icon.rotate(float(wind_deg),)
+            arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor=0)
         Himage.paste(arrow_icon, (70, 130))
         draw.text((100, 130), str(wind_deg), fill=0, font=font12)
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
