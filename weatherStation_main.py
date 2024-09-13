@@ -612,13 +612,13 @@ class weather_station:
             (90, 45),
             self.weather.current_daymax()+ str("\xb0"),
             fill=0,
-            font=font16,
+            font=font20,
         )  # CURRENT DAY HIGH
         draw.text(
-            (90, 60),
+            (90, 68),
             self.weather.current_daymin()+ str("\xb0"),
             fill=0,
-            font=font16,
+            font=font20,
         )  # CURRENT DAY LOW
         draw.text((2, 115), "Wind", fill=0, font=font12)
         draw.text(
