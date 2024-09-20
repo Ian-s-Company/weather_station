@@ -162,46 +162,49 @@ class Weather:
     def current_sunset(self):
         return time.strftime("%H:%M", time.localtime(self.data["current"]["sunset"]))
 
-    def wind_dir(self, wind_dir):
-        deg = wind_dir
-        if deg < 11 or deg >= 349:
+    def wind_dir(self, wind_dir_deg):
+        if wind_dir_deg < 11 or wind_dir_deg >= 349:
             direction = "N"
-        elif 12 <= deg < 34:
+        elif 12 <= wind_dir_deg < 34:
             direction = "NNE"
-        elif 35 <= deg < 57:
+        elif 35 <= wind_dir_deg < 57:
             direction = "NE"
-        elif 58 <= deg < 80:
+        elif 58 <= wind_dir_deg < 80:
             direction = "ENE"
-        elif 81 <= deg < 101:
+        elif 81 <= wind_dir_deg < 101:
             direction = "E"
-        elif 102 <= deg < 122:
+        elif 102 <= wind_dir_deg < 122:
             direction = "ESE"
-        elif 123 <= deg < 145:
+        elif 123 <= wind_dir_deg < 145:
             direction = "SE"
-        elif 146 <= deg < 168:
+        elif 146 <= wind_dir_deg < 168:
             direction = "SSE"
-        elif 169 <= deg < 192:
+        elif 169 <= wind_dir_deg < 192:
             direction = "S"
-        elif 193 <= deg < 215:
+        elif 193 <= wind_dir_deg < 215:
             direction = "SSW"
-        elif 216 <= deg < 238:
+        elif 216 <= wind_dir_deg < 238:
             direction = "SW"
-        elif 239 <= deg < 262:
+        elif 239 <= wind_dir_deg < 262:
             direction = "WSW"
-        elif 263 <= deg < 281:
+        elif 263 <= wind_dir_deg < 281:
             direction = "W"
-        elif 282 <= deg < 303:
+        elif 282 <= wind_dir_deg < 303:
             direction = "WNW"
-        elif 304 <= deg < 326:
+        elif 304 <= wind_dir_deg < 326:
             direction = "NW"
-        elif 327 <= deg < 349:
+        elif 327 <= wind_dir_deg < 349:
             direction = "NNW"
         else:
             direction = "N/A"
-        return direction
+        return direction, wind_dir_deg
 
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]
+        return description
+    
+    def curent_wind_deg(self):
+        description = self.data["current"]['wind_deg']
         return description
 
     def current_condition(self):
@@ -367,26 +370,76 @@ class Weather:
             alert_descrip = 0
         return alert_descrip
 
-    def co(self):
-        return self.pol_data["list"][0]["components"]["co"]
+    def co(self): # Carbon Monoxide
+        
+        if 0 < self.pol_data["list"][0]["components"]["co"] < 4400:
+            status = "good"
+        elif 4400 < self.pol_data["list"][0]["components"]["co"] < 9400:
+            status = "fair"
+        elif 9400 < self.pol_data["list"][0]["components"]["co"] < 12400:
+            status = "moderate"
+        elif 12400 < self.pol_data["list"][0]["components"]["co"] < 15400:
+            status = "poor"
+        elif 15400 < self.pol_data["list"][0]["components"]["co"]:
+            status = "very poor"
 
-    def no(self):
+        return self.pol_data["list"][0]["components"]["co"], status
+
+    def no(self): #Nitrogen Monoxide
         return self.pol_data["list"][0]["components"]["no"]
 
-    def no2(self):
-        return self.pol_data["list"][0]["components"]["no2"]
+    def no2(self): # Nitrogen Dioxide
 
-    def o3(self):
-        return self.pol_data["list"][0]["components"]["o3"]
+        if 0 < self.pol_data["list"][0]["components"]["no2"] < 40:
+            status = "good"
+        elif 40 < self.pol_data["list"][0]["components"]["no2"] < 70:
+            status = "fair"
+        elif 70 < self.pol_data["list"][0]["components"]["no2"] < 150:
+            status = "moderate"
+        elif 150 < self.pol_data["list"][0]["components"]["no2"] < 200:
+            status = "poor"
+        elif 200 < self.pol_data["list"][0]["components"]["no2"]:
+            status = "very poor"
 
-    def so2(self):
-        return self.pol_data["list"][0]["components"]["so2"]
+        return self.pol_data["list"][0]["components"]["no2"], status
 
-    def pm2_5(self):
+
+    def o3(self): # Ozone
+
+        if 0 < self.pol_data["list"][0]["components"]["o3"] < 60:
+            status = "good"
+        elif 60 < self.pol_data["list"][0]["components"]["o3"] < 100:
+            status = "fair"
+        elif 100 < self.pol_data["list"][0]["components"]["o3"] < 140:
+            status = "moderate"
+        elif 140 < self.pol_data["list"][0]["components"]["o3"] < 180:
+            status = "poor"
+        elif 180 < self.pol_data["list"][0]["components"]["o3"]:
+            status = "very poor"
+
+        return self.pol_data["list"][0]["components"]["o3"], status
+
+    def so2(self): # Sulpher Dioxide
+
+        if 0 < self.pol_data["list"][0]["components"]["so2"] < 20:
+            status = "good"
+        elif 20 < self.pol_data["list"][0]["components"]["so2"] < 80:
+            status = "fair"
+        elif 80 < self.pol_data["list"][0]["components"]["so2"] < 250:
+            status = "moderate"
+        elif 250 < self.pol_data["list"][0]["components"]["so2"] < 350:
+            status = "poor"
+        elif 350 < self.pol_data["list"][0]["components"]["so2"]:
+            status = "very poor"
+
+        return self.pol_data["list"][0]["components"]["so2"], status
+
+    def pm2_5(self): 
         return self.pol_data["list"][0]["components"]["pm2_5"]
 
     def pm10(self):
         return self.pol_data["list"][0]["components"]["pm10"]
 
-    def nh3(self):
+    def nh3(self): # Ammonia
+
         return self.pol_data["list"][0]["components"]["nh3"]
