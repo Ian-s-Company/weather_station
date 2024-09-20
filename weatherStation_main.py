@@ -991,7 +991,7 @@ def main():
         btn4.when_pressed = weather_station_inst.button6
         while True:
             logger.info("Updating Screen")
-            epd = epd2in7.EPD()
+            #epd = epd2in7.EPD()
             weather_station_inst = weather_station(epd, weather, news)
             if debug == True:
                 sleep_time = 8
