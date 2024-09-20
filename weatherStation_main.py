@@ -979,20 +979,19 @@ def main():
     if screen_size == "2.7in":
         logger.info("Initializing EPD for 2.7in")
         epd = epd2in7.EPD()
-        weather_station_inst = weather_station(epd, weather, news)
-        logger.info("Creating Buttons")
-        btn1 = Button(5)
-        btn1.when_pressed = weather_station_inst.button1
-        btn2 = Button(6)
-        btn2.when_pressed = weather_station_inst.button2
-        btn3 = Button(13)
-        btn3.when_pressed = weather_station_inst.button3
-        btn4 = Button(19)
-        btn4.when_pressed = weather_station_inst.button6
         while True:
             logger.info("Updating Screen")
             #epd = epd2in7.EPD()
             weather_station_inst = weather_station(epd, weather, news)
+            logger.info("Creating Buttons")
+            btn1 = Button(5)
+            btn1.when_pressed = weather_station_inst.button1
+            btn2 = Button(6)
+            btn2.when_pressed = weather_station_inst.button2
+            btn3 = Button(13)
+            btn3.when_pressed = weather_station_inst.button3
+            btn4 = Button(19)
+            btn4.when_pressed = weather_station_inst.button6
             if debug == True:
                 sleep_time = 8
             else:
