@@ -92,7 +92,7 @@ with open(app_dir + "/weatherstation.service", "r") as file:
 with open(app_dir + "/weatherstation.service", "w") as file:
     file.write(data)
 
-FORMAT = '%(asctime)s'
+FORMAT = '%(asctime)s %(message)s'
 
 logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG, format=FORMAT)
 
