@@ -92,8 +92,9 @@ with open(app_dir + "/weatherstation.service", "r") as file:
 with open(app_dir + "/weatherstation.service", "w") as file:
     file.write(data)
 
+FORMAT = '%(asctime)s %(clientip)-15s %(user)-8s %(message)s'
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG)
+logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG, format=FORMAT)
 
 if screen_size == "7x5in":
     logger.info("Screen size is 7x5in")
