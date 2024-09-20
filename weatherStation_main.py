@@ -92,9 +92,11 @@ with open(app_dir + "/weatherstation.service", "r") as file:
 with open(app_dir + "/weatherstation.service", "w") as file:
     file.write(data)
 
-FORMAT = '%(asctime)s %(message)s'
+FORMAT = "%(asctime)s %(message)s"
 
-logging.basicConfig(filename=app_dir + "/weatherStation.log", level=logging.DEBUG, format=FORMAT)
+logging.basicConfig(
+    filename=app_dir + "/weatherStation.log", level=logging.DEBUG, format=FORMAT
+)
 
 logger = logging.getLogger(__name__)
 
@@ -152,10 +154,10 @@ class weather_station:
         )  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         return (draw, Himage)
-    
+
     def epd_finish(self):
         self.epd.sleep()
-        
+
     def button2(self):  # Hourly Forecast
         logger.info("Drawing Hourly Forecast")
         draw, Himage = self.epd_initialize()
@@ -208,7 +210,7 @@ class weather_station:
         self.epd_finish()
         return 0
 
-    def button5(self):  # Pollution and other Metrics 
+    def button5(self):  # Pollution and other Metrics
         logger.info("Drawing Button 5 screen")
         draw, Himage = self.epd_initialize()
         draw = self.get_news_footer(draw)
@@ -218,16 +220,33 @@ class weather_station:
         daily_all = self.weather.get_daily_all()
         co_num, co_status = self.weather.co()
         draw.text((127, 20), "CO (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 32), str(co_status.upper() + " (" + str(co_num) + ")"), fill=0, font=font14)
+        draw.text(
+            (127, 32),
+            str(co_status.upper() + " (" + str(co_num) + ")"),
+            fill=0,
+            font=font14,
+        )
         so2_num, so2_status = self.weather.so2()
         draw.text((127, 50), "SO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 62), str(so2_status.upper() + " (" + str(so2_num) + ")"), fill=0, font=font14)
+        draw.text(
+            (127, 62),
+            str(so2_status.upper() + " (" + str(so2_num) + ")"),
+            fill=0,
+            font=font14,
+        )
         no2_num, no2_status = self.weather.no2()
         draw.text((127, 80), "NO2 (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 92), str(no2_status.upper() + " (" + str(no2_num) + ")") , fill=0, font=font14)
+        draw.text(
+            (127, 92),
+            str(no2_status.upper() + " (" + str(no2_num) + ")"),
+            fill=0,
+            font=font14,
+        )
         o3_num, o3_status = self.weather.o3()
         draw.text((127, 110), "Ozone (\u03BCg/m\u00b3)", fill=0, font=font12)
-        draw.text((127, 122), str(o3_status + " (" + str(o3_num) + ")"), fill=0, font=font14)
+        draw.text(
+            (127, 122), str(o3_status + " (" + str(o3_num) + ")"), fill=0, font=font14
+        )
         draw.text((2, 20), "Cloud %", fill=0, font=font12)
         draw.text(
             (2, 30), str(self.weather.current_cloud_cov()), fill=0, font=font16
@@ -236,7 +255,10 @@ class weather_station:
         draw.text((2, 60), str(self.weather.current_uvi()), fill=0, font=font16)  # UVI
         draw.text((2, 80), "Dew Point", fill=0, font=font12)
         draw.text(
-            (2, 90), str(self.weather.current_dew_point() + str("\xb0")), fill=0, font=font16
+            (2, 90),
+            str(self.weather.current_dew_point() + str("\xb0")),
+            fill=0,
+            font=font16,
         )  # Dew Point
         draw.text((2, 110), "Pressure (hPa)", fill=0, font=font12)
         draw.text(
@@ -432,7 +454,7 @@ class weather_station:
         )  # DAY HIGH
         draw.text(
             (start_pixel[0] + 35, start_pixel[1] + 35),
-            str(day_info[3])+ str("\xb0"),
+            str(day_info[3]) + str("\xb0"),
             fill=0,
             font=font16,
         )  # DAY LOW
@@ -446,7 +468,7 @@ class weather_station:
         wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
         arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
         arrow_icon = arrow_icon.resize((10, 10))
-        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
+        arrow_icon = arrow_icon.rotate(angle=wind_deg, fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 63),
             str(day_info[7]),
@@ -479,8 +501,8 @@ class weather_station:
         )
         wind_dir, wind_deg = self.weather.wind_dir(day_info[8])
         arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
-        arrow_icon = arrow_icon.resize((15,15))
-        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
+        arrow_icon = arrow_icon.resize((15, 15))
+        arrow_icon = arrow_icon.rotate(angle=wind_deg, fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 101),
             str(day_info[7]),
@@ -498,7 +520,7 @@ class weather_station:
         )  # HOUR
         draw.text(
             (start_pixel[0] + 35, start_pixel[1] + 15),
-            str(hour_info[2])+ str("\xb0"),
+            str(hour_info[2]) + str("\xb0"),
             fill=0,
             font=font16,
         )  # HOUR TEMP
@@ -511,7 +533,7 @@ class weather_station:
         wind_dir, wind_deg = self.weather.wind_dir(hour_info[8])
         arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
         arrow_icon = arrow_icon.resize((10, 10))
-        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
+        arrow_icon = arrow_icon.rotate(angle=wind_deg, fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 65),
             str(hour_info[7]),
@@ -545,7 +567,7 @@ class weather_station:
         wind_dir, wind_deg = self.weather.wind_dir(hour_info[8])
         arrow_icon = Image.open(app_dir + "/static_icons/arrow.bmp")
         arrow_icon = arrow_icon.resize((15, 15))
-        arrow_icon = arrow_icon.rotate(angle=wind_deg,fillcolor="#FFFFFF")
+        arrow_icon = arrow_icon.rotate(angle=wind_deg, fillcolor="#FFFFFF")
         draw.text(
             (start_pixel[0], start_pixel[1] + 105),
             str(hour_info[7]),
@@ -623,41 +645,42 @@ class weather_station:
         draw.text((5, 50), "Temp", fill=0, font=font12)  # CURRENT TEMP LABEL
         draw.text(
             (5, 60),
-            str(round(current_info["temp"]))+ str("\xb0"),
+            str(round(current_info["temp"])) + str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT TEMP
-        draw.text((20, 84), "Feels LIke", fill=0, font=font12)  # CURRENT FEELS LIKE LABEL
+        draw.text(
+            (20, 84), "Feels LIke", fill=0, font=font12
+        )  # CURRENT FEELS LIKE LABEL
         draw.text(
             (20, 93),
-            str(round(current_info["feels_like"]))+ str("\xb0"),
+            str(round(current_info["feels_like"])) + str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT FEELS LIKE
         draw.text(
             (90, 45),
-            self.weather.current_daymax()+ str("\xb0"),
+            self.weather.current_daymax() + str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT DAY HIGH
         draw.text(
             (90, 68),
-            self.weather.current_daymin()+ str("\xb0"),
+            self.weather.current_daymin() + str("\xb0"),
             fill=0,
             font=font20,
         )  # CURRENT DAY LOW
         draw.text((2, 130), "Wind: ", fill=0, font=font12)
         draw.text(
             (40, 128),
-            str(round(current_info["wind_speed"]))
-            ,
+            str(round(current_info["wind_speed"])),
             fill=0,
             font=font14,
         )  # CURRENT WIND
         wind_deg = self.weather.curent_wind_deg()
-        arrow_icon = arrow_icon.rotate(angle=-wind_deg,fillcolor="#FFFFFF")
+        arrow_icon = arrow_icon.rotate(angle=-wind_deg, fillcolor="#FFFFFF")
         Himage.paste(arrow_icon, (63, 130))
-        #draw.text((100, 130), str(wind_deg), fill=0, font=font12)
+        # draw.text((100, 130), str(wind_deg), fill=0, font=font12)
         draw.text((165, 121), "Rain 24h", fill=0, font=font12)
         if "rain" in day_info:
             day_rain = day_info["rain"]
@@ -679,7 +702,7 @@ class weather_station:
             "1", (epd.width, epd.height), 255
         )  # 255: clear the frame
         HimageRed = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
-        
+
         current_info = self.weather.get_current()
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
@@ -752,9 +775,7 @@ class weather_station:
         wind_dir, wind_deg = self.weather.wind_dir(current_info["wind_deg"])
         epaperBlack7x5img.text(
             (300, 180),
-            str(current_info["wind_speed"])
-            + " "
-            + str(wind_dir),
+            str(current_info["wind_speed"]) + " " + str(wind_dir),
             fill=0,
             font=font24,
         )  # CURRENT WIND
@@ -981,7 +1002,7 @@ def main():
         epd = epd2in7.EPD()
         while True:
             logger.info("Updating Screen")
-            #epd = epd2in7.EPD()
+            # epd = epd2in7.EPD()
             weather_station_inst = weather_station(epd, weather, news)
             logger.info("Creating Buttons")
             btn1 = Button(5)
