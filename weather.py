@@ -202,9 +202,9 @@ class Weather:
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]
         return description
-    
+
     def curent_wind_deg(self):
-        description = self.data["current"]['wind_deg']
+        description = self.data["current"]["wind_deg"]
         return description
 
     def current_condition(self):
@@ -370,8 +370,7 @@ class Weather:
             alert_descrip = 0
         return alert_descrip
 
-    def co(self): # Carbon Monoxide
-        
+    def co(self):  # Carbon Monoxide
         if 0 < self.pol_data["list"][0]["components"]["co"] < 4400:
             status = "good"
         elif 4400 < self.pol_data["list"][0]["components"]["co"] < 9400:
@@ -385,11 +384,10 @@ class Weather:
 
         return self.pol_data["list"][0]["components"]["co"], status
 
-    def no(self): #Nitrogen Monoxide
+    def no(self):  # Nitrogen Monoxide
         return self.pol_data["list"][0]["components"]["no"]
 
-    def no2(self): # Nitrogen Dioxide
-
+    def no2(self):  # Nitrogen Dioxide
         if 0 < self.pol_data["list"][0]["components"]["no2"] < 40:
             status = "good"
         elif 40 < self.pol_data["list"][0]["components"]["no2"] < 70:
@@ -403,9 +401,7 @@ class Weather:
 
         return self.pol_data["list"][0]["components"]["no2"], status
 
-
-    def o3(self): # Ozone
-
+    def o3(self):  # Ozone
         if 0 < self.pol_data["list"][0]["components"]["o3"] < 60:
             status = "good"
         elif 60 < self.pol_data["list"][0]["components"]["o3"] < 100:
@@ -419,8 +415,7 @@ class Weather:
 
         return self.pol_data["list"][0]["components"]["o3"], status
 
-    def so2(self): # Sulpher Dioxide
-
+    def so2(self):  # Sulpher Dioxide
         if 0 < self.pol_data["list"][0]["components"]["so2"] < 20:
             status = "good"
         elif 20 < self.pol_data["list"][0]["components"]["so2"] < 80:
@@ -434,12 +429,11 @@ class Weather:
 
         return self.pol_data["list"][0]["components"]["so2"], status
 
-    def pm2_5(self): 
+    def pm2_5(self):
         return self.pol_data["list"][0]["components"]["pm2_5"]
 
     def pm10(self):
         return self.pol_data["list"][0]["components"]["pm10"]
 
-    def nh3(self): # Ammonia
-
+    def nh3(self):  # Ammonia
         return self.pol_data["list"][0]["components"]["nh3"]
