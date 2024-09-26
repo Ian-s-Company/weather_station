@@ -861,9 +861,7 @@ class weather_station:
         i = 0
         for start_pixel in day_pixel_array:
             day_info = self.forecast(time, i)
-            epaperBlack7x5img, icon = self.day_summary_large(
-                epaperBlack7x5img, HimageBlack, day_info, start_pixel
-            )
+            epaperBlack7x5img, icon = self.day_summary_large(                epaperBlack7x5img, HimageBlack, day_info, start_pixel            )
             HimageRed.paste(icon, (start_pixel[0] + 15, start_pixel[1] + 20))
             i = i + 1
 
