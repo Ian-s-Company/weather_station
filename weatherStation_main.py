@@ -583,14 +583,7 @@ class weather_station:
         logger.info("Drawing Button 1 screen")
         draw, Himage = self.epd_initialize()
         current_info = self.weather.get_current()
-        logger.info(
-            "Begin update @"
-            + self.weather.current_time()
-            + " at latitude "
-            + lat
-            + " longitude "
-            + lon
-        )
+        logger.info("Begin update @" + self.weather.current_time())
 
         day_info = self.weather.get_daily(0)
         hour_info = self.weather.get_hourly(0)
